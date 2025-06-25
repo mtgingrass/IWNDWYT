@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = DayCounterViewModel()
+    @EnvironmentObject private var viewModel: DayCounterViewModel
     @State private var showResetConfirmation = false
 
     var body: some View {
@@ -78,4 +78,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(DayCounterViewModel.shared)
 }

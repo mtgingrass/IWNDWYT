@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 class DayCounterViewModel: ObservableObject {
+    static let shared = DayCounterViewModel()
+    
     @Published var sobrietyData: SobrietyData
 
     private let storageKey = "sobriety_data"
@@ -52,6 +54,20 @@ class DayCounterViewModel: ObservableObject {
         sobrietyData.pastStreaks.append(finishedStreak)
         sobrietyData.currentStartDate = today
         save()
+    }
+    
+    // Reset all data
+    func resetAllData() {
+        sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [])
+        
+        // Clear UserDefaults for this key
+        UserDefaults.standard.removeObject(forKey: storageKey)
+        
+        // Save the fresh state
+        save()
+        
+        // Force a refresh of the UI
+        objectWillChange.send()
     }
     
     func refresh() {

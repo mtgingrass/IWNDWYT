@@ -12,6 +12,7 @@ struct IWNDWYTApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(DayCounterViewModel.shared)
         }
     }
 }

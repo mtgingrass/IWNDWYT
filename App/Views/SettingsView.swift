@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject private var viewModel = DayCounterViewModel()
+    @EnvironmentObject private var viewModel: DayCounterViewModel
     @State private var showResetConfirmation = false
     @Environment(\.dismiss) private var dismiss
     
@@ -52,30 +52,18 @@ struct SettingsView: View {
         .alert("Reset All Data", isPresented: $showResetConfirmation) {
             Button("Cancel", role: .cancel) { }
             Button("Reset", role: .destructive) {
-                resetAllData()
+                viewModel.resetAllData()
+                dismiss()
             }
         } message: {
             Text("Are you sure you want to reset all data? This action cannot be undone.")
         }
-    }
-    
-    private func resetAllData() {
-        // Clear UserDefaults
-        if let bundleID = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-        }
-        
-        // Initialize fresh data
-        viewModel.sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [])
-        viewModel.save()
-        
-        // Optionally dismiss the settings screen after reset
-        dismiss()
     }
 }
 
 #Preview {
     NavigationView {
         SettingsView()
+            .environmentObject(DayCounterViewModel.shared)
     }
 } 
