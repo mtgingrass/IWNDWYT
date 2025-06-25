@@ -19,6 +19,10 @@ final class DateProvider {
         offsetInDays = 0
     }
 }
+
+extension Notification.Name {
+    static let dateOffsetChanged = Notification.Name("dateOffsetChanged")
+}
 #else
 enum DateProvider {
     static var now: Date {
@@ -26,7 +30,3 @@ enum DateProvider {
     }
 }
 #endif
-
-extension Notification.Name {
-    static let dateOffsetChanged = Notification.Name("dateOffsetChanged")
-}

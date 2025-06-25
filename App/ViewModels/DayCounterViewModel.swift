@@ -8,9 +8,6 @@
 import Foundation
 import SwiftUI
 
-import Foundation
-import SwiftUI
-
 class DayCounterViewModel: ObservableObject {
     @Published var sobrietyData: SobrietyData
 
@@ -26,9 +23,11 @@ class DayCounterViewModel: ObservableObject {
             save()
         }
         
+        #if DEBUG
         NotificationCenter.default.addObserver(forName: .dateOffsetChanged, object: nil, queue: .main) { [weak self] _ in
             self?.refresh()
         }
+        #endif
     }
 
     // Save to UserDefaults

@@ -63,7 +63,15 @@ struct ContentView: View {
                 .padding()
             }
             .navigationBarTitle("IWNDWYT", displayMode: .inline)
-            .toolbarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                }
+            }
         }
     }
 }

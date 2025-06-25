@@ -12,6 +12,7 @@
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
 		1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF62E0CA05D007C9143 /* DateProvider.swift */; };
 		1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF82E0CA1BE007C9143 /* DebugPanelView.swift */; };
+		1ED34BFB2E0CAACC007C9143 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		1ED34BF42E0C802C007C9143 /* SobrietyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SobrietyData.swift; path = ../Models/SobrietyData.swift; sourceTree = SOURCE_ROOT; };
 		1ED34BF62E0CA05D007C9143 /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateProvider.swift; path = ../Models/DateProvider.swift; sourceTree = SOURCE_ROOT; };
 		1ED34BF82E0CA1BE007C9143 /* DebugPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DebugPanelView.swift; path = ../Views/DebugPanelView.swift; sourceTree = SOURCE_ROOT; };
+		1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -139,6 +141,7 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */,
 				1ED34BC72E0C5A5F007C9143 /* ContentView.swift */,
 				1ED34BF62E0CA05D007C9143 /* DateProvider.swift */,
 			);
@@ -290,6 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ED34BFB2E0CAACC007C9143 /* SettingsView.swift in Sources */,
 				1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */,
 				1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */,
 				1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */,
