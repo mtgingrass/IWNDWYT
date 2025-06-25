@@ -7,6 +7,7 @@
 
 import Foundation
 
+///Each streak has a start and end date and a calculated length. Once the streak has an end date, it can be added to the `pastStreaks` array.
 struct Streak: Codable, Identifiable {
     let id: UUID
     let startDate: Date
@@ -14,9 +15,10 @@ struct Streak: Codable, Identifiable {
     let length: Int
 }
 
+
 struct SobrietyData: Codable {
-    let currentStartDate: Date
-    let pastStreaks: [Streak]
+    var currentStartDate: Date
+    var pastStreaks: [Streak]
     
     var lastMessageDate: Date?
 }
