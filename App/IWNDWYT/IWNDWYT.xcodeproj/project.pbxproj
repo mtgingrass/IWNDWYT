@@ -13,6 +13,7 @@
 		1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF62E0CA05D007C9143 /* DateProvider.swift */; };
 		1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF82E0CA1BE007C9143 /* DebugPanelView.swift */; };
 		1ED34BFB2E0CAACC007C9143 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */; };
+		1ED34BFD2E0CAFD7007C9143 /* MetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		1ED34BF62E0CA05D007C9143 /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateProvider.swift; path = ../Models/DateProvider.swift; sourceTree = SOURCE_ROOT; };
 		1ED34BF82E0CA1BE007C9143 /* DebugPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DebugPanelView.swift; path = ../Views/DebugPanelView.swift; sourceTree = SOURCE_ROOT; };
 		1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -141,6 +143,7 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */,
 				1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */,
 				1ED34BC72E0C5A5F007C9143 /* ContentView.swift */,
 				1ED34BF62E0CA05D007C9143 /* DateProvider.swift */,
@@ -299,6 +302,7 @@
 				1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */,
 				1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */,
 				1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */,
+				1ED34BFD2E0CAFD7007C9143 /* MetricsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

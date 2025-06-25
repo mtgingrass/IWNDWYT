@@ -10,14 +10,23 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @State private var showResetConfirmation = false
+    @State private var showMetrics = false
 
     var body: some View {
         NavigationView {
             ZStack {
                 VStack(spacing: 20) {
-                    Text("🟢 \(viewModel.currentStreak) days")
-                        .font(.system(size: 48, weight: .bold, design: .rounded))
-                        .foregroundColor(.green)
+                    NavigationLink(destination: MetricsView()) {
+                        VStack(spacing: 8) {
+                            Text("🟢 \(viewModel.currentStreak) days")
+                                .font(.system(size: 48, weight: .bold, design: .rounded))
+                                .foregroundColor(.green)
+                            
+                            Text("Tap for detailed metrics")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
 
                     Spacer()
 
