@@ -9,119 +9,176 @@ import SwiftUI
 
 struct CalendarView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
-    @State private var forceUpdate = false // Used to force view updates
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
-    private let daysToShow = 365 // Show last year
+    @State private var selectedMonth = Date()
     
-    private var soberDays: Set<Date> {
-        var days = Set<Date>()
-        
-        // Add days from past streaks
-        for streak in viewModel.sobrietyData.pastStreaks {
-            var currentDate = streak.startDate
-            while currentDate <= streak.endDate {
-                days.insert(Calendar.current.startOfDay(for: currentDate))
-                currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-            }
-        }
-        
-        // Add days from current streak only if active
-        if viewModel.sobrietyData.isActiveStreak {
-            var currentDate = viewModel.sobrietyData.currentStartDate
-            let now = DateProvider.now
-            while currentDate <= now {
-                days.insert(Calendar.current.startOfDay(for: currentDate))
-                currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-            }
-        }
-        
-        return days
+    private var calendar: Calendar {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 1 // Start week on Sunday
+        return calendar
     }
     
-    private var dateRange: [Date] {
-        let calendar = Calendar.current
-        let endDate = calendar.startOfDay(for: DateProvider.now)
-        let startDate = calendar.date(byAdding: .day, value: -daysToShow + 1, to: endDate) ?? endDate
-        
-        var dates: [Date] = []
-        var currentDate = startDate
-        
-        while currentDate <= endDate {
-            dates.append(currentDate)
-            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-        }
-        
-        // Pad with empty cells at the start to align with weekday
-        let firstWeekday = calendar.component(.weekday, from: startDate)
-        let padding = (firstWeekday + 5) % 7 // Convert to Monday-based week
-        if padding > 0 {
-            for _ in 0..<padding {
-                dates.insert(Date.distantPast, at: 0)
+    var body: some View {
+        VStack(spacing: 20) {
+            // Month navigation
+            HStack {
+                Button(action: previousMonth) {
+                    Image(systemName: "chevron.left")
+                }
+                
+                Spacer()
+                
+                Text(selectedMonth.formatted(.dateTime.month().year()))
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                
+                Spacer()
+                
+                Button(action: nextMonth) {
+                    Image(systemName: "chevron.right")
+                }
             }
+            .padding(.horizontal)
+            
+            // Day of week row
+            HStack {
+                ForEach(calendar.shortWeekdaySymbols, id: \.self) { symbol in
+                    Text(symbol)
+                        .font(.caption)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            // Days grid
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: 7), spacing: 0) {
+                ForEach(daysInMonth(), id: \.self) { date in
+                    if let date = date {
+                        DayCell(date: date,
+                               isSelected: calendar.isDate(date, inSameDayAs: selectedMonth),
+                               status: getDayStatus(date))
+                            .onTapGesture {
+                                selectedMonth = date
+                            }
+                    } else {
+                        Color.clear
+                            .aspectRatio(1, contentMode: .fill)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func previousMonth() {
+        if let newDate = calendar.date(byAdding: .month, value: -1, to: selectedMonth) {
+            selectedMonth = newDate
+        }
+    }
+    
+    private func nextMonth() {
+        if let newDate = calendar.date(byAdding: .month, value: 1, to: selectedMonth) {
+            selectedMonth = newDate
+        }
+    }
+    
+    private func daysInMonth() -> [Date?] {
+        let interval = calendar.dateInterval(of: .month, for: selectedMonth)!
+        let firstDay = interval.start
+        
+        // Calculate the first date to show (including leading dates from previous month)
+        let weekdayOfFirst = calendar.component(.weekday, from: firstDay)
+        let leadingDates = (weekdayOfFirst - calendar.firstWeekday + 7) % 7
+        
+        let firstDateToShow = calendar.date(byAdding: .day, value: -leadingDates, to: firstDay)!
+        
+        var dates: [Date?] = []
+        var currentDate = firstDateToShow
+        
+        // We'll always show 42 spots (6 weeks)
+        for _ in 0..<42 {
+            if calendar.isDate(currentDate, equalTo: interval.start, toGranularity: .month) ||
+               calendar.isDate(currentDate, equalTo: interval.end, toGranularity: .month) {
+                dates.append(currentDate)
+            } else {
+                dates.append(nil)
+            }
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
         }
         
         return dates
     }
     
-    private func cellColor(for date: Date) -> Color {
-        guard date != Date.distantPast else { return .clear }
+    private func getDayStatus(_ date: Date) -> DayStatus {
+        guard date <= DateProvider.now else { return .future }
         
-        if soberDays.contains(Calendar.current.startOfDay(for: date)) {
-            return .green.opacity(0.8)
+        // Check if it's within any streak
+        for streak in viewModel.sobrietyData.pastStreaks {
+            if date >= streak.startDate && date <= streak.endDate {
+                return .sober
+            }
         }
-        return Color(.systemGray6)
+        
+        // Check current streak
+        if viewModel.sobrietyData.isActiveStreak &&
+           date >= viewModel.sobrietyData.currentStartDate &&
+           date <= DateProvider.now {
+            return .sober
+        }
+        
+        // If the date is before the first streak or between streaks
+        let firstTrackingDate = viewModel.sobrietyData.pastStreaks.first?.startDate ?? viewModel.sobrietyData.currentStartDate
+        if date >= firstTrackingDate {
+            return .nonSober
+        }
+        
+        return .beforeTracking
+    }
+}
+
+enum DayStatus {
+    case sober
+    case nonSober
+    case beforeTracking
+    case future
+}
+
+struct DayCell: View {
+    let date: Date
+    let isSelected: Bool
+    let status: DayStatus
+    
+    private var backgroundColor: Color {
+        switch status {
+        case .sober:
+            return .green.opacity(0.3)
+        case .nonSober:
+            return .red.opacity(0.3)
+        case .beforeTracking, .future:
+            return .clear
+        }
     }
     
-    private func formattedDate(_ date: Date) -> String {
-        guard date != Date.distantPast else { return "" }
-        return date.formatted(date: .abbreviated, time: .omitted)
+    private var textColor: Color {
+        switch status {
+        case .sober:
+            return .primary
+        case .nonSober:
+            return .primary
+        case .beforeTracking, .future:
+            return .secondary
+        }
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            LazyVGrid(columns: columns, spacing: 4) {
-                ForEach(dateRange, id: \.timeIntervalSince1970) { date in
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(cellColor(for: date))
-                        .frame(height: 20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 2)
-                                .stroke(Color(.systemGray4), lineWidth: 0.5)
-                        )
-                        .help(formattedDate(date))
-                }
-            }
-            
-            HStack {
-                Text("Less")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(Color(.systemGray6))
-                    .frame(width: 20, height: 20)
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(.green.opacity(0.8))
-                    .frame(width: 20, height: 20)
-                Text("More")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-                Spacer()
-            }
-        }
-        .padding(.vertical, 8)
-        .id(forceUpdate) // Force view update when date changes
-        .onAppear {
-            #if DEBUG
-            NotificationCenter.default.addObserver(
-                forName: .dateOffsetChanged,
-                object: nil,
-                queue: .main
-            ) { _ in
-                // Toggle state to force view update
-                forceUpdate.toggle()
-            }
-            #endif
-        }
+        Text(date.formatted(.dateTime.day()))
+            .font(.callout)
+            .frame(maxWidth: .infinity)
+            .aspectRatio(1, contentMode: .fill)
+            .background(backgroundColor)
+            .foregroundColor(textColor)
+            .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 1)
+            )
     }
 }
 

@@ -53,10 +53,12 @@ struct MetricsView: View {
             } header: {
                 Text("Statistics")
             }
+            
             Section {
                 CalendarView()
+                    .frame(height: 380)
             } header: {
-                Text("Activity")
+                Text("Calendar")
             }
             
             if !viewModel.sobrietyData.pastStreaks.isEmpty {
