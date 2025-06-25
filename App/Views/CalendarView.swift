@@ -25,12 +25,14 @@ struct CalendarView: View {
             }
         }
         
-        // Add days from current streak
-        var currentDate = viewModel.sobrietyData.currentStartDate
-        let now = DateProvider.now
-        while currentDate <= now {
-            days.insert(Calendar.current.startOfDay(for: currentDate))
-            currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+        // Add days from current streak only if active
+        if viewModel.sobrietyData.isActiveStreak {
+            var currentDate = viewModel.sobrietyData.currentStartDate
+            let now = DateProvider.now
+            while currentDate <= now {
+                days.insert(Calendar.current.startOfDay(for: currentDate))
+                currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+            }
         }
         
         return days

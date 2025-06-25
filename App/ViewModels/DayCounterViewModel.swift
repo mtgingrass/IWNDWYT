@@ -21,7 +21,7 @@ class DayCounterViewModel: ObservableObject {
             sobrietyData = decoded
         } else {
             // First time user
-            sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [])
+            sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [], isActiveStreak: false)
             save()
         }
         
@@ -39,8 +39,10 @@ class DayCounterViewModel: ObservableObject {
         }
     }
 
-    // Reset streak (archive current and start new)
-    func resetStreak() {
+    // End current streak without starting a new one
+    func endStreak() {
+        guard sobrietyData.isActiveStreak else { return }
+        
         let today = DateProvider.now
         let length = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: today).day ?? 0
 
@@ -52,13 +54,20 @@ class DayCounterViewModel: ObservableObject {
         )
 
         sobrietyData.pastStreaks.append(finishedStreak)
-        sobrietyData.currentStartDate = today
+        sobrietyData.isActiveStreak = false
+        save()
+    }
+    
+    // Start a new streak
+    func startStreak() {
+        sobrietyData.currentStartDate = DateProvider.now
+        sobrietyData.isActiveStreak = true
         save()
     }
     
     // Reset all data
     func resetAllData() {
-        sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [])
+        sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [], isActiveStreak: false)
         
         // Clear UserDefaults for this key
         UserDefaults.standard.removeObject(forKey: storageKey)
@@ -76,15 +85,20 @@ class DayCounterViewModel: ObservableObject {
 
     // Calculate days since currentStartDate
     var currentStreak: Int {
-        Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: DateProvider.now).day ?? 0
+        guard sobrietyData.isActiveStreak else { return 0 }
+        return Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: DateProvider.now).day ?? 0
     }
 
     var totalAttempts: Int {
-        sobrietyData.pastStreaks.count + 1
+        sobrietyData.pastStreaks.count + (sobrietyData.isActiveStreak ? 1 : 0)
     }
 
     var longestStreak: Int {
         let past = sobrietyData.pastStreaks.map { $0.length }.max() ?? 0
         return max(past, currentStreak)
+    }
+    
+    var isActiveStreak: Bool {
+        sobrietyData.isActiveStreak
     }
 }

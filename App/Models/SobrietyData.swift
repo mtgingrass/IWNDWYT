@@ -15,10 +15,16 @@ struct Streak: Codable, Identifiable {
     let length: Int
 }
 
-
 struct SobrietyData: Codable {
     var currentStartDate: Date
     var pastStreaks: [Streak]
+    var isActiveStreak: Bool
     
     var lastMessageDate: Date?
+    
+    init(currentStartDate: Date, pastStreaks: [Streak], isActiveStreak: Bool = true) {
+        self.currentStartDate = currentStartDate
+        self.pastStreaks = pastStreaks
+        self.isActiveStreak = isActiveStreak
+    }
 }
