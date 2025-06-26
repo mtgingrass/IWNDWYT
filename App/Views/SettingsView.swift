@@ -65,5 +65,6 @@ struct SettingsView: View {
     NavigationView {
         SettingsView()
             .environmentObject(DayCounterViewModel.shared)
+            .environmentObject(AppSettingsViewModel.shared)
     }
 } 

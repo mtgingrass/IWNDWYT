@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
+    @EnvironmentObject private var settings: AppSettingsViewModel
     @State private var showEndConfirmation = false
 
     var body: some View {
@@ -47,7 +48,7 @@ struct ContentView: View {
                                     .foregroundColor(.primary)
                                 
                                 if viewModel.longestStreak > 0 {
-                                    VStack(spacing: 8) {
+                                    VStack(spacing: 12) {
                                         HStack {
                                             Image(systemName: "trophy.fill")
                                                 .foregroundColor(.yellow)
@@ -57,15 +58,32 @@ struct ContentView: View {
                                         }
                                         
                                         if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
+                                            let daysSinceLastStreak = Calendar.current.dateComponents([.day], from: lastStreak.endDate, to: Date()).day ?? 0
+                                            
                                             VStack(spacing: 4) {
-                                                Text("Last Attempt: \(lastStreak.endDate.formatted(date: .abbreviated, time: .omitted))")
-                                                    .font(.subheadline)
-                                                    .foregroundColor(.secondary)
-                                                Text("\(lastStreak.length) days")
-                                                    .font(.subheadline)
-                                                    .foregroundColor(.secondary)
+                                                if daysSinceLastStreak > 0 {
+                                                    Text(daysSinceLastStreak == 1 ? 
+                                                        "It's been 1 day since your last streak" :
+                                                        "It's been \(daysSinceLastStreak) days since your last streak")
+                                                        .font(.subheadline)
+                                                        .foregroundColor(.secondary)
+                                                }
+                                                
+                                                HStack {
+                                                    Image(systemName: "clock.arrow.circlepath")
+                                                        .foregroundColor(.orange)
+                                                    Text("Last streak: \(lastStreak.length) days")
+                                                        .font(.subheadline)
+                                                        .foregroundColor(.secondary)
+                                                }
                                             }
                                             .padding(.vertical, 4)
+                                            
+                                            if daysSinceLastStreak > 7 {
+                                                Text("Ready to get back on track?")
+                                                    .font(.headline)
+                                                    .foregroundColor(.green)
+                                            }
                                         }
                                     }
                                 } else {
@@ -99,6 +117,7 @@ struct ContentView: View {
                                         .foregroundColor(.secondary)
                                         .padding(.top, 8)
                                 }
+                                Spacer()
                                 
                                 // Access to metrics and milestones
                                 NavigationLink(destination: MetricsView()) {
@@ -160,6 +179,16 @@ struct ContentView: View {
             }
             .navigationBarTitle("IWNDWYT", displayMode: .inline)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        settings.toggleColorScheme()
+                    } label: {
+                        Image(systemName: settings.colorScheme == .dark ? "sun.max.fill" : "moon.fill")
+                            .imageScale(.medium)
+                            .foregroundColor(settings.colorScheme == .dark ? .yellow : .primary)
+                    }
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         SettingsView()
@@ -183,4 +212,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(DayCounterViewModel.shared)
+        .environmentObject(AppSettingsViewModel.shared)
 }

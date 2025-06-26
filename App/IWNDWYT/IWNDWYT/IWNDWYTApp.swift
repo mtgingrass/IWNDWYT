@@ -9,10 +9,14 @@ import SwiftUI
 
 @main
 struct IWNDWYTApp: App {
+    @StateObject private var settings = AppSettingsViewModel.shared
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(DayCounterViewModel.shared)
+                .environmentObject(settings)
+                .preferredColorScheme(settings.colorScheme)
         }
     }
 }

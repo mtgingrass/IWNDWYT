@@ -96,5 +96,6 @@ struct MetricRow: View {
     NavigationView {
         MetricsView()
             .environmentObject(DayCounterViewModel.shared)
+            .environmentObject(AppSettingsViewModel.shared)
     }
 } 
