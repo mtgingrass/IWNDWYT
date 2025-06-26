@@ -15,17 +15,29 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 VStack(spacing: 20) {
-                    VStack(spacing: 20) {
+                    VStack(spacing: 24) {
                         if viewModel.isActiveStreak {
-                            NavigationLink(destination: MetricsView()) {
-                                VStack(spacing: 8) {
-                                    Text("🟢 \(viewModel.currentStreak) days")
-                                        .font(.system(size: 48, weight: .bold, design: .rounded))
-                                        .foregroundColor(.green)
-                                    
-                                    Text("Tap for detailed metrics")
-                                        .font(.caption)
+                            VStack(spacing: 20) {
+                                NavigationLink(destination: MetricsView()) {
+                                    VStack(spacing: 8) {
+                                        Text("🟢 \(viewModel.currentStreak) days")
+                                            .font(.system(size: 48, weight: .bold, design: .rounded))
+                                            .foregroundColor(.green)
+                                        
+                                        Text("Tap for detailed metrics")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                
+                                VStack(spacing: 16) {
+                                    Text("Progress Milestones")
+                                        .font(.headline)
                                         .foregroundColor(.secondary)
+                                    
+                                    MilestoneProgressView(currentStreak: viewModel.currentStreak)
+                                        .padding(.vertical, 12)
+                                        .frame(maxHeight: 320)
                                 }
                             }
                         } else {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0B2F2B2E0CE67F00CF25EE /* MilestoneProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0B2F2A2E0CE67F00CF25EE /* MilestoneProgressView.swift */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E0B2F2A2E0CE67F00CF25EE /* MilestoneProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneProgressView.swift; sourceTree = "<group>"; };
 		1ED34BC22E0C5A5F007C9143 /* IWNDWYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IWNDWYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BC72E0C5A5F007C9143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +149,7 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1E0B2F2A2E0CE67F00CF25EE /* MilestoneProgressView.swift */,
 				1ED34BFE2E0CB9B0007C9143 /* CalendarView.swift */,
 				1ED34BFF2E0CB9B0007C9143 /* DebugPanelView.swift */,
 				1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */,
@@ -305,6 +308,7 @@
 				1ED34BFB2E0CAACC007C9143 /* SettingsView.swift in Sources */,
 				1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */,
 				1ED34C002E0CB9B0007C9143 /* CalendarView.swift in Sources */,
+				1E0B2F2B2E0CE67F00CF25EE /* MilestoneProgressView.swift in Sources */,
 				1ED34C012E0CB9B0007C9143 /* DebugPanelView.swift in Sources */,
 				1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */,
 				1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */,
