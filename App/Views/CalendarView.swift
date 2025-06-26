@@ -80,7 +80,8 @@ struct CalendarView: View {
                     if let date = date {
                         DayCell(date: date,
                                isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
-                               status: getDayStatus(date))
+                               status: getDayStatus(date),
+                               isInDisplayedMonth: calendar.isDate(date, equalTo: displayedMonth, toGranularity: .month))
                             .onTapGesture {
                                 selectedDate = date
                             }
@@ -171,19 +172,23 @@ struct DayCell: View {
     let date: Date
     let isSelected: Bool
     let status: DayStatus
+    let isInDisplayedMonth: Bool
     
     private var backgroundColor: Color {
         switch status {
         case .sober:
-            return .green.opacity(0.3)
+            return .green.opacity(isInDisplayedMonth ? 0.3 : 0.15)
         case .nonSober:
-            return .red.opacity(0.3)
+            return .red.opacity(isInDisplayedMonth ? 0.3 : 0.15)
         case .beforeTracking, .future:
             return .clear
         }
     }
     
     private var textColor: Color {
+        if !isInDisplayedMonth {
+            return .secondary.opacity(0.5)
+        }
         switch status {
         case .sober:
             return .primary
