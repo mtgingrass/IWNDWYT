@@ -14,26 +14,78 @@ struct ContentView: View {
     @State private var showCancelConfirmation = false
     @State private var animateProgressSection = false
     @State private var animateHistorySection = false
+    @State private var timeUntilMidnight: TimeInterval = 0
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    private func updateTimeUntilMidnight() {
+        let calendar = Calendar.current
+        let now = Date()
+        let tomorrow = calendar.startOfDay(for: now.addingTimeInterval(24*60*60))
+        timeUntilMidnight = tomorrow.timeIntervalSince(now)
+    }
+    
+    private func formatTimeRemaining() -> String {
+        let hours = Int(timeUntilMidnight) / 3600
+        let minutes = Int(timeUntilMidnight) / 60 % 60
+        let seconds = Int(timeUntilMidnight) % 60
+        
+        return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+    }
 
     var body: some View {
         NavigationView {
             ZStack {
                 VStack(spacing: 20) {
+                    Spacer(minLength: 10)
                     VStack(spacing: 24) {
                         if viewModel.isActiveStreak {
                             VStack(spacing: 20) {
                                 NavigationLink(destination: MetricsView()) {
-                                    VStack(spacing: 8) {
+                                    VStack(spacing: 12) {
                                         Text("🟢 \(viewModel.currentStreak) days")
                                             .font(.system(size: 48, weight: .bold, design: .rounded))
                                             .foregroundColor(.green)
+                                            .padding(.top, 8) // <- top padding added here
+
+                                        HStack {
+                                            Text("Countdown:")
+                                                .foregroundColor(.primary)
+                                            Text("\(formatTimeRemaining())")
+                                                .font(.system(.title3, design: .monospaced))
+                                                .foregroundColor(.orange)
+                                        }
+
                                         Text("Tap for detailed metrics")
                                             .font(.caption)
                                             .foregroundColor(.secondary)
                                     }
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .fill(Color(.systemGray6))
+                                            .shadow(color: Color.black.opacity(0.05), radius: 1, x: 0, y: 1)
+                                    )
+                                    .padding(.horizontal)
                                     .transition(.opacity.combined(with: .move(edge: .top)))
                                     .animation(.easeOut(duration: 0.4), value: viewModel.currentStreak)
                                 }
+                                
+                                let dateFormatter: DateFormatter = {
+                                    let formatter = DateFormatter()
+                                    formatter.dateStyle = .long
+                                    return formatter
+                                }()
+                                
+                                MetricCardView(
+                                    icon: "🌅",
+                                    title: "Current Streak Started",
+                                    value: dateFormatter.string(from: viewModel.sobrietyData.currentStartDate),
+                                    valueColor: .primary
+                                )
+                                .padding(.horizontal)
+                                .transition(.move(edge: .leading).combined(with: .opacity))
 
                                 VStack(spacing: 16) {
                                     Text("Progress Milestones")
@@ -172,6 +224,10 @@ struct ContentView: View {
                     animateProgressSection = true
                     animateHistorySection = true
                 }
+                updateTimeUntilMidnight()
+            }
+            .onReceive(timer) { _ in
+                updateTimeUntilMidnight()
             }
             .navigationBarTitle("IWNDWYT", displayMode: .inline)
             .toolbar {
