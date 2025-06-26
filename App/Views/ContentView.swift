@@ -29,22 +29,64 @@ struct ContentView: View {
                                 }
                             }
                         } else {
-                            Text("Ready to start?")
-                                .font(.title2)
-                                .foregroundColor(.secondary)
-                            
-                            Button(action: {
-                                viewModel.startStreak()
-                            }) {
-                                Text("Start New Streak")
-                                    .font(.headline)
+                            VStack(spacing: 16) {
+                                Text("Ready for a Fresh Start?")
+                                    .font(.title2)
+                                    .foregroundColor(.primary)
+                                
+                                if viewModel.longestStreak > 0 {
+                                    VStack(spacing: 8) {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                            Text("Best Streak: \(viewModel.longestStreak) days")
+                                                .font(.headline)
+                                                .foregroundColor(.green)
+                                        }
+                                        
+                                        if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
+                                            VStack(spacing: 4) {
+                                                Text("Last Attempt: \(lastStreak.endDate.formatted(date: .abbreviated, time: .omitted))")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.secondary)
+                                                Text("\(lastStreak.length) days")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.secondary)
+                                            }
+                                            .padding(.vertical, 4)
+                                        }
+                                    }
+                                } else {
+                                    Text("Today is a Perfect Day to Start!")
+                                        .font(.headline)
+                                        .foregroundColor(.green)
+                                }
+                                
+                                Button(action: {
+                                    viewModel.startStreak()
+                                }) {
+                                    HStack {
+                                        Image(systemName: "sunrise.fill")
+                                            .imageScale(.large)
+                                        Text("Start New Streak")
+                                            .font(.headline)
+                                    }
                                     .foregroundColor(.white)
                                     .padding()
                                     .frame(maxWidth: .infinity)
                                     .background(Color.green)
                                     .cornerRadius(10)
+                                }
+                                .padding(.horizontal)
+                                .padding(.top, 8)
+                                
+                                if viewModel.totalAttempts > 0 {
+                                    Text("Each attempt makes you stronger 💪")
+                                        .font(.callout)
+                                        .foregroundColor(.secondary)
+                                        .padding(.top, 8)
+                                }
                             }
-                            .padding(.horizontal)
                         }
                     }
 
