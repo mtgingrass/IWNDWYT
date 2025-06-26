@@ -18,17 +18,17 @@ struct MetricsView: View {
                 // Metrics List
                 List {
                     Section {
-                        MetricRow(title: "Current Streak", value: "\(viewModel.currentStreak) days", icon: "calendar")
-                        MetricRow(title: "Longest Streak", value: "\(viewModel.longestStreak) days", icon: "star.fill")
-                        MetricRow(title: "Total Attempts", value: "\(viewModel.totalAttempts)", icon: "arrow.triangle.2.circlepath")
+                        MetricRowView(title: "Current Streak", value: "\(viewModel.currentStreak) days", icon: "calendar")
+                        MetricRowView(title: "Longest Streak", value: "\(viewModel.longestStreak) days", icon: "star.fill")
+                        MetricRowView(title: "Total Attempts", value: "\(viewModel.totalAttempts)", icon: "arrow.triangle.2.circlepath")
                     } header: {
                         Text("Current Status")
                     }
                     
                     Section {
-                        MetricRow(title: "Total Sober Days", value: "\(viewModel.totalSoberDays) days", icon: "sum")
-                        MetricRow(title: "Average Streak", value: "\(viewModel.averageStreakLength) days", icon: "chart.bar.fill")
-                        MetricRow(title: "Success Rate", value: String(format: "%.1f%%", viewModel.successRate), icon: "percent")
+                        MetricRowView(title: "Total Sober Days", value: "\(viewModel.totalSoberDays) days", icon: "sum")
+                        MetricRowView(title: "Average Streak", value: "\(viewModel.averageStreakLength) days", icon: "chart.bar.fill")
+                        MetricRowView(title: "Success Rate", value: String(format: "%.1f%%", viewModel.successRate), icon: "percent")
                     } header: {
                         Text("Statistics")
                     }
@@ -77,20 +77,7 @@ struct MetricsView: View {
     }
 }
 
-struct MetricRow: View {
-    let title: String
-    let value: String
-    let icon: String
-    
-    var body: some View {
-        HStack {
-            Label(title, systemImage: icon)
-            Spacer()
-            Text(value)
-                .foregroundColor(.secondary)
-        }
-    }
-}
+
 
 #Preview {
     NavigationView {
