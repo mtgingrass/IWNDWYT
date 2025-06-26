@@ -12,6 +12,8 @@ struct ContentView: View {
     @EnvironmentObject private var settings: AppSettingsViewModel
     @State private var showEndConfirmation = false
     @State private var showCancelConfirmation = false
+    @State private var animateProgressSection = false
+    @State private var animateHistorySection = false
 
     var body: some View {
         NavigationView {
@@ -29,17 +31,20 @@ struct ContentView: View {
                                             .font(.caption)
                                             .foregroundColor(.secondary)
                                     }
+                                    .transition(.opacity.combined(with: .move(edge: .top)))
+                                    .animation(.easeOut(duration: 0.4), value: viewModel.currentStreak)
                                 }
 
                                 VStack(spacing: 16) {
                                     Text("Progress Milestones")
                                         .font(.headline)
                                         .foregroundColor(.secondary)
-
                                     MilestoneProgressView(currentStreak: viewModel.currentStreak)
                                         .padding(.vertical, 12)
                                         .frame(maxHeight: 320)
                                 }
+                                .transition(.opacity)
+                                .animation(.easeInOut(duration: 0.4), value: viewModel.currentStreak)
                             }
                         } else {
                             VStack(spacing: 16) {
@@ -47,8 +52,11 @@ struct ContentView: View {
                                     .font(.title2)
                                     .foregroundColor(.primary)
                                     .padding(.bottom, 4)
+
                                 Button(action: {
-                                    viewModel.startStreak()
+                                    withAnimation {
+                                        viewModel.startStreak()
+                                    }
                                 }) {
                                     HStack {
                                         Image(systemName: "sunrise.fill")
@@ -69,29 +77,37 @@ struct ContentView: View {
 
                                 if viewModel.longestStreak > 0 {
                                     VStack(spacing: 16) {
-//                                        Text("Your Progress")
-//                                            .font(.title)
-//                                            .foregroundColor(.secondary)
-                                        SectionHeaderView(title: "Your Progress", systemImage: "flag.fill")
+                                        if animateProgressSection {
+                                            SectionHeaderView(title: "Your Progress", systemImage: "flag.fill")
+                                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                                        }
 
                                         VStack(spacing: 12) {
                                             MetricCardView(icon: "🏆", title: "Best Streak", value: "\(viewModel.longestStreak) days", valueColor: .green)
-
+                                                .transition(.move(edge: .leading).combined(with: .opacity))
                                             if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
                                                 MetricCardView(icon: "⏱", title: "Previous Streak Ended", value: "\(lastStreak.length) days ago", valueColor: .primary)
+                                                    .transition(.move(edge: .leading).combined(with: .opacity))
                                             }
-
                                             MetricCardView(icon: "📈", title: "Total Attempts", value: "\(viewModel.totalAttempts)", valueColor: .primary)
+                                                .transition(.move(edge: .leading).combined(with: .opacity))
                                         }
                                         .padding(.horizontal)
+                                        .animation(.easeOut(duration: 0.5), value: animateProgressSection)
                                     }
                                 } else {
                                     Text("Today is a Perfect Day to Start!")
                                         .font(.headline)
                                         .foregroundColor(.green)
                                 }
+
                                 Spacer()
-                                SectionHeaderView(title: "DETAILED HISTORY", systemImage: "chart.bar.fill")
+
+                                if animateHistorySection {
+                                    SectionHeaderView(title: "DETAILED HISTORY", systemImage: "chart.bar.fill")
+                                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                                }
+
                                 NavigationLink(destination: MetricsView()) {
                                     MetricCardView(
                                         icon: "📊",
@@ -101,6 +117,8 @@ struct ContentView: View {
                                     )
                                 }
                                 .padding(.horizontal)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                                .animation(.easeOut(duration: 0.5), value: animateHistorySection)
                             }
                         }
                     }
@@ -149,6 +167,12 @@ struct ContentView: View {
                 }
                 .padding()
             }
+            .onAppear {
+                withAnimation(.easeIn(duration: 0.4)) {
+                    animateProgressSection = true
+                    animateHistorySection = true
+                }
+            }
             .navigationBarTitle("IWNDWYT", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -189,12 +213,14 @@ struct ContentView: View {
     }
 }
 
+
+
 struct SectionHeaderView: View {
     let title: String
     let systemImage: String?
 
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
             if let systemImage = systemImage {
                 Image(systemName: systemImage)
                     .foregroundColor(.accentColor)
@@ -207,9 +233,13 @@ struct SectionHeaderView: View {
             Spacer()
         }
         .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.systemGray6))
+                .shadow(color: Color.black.opacity(0.05), radius: 1, x: 0, y: 1)
+        )
         .padding(.horizontal)
+        .transition(.opacity)
     }
 }
 
