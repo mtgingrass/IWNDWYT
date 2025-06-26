@@ -35,12 +35,11 @@ struct SettingsView: View {
             }
             
             Section {
-                Link(destination: URL(string: "mailto:iwndwyt@markgingrass.com")!) {
+                Link(destination: URL(string: "mailto:iwndwytoday@markgingrass.com")!) {
                     Label("Contact Support", systemImage: "envelope")
                 }
                 NavigationLink {
-                    Text("Version 1.0.0")
-                        .navigationTitle("About")
+                    AboutView()
                 } label: {
                     Label("About", systemImage: "info.circle")
                 }
