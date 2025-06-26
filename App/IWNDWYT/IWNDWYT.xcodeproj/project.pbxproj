@@ -16,6 +16,8 @@
 		1E4F58B02E0DB05C000EB7B9 /* ProgressSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58AB2E0DB05C000EB7B9 /* ProgressSectionView.swift */; };
 		1E4F58B12E0DB05C000EB7B9 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58AC2E0DB05C000EB7B9 /* SectionHeaderView.swift */; };
 		1E4F58B22E0DB05C000EB7B9 /* MetricRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58AA2E0DB05C000EB7B9 /* MetricRowView.swift */; };
+		1E4F58B42E0DB898000EB7B9 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58B32E0DB898000EB7B9 /* MainTabView.swift */; };
+		1E4F58B62E0DC181000EB7B9 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58B52E0DC181000EB7B9 /* TabBarButton.swift */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
@@ -54,6 +56,8 @@
 		1E4F58AB2E0DB05C000EB7B9 /* ProgressSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSectionView.swift; sourceTree = "<group>"; };
 		1E4F58AC2E0DB05C000EB7B9 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		1E4F58AD2E0DB05C000EB7B9 /* StreakActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakActionButtonView.swift; sourceTree = "<group>"; };
+		1E4F58B32E0DB898000EB7B9 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		1E4F58B52E0DC181000EB7B9 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		1ED34BC22E0C5A5F007C9143 /* IWNDWYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IWNDWYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BC72E0C5A5F007C9143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +170,8 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1E4F58B52E0DC181000EB7B9 /* TabBarButton.swift */,
+				1E4F58B32E0DB898000EB7B9 /* MainTabView.swift */,
 				1E4F58A92E0DB05C000EB7B9 /* HistorySectionView.swift */,
 				1E4F58AA2E0DB05C000EB7B9 /* MetricRowView.swift */,
 				1E4F58AB2E0DB05C000EB7B9 /* ProgressSectionView.swift */,
@@ -340,6 +346,7 @@
 				1ED34C002E0CB9B0007C9143 /* CalendarView.swift in Sources */,
 				1E0B2F2B2E0CE67F00CF25EE /* MilestoneProgressView.swift in Sources */,
 				1ED34C012E0CB9B0007C9143 /* DebugPanelView.swift in Sources */,
+				1E4F58B62E0DC181000EB7B9 /* TabBarButton.swift in Sources */,
 				1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */,
 				1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */,
 				1E0B2F2D2E0CED5C00CF25EE /* AppSettingsViewModel.swift in Sources */,
@@ -347,6 +354,7 @@
 				1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */,
 				1ED34BFD2E0CAFD7007C9143 /* MetricsView.swift in Sources */,
 				1E4F589A2E0D9117000EB7B9 /* MetricCardView.swift in Sources */,
+				1E4F58B42E0DB898000EB7B9 /* MainTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

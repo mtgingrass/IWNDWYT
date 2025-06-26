@@ -13,9 +13,7 @@ struct StreakActionButtonView: View {
     
     var body: some View {
         Button(action: {
-            if viewModel.isActiveStreak {
-                navigateToStreakView = true
-            } else {
+            if !viewModel.isActiveStreak {
                 withAnimation {
                     viewModel.startStreak()
                 }
@@ -24,7 +22,7 @@ struct StreakActionButtonView: View {
             HStack {
                 Image(systemName: viewModel.isActiveStreak ? "flame.fill" : "sunrise.fill")
                     .imageScale(.large)
-                Text(viewModel.isActiveStreak ? "Streak in Progress" : "Start New Streak")
+                Text(viewModel.isActiveStreak ? "Streak in Progress - Check Streak Tab" : "Start New Streak")
                     .font(.headline)
             }
             .foregroundColor(.white)
@@ -33,6 +31,7 @@ struct StreakActionButtonView: View {
             .background(viewModel.isActiveStreak ? Color.orange : Color.green)
             .cornerRadius(10)
         }
+        .disabled(viewModel.isActiveStreak)
         .padding(.horizontal)
         .padding(.bottom, 8)
     }

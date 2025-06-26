@@ -13,7 +13,7 @@ struct IWNDWYTApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
                 .environmentObject(DayCounterViewModel.shared)
                 .environmentObject(settings)
                 .preferredColorScheme(settings.colorScheme)

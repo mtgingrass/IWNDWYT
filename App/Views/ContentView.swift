@@ -44,17 +44,12 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationView {
-            ScrollView {
+        ScrollView {
                 VStack(spacing: 24) {
                     Spacer(minLength: 10)
 
                     // Header Button
                     StreakActionButtonView(navigateToStreakView: $navigateToStreakView)
-                    
-                    NavigationLink(destination: ActiveStreakView(), isActive: $navigateToStreakView) {
-                        EmptyView()
-                    }
 
                     ProgressSectionView()
 
@@ -80,27 +75,7 @@ struct ContentView: View {
             .onReceive(timer) { _ in
                 updateTimeUntilMidnight()
             }
-            .navigationBarTitle("IWNDWYT", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        settings.toggleColorScheme()
-                    } label: {
-                        Image(systemName: settings.colorScheme == .dark ? "sun.max.fill" : "moon.fill")
-                            .imageScale(.medium)
-                            .foregroundColor(settings.colorScheme == .dark ? .yellow : .primary)
-                    }
-                }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        SettingsView()
-                    } label: {
-                        Image(systemName: "gear")
-                    }
-                }
-            }
-        }
     }
 }
 

@@ -12,14 +12,12 @@ struct HistorySectionView: View {
         VStack(spacing: 12) {
             SectionHeaderView(title: "DETAILED HISTORY", systemImage: "chart.bar.fill")
             
-            NavigationLink(destination: MetricsView()) {
-                MetricCardView(
-                    icon: "📊",
-                    title: "Progress & History",
-                    value: "View Details",
-                    valueColor: .secondary
-                )
-            }
+            MetricCardView(
+                icon: "📊",
+                title: "Progress & History",
+                value: "Check Metrics Tab",
+                valueColor: .secondary
+            )
             .padding(.horizontal)
         }
     }
