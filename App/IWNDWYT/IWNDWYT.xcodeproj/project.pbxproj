@@ -10,6 +10,7 @@
 		1E0B2F2B2E0CE67F00CF25EE /* MilestoneProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0B2F2A2E0CE67F00CF25EE /* MilestoneProgressView.swift */; };
 		1E0B2F2D2E0CED5C00CF25EE /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0B2F2C2E0CED5C00CF25EE /* AppSettingsViewModel.swift */; };
 		1E4F589A2E0D9117000EB7B9 /* MetricCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58992E0D9117000EB7B9 /* MetricCardView.swift */; };
+		1E4F589C2E0DA834000EB7B9 /* ActiveStreakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F589B2E0DA834000EB7B9 /* ActiveStreakView.swift */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
@@ -42,6 +43,7 @@
 		1E0B2F2A2E0CE67F00CF25EE /* MilestoneProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneProgressView.swift; sourceTree = "<group>"; };
 		1E0B2F2C2E0CED5C00CF25EE /* AppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModel.swift; sourceTree = "<group>"; };
 		1E4F58992E0D9117000EB7B9 /* MetricCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricCardView.swift; sourceTree = "<group>"; };
+		1E4F589B2E0DA834000EB7B9 /* ActiveStreakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveStreakView.swift; sourceTree = "<group>"; };
 		1ED34BC22E0C5A5F007C9143 /* IWNDWYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IWNDWYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BC72E0C5A5F007C9143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +162,7 @@
 				1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */,
 				1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */,
 				1ED34BC72E0C5A5F007C9143 /* ContentView.swift */,
+				1E4F589B2E0DA834000EB7B9 /* ActiveStreakView.swift */,
 				1E4F58992E0D9117000EB7B9 /* MetricCardView.swift */,
 				1ED34BF62E0CA05D007C9143 /* DateProvider.swift */,
 			);
@@ -313,6 +316,7 @@
 			files = (
 				1ED34BFB2E0CAACC007C9143 /* SettingsView.swift in Sources */,
 				1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */,
+				1E4F589C2E0DA834000EB7B9 /* ActiveStreakView.swift in Sources */,
 				1ED34C002E0CB9B0007C9143 /* CalendarView.swift in Sources */,
 				1E0B2F2B2E0CE67F00CF25EE /* MilestoneProgressView.swift in Sources */,
 				1ED34C012E0CB9B0007C9143 /* DebugPanelView.swift in Sources */,
