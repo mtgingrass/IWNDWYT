@@ -25,20 +25,17 @@ struct ContentView: View {
                                         Text("🟢 \(viewModel.currentStreak) days")
                                             .font(.system(size: 48, weight: .bold, design: .rounded))
                                             .foregroundColor(.green)
-                                        
                                         Text("Tap for detailed metrics")
                                             .font(.caption)
                                             .foregroundColor(.secondary)
                                     }
                                 }
-                                
 
-                                
                                 VStack(spacing: 16) {
                                     Text("Progress Milestones")
                                         .font(.headline)
                                         .foregroundColor(.secondary)
-                                    
+
                                     MilestoneProgressView(currentStreak: viewModel.currentStreak)
                                         .padding(.vertical, 12)
                                         .frame(maxHeight: 320)
@@ -50,7 +47,6 @@ struct ContentView: View {
                                     .font(.title2)
                                     .foregroundColor(.primary)
                                     .padding(.bottom, 4)
-                                
                                 Button(action: {
                                     viewModel.startStreak()
                                 }) {
@@ -68,148 +64,81 @@ struct ContentView: View {
                                 }
                                 .padding(.horizontal)
                                 .padding(.bottom, 8)
+
                                 Spacer()
+
                                 if viewModel.longestStreak > 0 {
                                     VStack(spacing: 16) {
-                                        // Streak History Section
-                                        VStack(spacing: 8) {
-                                            HStack {
-                                                Image(systemName: "trophy.fill")
-                                                    .foregroundColor(.yellow)
-                                                Text("Best Streak: \(viewModel.longestStreak) days")
-                                                    .font(.headline)
-                                                    .foregroundColor(.green)
-                                            }
-                                            
+//                                        Text("Your Progress")
+//                                            .font(.title)
+//                                            .foregroundColor(.secondary)
+                                        SectionHeaderView(title: "Your Progress", systemImage: "flag.fill")
+
+                                        VStack(spacing: 12) {
+                                            MetricCardView(icon: "🏆", title: "Best Streak", value: "\(viewModel.longestStreak) days", valueColor: .green)
+
                                             if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
-                                                HStack {
-                                                    Image(systemName: "clock.arrow.circlepath")
-                                                        .foregroundColor(.orange)
-                                                    Text("Previous streak: \(lastStreak.length) days ago")
-                                                        .font(.subheadline)
-                                                        .foregroundColor(.secondary)
-                                                }
+                                                MetricCardView(icon: "⏱", title: "Previous Streak Ended", value: "\(lastStreak.length) days ago", valueColor: .primary)
                                             }
+
+                                            MetricCardView(icon: "📈", title: "Total Attempts", value: "\(viewModel.totalAttempts)", valueColor: .primary)
                                         }
-                                        .padding(.vertical, 8)
                                         .padding(.horizontal)
-                                        .background(Color(.systemGray6))
-                                        .cornerRadius(10)
-                                        
-                                        // Motivational Section
-                                        if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
-                                            let daysSinceLastStreak = Calendar.current.dateComponents([.day], from: lastStreak.endDate, to: Date()).day ?? 0
-                                            
-                                            VStack(spacing: 8) {
-                                                if daysSinceLastStreak > 0 {
-                                                    VStack(spacing: 2) {
-                                                        Text("\(daysSinceLastStreak)")
-                                                            .font(.title)
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.primary)
-                                                        Text("days without a streak")
-                                                            .font(.subheadline)
-                                                            .foregroundColor(.secondary)
-                                                    }
-                                                }
-                                                
-                                                let message = daysSinceLastStreak > 30 ? "A new streak awaits - you've got this! 💪" :
-                                                             daysSinceLastStreak > 14 ? "Time to build momentum again! 🚀" :
-                                                             daysSinceLastStreak > 7 ? "Ready to get back on track? 🎯" :
-                                                             "Every new day is a fresh opportunity! ✨"
-                                                
-                                                Text(message)
-                                                    .font(.headline)
-                                                    .foregroundColor(.green)
-                                                    .padding(.top, 4)
-                                            }
-                                        }
                                     }
                                 } else {
                                     Text("Today is a Perfect Day to Start!")
                                         .font(.headline)
                                         .foregroundColor(.green)
                                 }
-                                
-                                // Motivational message
-                                if viewModel.totalAttempts > 0 {
-                                    Text("Each attempt makes you stronger 💪")
-                                        .font(.callout)
-                                        .foregroundColor(.secondary)
-                                        .padding(.top, 8)
-                                }
                                 Spacer()
-                                
-                                // Access to metrics and milestones
+                                SectionHeaderView(title: "DETAILED HISTORY", systemImage: "chart.bar.fill")
                                 NavigationLink(destination: MetricsView()) {
-                                    HStack {
-                                        Image(systemName: "chart.bar.fill")
-                                        Text(viewModel.longestStreak > 0 ? "View Progress & History" : "View Milestones")
-                                    }
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                    MetricCardView(
+                                        icon: "📊",
+                                        title: "Progress & History",
+                                        value: "View Details",
+                                        valueColor: .secondary
+                                    )
+                                }
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+
+                    if viewModel.isActiveStreak {
+                        VStack(spacing: 12) {
+                            Button(action: {
+                                showEndConfirmation = true
+                            }) {
+                                Text("End Streak")
+                                    .foregroundColor(.red)
                                     .padding()
                                     .frame(maxWidth: .infinity)
                                     .background(Color(.systemGray6))
                                     .cornerRadius(10)
-                                }
-                                .padding(.horizontal)
-                                .padding(.top, 8)
                             }
-                        }
-                    }
 
-                    Spacer()
-
-                    VStack(spacing: 16) {
-                        if viewModel.longestStreak > 0 {
-                            Text("Total attempts: \(viewModel.totalAttempts)")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                        
-                        if viewModel.isActiveStreak {
-                            VStack(spacing: 12) {
+                            if Calendar.current.isDate(viewModel.sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
                                 Button(action: {
-                                    showEndConfirmation = true
+                                    showCancelConfirmation = true
                                 }) {
-                                    Text("End Streak")
-                                        .foregroundColor(.red)
-                                        .padding()
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color(.systemGray6))
-                                        .cornerRadius(10)
-                                }
-                                
-                                // Only show cancel button if streak was started today
-                                if Calendar.current.isDate(viewModel.sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
-                                    Button(action: {
-                                        showCancelConfirmation = true
-                                    }) {
-                                        HStack(spacing: 6) {
-                                            Image(systemName: "arrow.uturn.backward")
-                                            Text("Cancel Streak")
-                                        }
-                                        .font(.subheadline)
-                                        .foregroundColor(.red)
-                                        .padding(.horizontal, 16)
-                                        .padding(.vertical, 8)
-                                        .frame(maxWidth: .infinity)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .fill(Color(.systemGray6))
-                                        )
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .strokeBorder(Color.red.opacity(0.3), lineWidth: 1)
-                                        )
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "arrow.uturn.backward")
+                                        Text("Cancel Streak")
                                     }
+                                    .font(.subheadline)
+                                    .foregroundColor(.red)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .frame(maxWidth: .infinity)
+                                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
+                                    .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.red.opacity(0.3), lineWidth: 1))
                                 }
                             }
-                            .padding(.horizontal)
                         }
+                        .padding(.horizontal)
                     }
-                    
+
                     #if DEBUG
                     NavigationLink("Open Debug Panel") {
                         DebugPanelView()
@@ -217,7 +146,6 @@ struct ContentView: View {
                     .font(.footnote)
                     .padding(.top)
                     #endif
-                    
                 }
                 .padding()
             }
@@ -232,7 +160,7 @@ struct ContentView: View {
                             .foregroundColor(settings.colorScheme == .dark ? .yellow : .primary)
                     }
                 }
-                
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         SettingsView()
@@ -258,6 +186,30 @@ struct ContentView: View {
                 Text("This will completely remove this streak attempt. It won't be saved or counted in your history. This action cannot be undone.")
             }
         }
+    }
+}
+
+struct SectionHeaderView: View {
+    let title: String
+    let systemImage: String?
+
+    var body: some View {
+        HStack {
+            if let systemImage = systemImage {
+                Image(systemName: systemImage)
+                    .foregroundColor(.accentColor)
+            }
+
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.primary)
+
+            Spacer()
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+        .padding(.horizontal)
     }
 }
 
