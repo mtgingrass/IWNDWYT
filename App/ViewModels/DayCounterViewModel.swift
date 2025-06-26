@@ -65,6 +65,15 @@ class DayCounterViewModel: ObservableObject {
         save()
     }
     
+    func cancelStreak() {
+        // Only cancel if the streak was started today
+        if sobrietyData.isActiveStreak && 
+           Calendar.current.isDate(sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
+            sobrietyData.isActiveStreak = false
+            save()
+        }
+    }
+    
     // Reset all data
     func resetAllData() {
         sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [], isActiveStreak: false)
