@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CalendarView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
-    @State private var selectedMonth = Date()
+    @State private var selectedDate = Date()
+    @State private var displayedMonth = Date()
     
     private var calendar: Calendar {
         var calendar = Calendar.current
@@ -17,25 +18,49 @@ struct CalendarView: View {
         return calendar
     }
     
+    init() {
+        // Initialize displayedMonth to start of current month
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month], from: Date())
+        self._displayedMonth = State(initialValue: calendar.date(from: components) ?? Date())
+    }
+    
     var body: some View {
         VStack(spacing: 20) {
             // Month navigation
             HStack {
-                Button(action: previousMonth) {
+                Button {
+                    withAnimation {
+                        previousMonth()
+                    }
+                } label: {
                     Image(systemName: "chevron.left")
+                        .imageScale(.large)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
                 }
+                .buttonStyle(PlainButtonStyle())
                 
                 Spacer()
                 
-                Text(selectedMonth.formatted(.dateTime.month().year()))
+                Text(displayedMonth.formatted(.dateTime.month().year()))
                     .font(.title3)
                     .fontWeight(.semibold)
+                    .frame(minWidth: 120)
                 
                 Spacer()
                 
-                Button(action: nextMonth) {
+                Button {
+                    withAnimation {
+                        nextMonth()
+                    }
+                } label: {
                     Image(systemName: "chevron.right")
+                        .imageScale(.large)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal)
             
@@ -54,10 +79,10 @@ struct CalendarView: View {
                 ForEach(daysInMonth(), id: \.self) { date in
                     if let date = date {
                         DayCell(date: date,
-                               isSelected: calendar.isDate(date, inSameDayAs: selectedMonth),
+                               isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
                                status: getDayStatus(date))
                             .onTapGesture {
-                                selectedMonth = date
+                                selectedDate = date
                             }
                     } else {
                         Color.clear
@@ -69,19 +94,19 @@ struct CalendarView: View {
     }
     
     private func previousMonth() {
-        if let newDate = calendar.date(byAdding: .month, value: -1, to: selectedMonth) {
-            selectedMonth = newDate
+        if let newDate = calendar.date(byAdding: .month, value: -1, to: displayedMonth) {
+            displayedMonth = newDate
         }
     }
     
     private func nextMonth() {
-        if let newDate = calendar.date(byAdding: .month, value: 1, to: selectedMonth) {
-            selectedMonth = newDate
+        if let newDate = calendar.date(byAdding: .month, value: 1, to: displayedMonth) {
+            displayedMonth = newDate
         }
     }
     
     private func daysInMonth() -> [Date?] {
-        let interval = calendar.dateInterval(of: .month, for: selectedMonth)!
+        let interval = calendar.dateInterval(of: .month, for: displayedMonth)!
         let firstDay = interval.start
         
         // Calculate the first date to show (including leading dates from previous month)
@@ -95,11 +120,12 @@ struct CalendarView: View {
         
         // We'll always show 42 spots (6 weeks)
         for _ in 0..<42 {
-            if calendar.isDate(currentDate, equalTo: interval.start, toGranularity: .month) ||
+            if calendar.isDate(currentDate, equalTo: firstDateToShow, toGranularity: .month) ||
+               calendar.isDate(currentDate, equalTo: interval.start, toGranularity: .month) ||
                calendar.isDate(currentDate, equalTo: interval.end, toGranularity: .month) {
                 dates.append(currentDate)
             } else {
-                dates.append(nil)
+                dates.append(currentDate)
             }
             currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
         }

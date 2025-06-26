@@ -101,4 +101,35 @@ class DayCounterViewModel: ObservableObject {
     var isActiveStreak: Bool {
         sobrietyData.isActiveStreak
     }
+    
+    // MARK: - Metrics
+    
+    var averageStreakLength: Int {
+        let streaks = sobrietyData.pastStreaks
+        guard !streaks.isEmpty else { return currentStreak }
+        let totalDays = streaks.reduce(0) { $0 + $1.length } + currentStreak
+        return totalDays / (streaks.count + 1)
+    }
+    
+    var totalSoberDays: Int {
+        sobrietyData.pastStreaks.reduce(0) { $0 + $1.length } + currentStreak
+    }
+    
+    var successRate: Double {
+        // Count total tracked days (only days within streaks)
+        var totalTrackedDays = sobrietyData.pastStreaks.reduce(0) { $0 + $1.length }
+        
+        // Add current streak days if active
+        if sobrietyData.isActiveStreak {
+            let currentDays = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: DateProvider.now).day ?? 0
+            totalTrackedDays += currentDays
+        }
+        
+        // If we haven't tracked any days, return 100% (fresh start)
+        guard totalTrackedDays > 0 else { return 100.0 }
+        
+        // Success rate is total sober days divided by total tracked days
+        return (Double(totalSoberDays) / Double(totalTrackedDays)) * 100
+    }
+    
 }

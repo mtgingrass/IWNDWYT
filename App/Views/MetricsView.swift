@@ -10,74 +10,70 @@ import SwiftUI
 struct MetricsView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     
-    private var averageStreakLength: Int {
-        let streaks = viewModel.sobrietyData.pastStreaks
-        guard !streaks.isEmpty else { return viewModel.currentStreak }
-        let totalDays = streaks.reduce(0) { $0 + $1.length } + viewModel.currentStreak
-        return totalDays / (streaks.count + 1)
-    }
-    
-    private var totalSoberDays: Int {
-        viewModel.sobrietyData.pastStreaks.reduce(0) { $0 + $1.length } + viewModel.currentStreak
-    }
-    
-    private var successRate: Double {
-        let totalDays = Calendar.current.dateComponents([.day], from: viewModel.sobrietyData.pastStreaks.first?.startDate ?? viewModel.sobrietyData.currentStartDate, to: Date()).day ?? 0
-        guard totalDays > 0 else { return 100.0 }
-        return (Double(totalSoberDays) / Double(totalDays)) * 100
-    }
-    
-    private var shortestStreak: Int {
-        let pastStreaks = viewModel.sobrietyData.pastStreaks.map { $0.length }
-        if pastStreaks.isEmpty {
-            return viewModel.currentStreak
-        }
-        return min(pastStreaks.min() ?? .max, viewModel.currentStreak)
-    }
+    // Metrics are now computed in the ViewModel
     
     var body: some View {
-        List {
-            Section {
-                MetricRow(title: "Current Streak", value: "\(viewModel.currentStreak) days", icon: "calendar")
-                MetricRow(title: "Longest Streak", value: "\(viewModel.longestStreak) days", icon: "star.fill")
-                MetricRow(title: "Total Attempts", value: "\(viewModel.totalAttempts)", icon: "arrow.triangle.2.circlepath")
-            } header: {
-                Text("Current Status")
-            }
-            
-            Section {
-                MetricRow(title: "Total Sober Days", value: "\(totalSoberDays) days", icon: "sum")
-                MetricRow(title: "Average Streak", value: "\(averageStreakLength) days", icon: "chart.bar.fill")
-                MetricRow(title: "Shortest Streak", value: "\(shortestStreak) days", icon: "chart.bar")
-                MetricRow(title: "Success Rate", value: String(format: "%.1f%%", successRate), icon: "percent")
-            } header: {
-                Text("Statistics")
-            }
-            
-            Section {
-                CalendarView()
-                    .frame(height: 380)
-            } header: {
-                Text("Calendar")
-            }
-            
-            if !viewModel.sobrietyData.pastStreaks.isEmpty {
-                Section {
-                    ForEach(viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate })) { streak in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("\(streak.length) days")
-                                .font(.headline)
-                            Text("\(streak.startDate.formatted(date: .abbreviated, time: .omitted)) - \(streak.endDate.formatted(date: .abbreviated, time: .omitted))")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+        ScrollView {
+            VStack(spacing: 20) {
+                // Metrics List
+                List {
+                    Section {
+                        MetricRow(title: "Current Streak", value: "\(viewModel.currentStreak) days", icon: "calendar")
+                        MetricRow(title: "Longest Streak", value: "\(viewModel.longestStreak) days", icon: "star.fill")
+                        MetricRow(title: "Total Attempts", value: "\(viewModel.totalAttempts)", icon: "arrow.triangle.2.circlepath")
+                    } header: {
+                        Text("Current Status")
+                    }
+                    
+                    Section {
+                        MetricRow(title: "Total Sober Days", value: "\(viewModel.totalSoberDays) days", icon: "sum")
+                        MetricRow(title: "Average Streak", value: "\(viewModel.averageStreakLength) days", icon: "chart.bar.fill")
+                        MetricRow(title: "Success Rate", value: String(format: "%.1f%%", viewModel.successRate), icon: "percent")
+                    } header: {
+                        Text("Statistics")
+                    }
+                }
+                .listStyle(InsetGroupedListStyle())
+                .frame(height: 320)
+                
+                // Calendar Section
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Calendar")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                    
+                    CalendarView()
+                        .frame(height: 380)
+                        .padding(.horizontal)
+                }
+                .background(Color(.systemGroupedBackground))
+                
+                // Past Streaks
+                if !viewModel.sobrietyData.pastStreaks.isEmpty {
+                    List {
+                        Section {
+                            ForEach(viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate })) { streak in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(streak.length) days")
+                                        .font(.headline)
+                                    Text("\(streak.startDate.formatted(date: .abbreviated, time: .omitted)) - \(streak.endDate.formatted(date: .abbreviated, time: .omitted))")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        } header: {
+                            Text("Past Streaks")
                         }
                     }
-                } header: {
-                    Text("Past Streaks")
+                    .listStyle(InsetGroupedListStyle())
+                    .frame(height: min(CGFloat(viewModel.sobrietyData.pastStreaks.count * 60 + 50), 300))
                 }
             }
+            .padding(.vertical)
         }
         .navigationTitle("Metrics")
+        .background(Color(.systemGroupedBackground))
     }
 }
 
