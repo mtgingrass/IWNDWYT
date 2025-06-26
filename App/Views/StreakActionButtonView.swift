@@ -9,11 +9,14 @@ import SwiftUI
 
 struct StreakActionButtonView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
-    @Binding var navigateToStreakView: Bool
+    @Binding var selectedTab: Int
     
     var body: some View {
         Button(action: {
-            if !viewModel.isActiveStreak {
+            if viewModel.isActiveStreak {
+                // Switch to streak tab (tab 1)
+                selectedTab = 1
+            } else {
                 withAnimation {
                     viewModel.startStreak()
                 }
@@ -22,7 +25,7 @@ struct StreakActionButtonView: View {
             HStack {
                 Image(systemName: viewModel.isActiveStreak ? "flame.fill" : "sunrise.fill")
                     .imageScale(.large)
-                Text(viewModel.isActiveStreak ? "Streak in Progress - Check Streak Tab" : "Start New Streak")
+                Text(viewModel.isActiveStreak ? "View Active Streak" : "Start New Streak")
                     .font(.headline)
             }
             .foregroundColor(.white)
@@ -31,17 +34,17 @@ struct StreakActionButtonView: View {
             .background(viewModel.isActiveStreak ? Color.orange : Color.green)
             .cornerRadius(10)
         }
-        .disabled(viewModel.isActiveStreak)
+        .disabled(false)
         .padding(.horizontal)
         .padding(.bottom, 8)
     }
 }
 
 #Preview {
-    @Previewable @State var navigateToStreakView = false
+    @Previewable @State var selectedTab = 0
     
     VStack(spacing: 20) {
-        StreakActionButtonView(navigateToStreakView: $navigateToStreakView)
+        StreakActionButtonView(selectedTab: $selectedTab)
             .environmentObject(DayCounterViewModel.shared)
     }
     .padding()

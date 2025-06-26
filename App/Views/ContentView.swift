@@ -19,6 +19,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
+    @Binding var selectedTab: Int
     @State private var showEndConfirmation = false
     @State private var showCancelConfirmation = false
     @State private var animateProgressSection = false
@@ -49,11 +50,11 @@ struct ContentView: View {
                     Spacer(minLength: 10)
 
                     // Header Button
-                    StreakActionButtonView(navigateToStreakView: $navigateToStreakView)
+                    StreakActionButtonView(selectedTab: $selectedTab)
 
                     ProgressSectionView()
 
-                    HistorySectionView()
+                    HistorySectionView(selectedTab: $selectedTab)
 
                     #if DEBUG
                     NavigationLink("Open Debug Panel") {
@@ -84,7 +85,7 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView()
+    ContentView(selectedTab: .constant(0))
         .environmentObject(DayCounterViewModel.shared)
         .environmentObject(AppSettingsViewModel.shared)
 }

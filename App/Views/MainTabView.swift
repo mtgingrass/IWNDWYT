@@ -18,7 +18,7 @@ struct MainTabView: View {
             TabView(selection: $selectedTab) {
                 // Home Tab
                 NavigationView {
-                    ContentView()
+                    ContentView(selectedTab: $selectedTab)
                         .navigationBarTitle("IWNDWYT", displayMode: .inline)
                         .toolbar {
                             ToolbarItem(placement: .navigationBarLeading) {
