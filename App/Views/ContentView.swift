@@ -92,12 +92,29 @@ struct ContentView: View {
                                 .padding(.horizontal)
                                 .padding(.top, 8)
                                 
+                                // Motivational message
                                 if viewModel.totalAttempts > 0 {
                                     Text("Each attempt makes you stronger 💪")
                                         .font(.callout)
                                         .foregroundColor(.secondary)
                                         .padding(.top, 8)
                                 }
+                                
+                                // Access to metrics and milestones
+                                NavigationLink(destination: MetricsView()) {
+                                    HStack {
+                                        Image(systemName: "chart.bar.fill")
+                                        Text(viewModel.longestStreak > 0 ? "View Progress & History" : "View Milestones")
+                                    }
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color(.systemGray6))
+                                    .cornerRadius(10)
+                                }
+                                .padding(.horizontal)
+                                .padding(.top, 8)
                             }
                         }
                     }
