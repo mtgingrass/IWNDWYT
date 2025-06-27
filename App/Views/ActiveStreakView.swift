@@ -16,6 +16,7 @@ import SwiftUI
 
 struct ActiveStreakView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
+    @Binding var selectedTab: Int
     @State private var showEndConfirmation = false
     @State private var showCancelConfirmation = false
     @State private var timeUntilMidnight: TimeInterval = 0
@@ -157,6 +158,7 @@ struct ActiveStreakView: View {
             Button("Keep Streak", role: .cancel) { }
             Button("Cancel Streak", role: .destructive) {
                 viewModel.cancelStreak()
+                selectedTab = 0
             }
         } message: {
             Text("This will completely remove this streak attempt. It won't be saved or counted in your history. This action cannot be undone.")
@@ -165,10 +167,10 @@ struct ActiveStreakView: View {
 }
 
 #Preview {
-    ActiveStreakView()
+    ActiveStreakView(selectedTab: .constant(0))
         .environmentObject(DayCounterViewModel.shared)
 }
 
 #Preview {
-    ActiveStreakView()
+    ActiveStreakView(selectedTab: .constant(0))
 }

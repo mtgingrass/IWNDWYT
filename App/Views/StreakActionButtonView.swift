@@ -19,6 +19,8 @@ struct StreakActionButtonView: View {
             } else {
                 withAnimation {
                     viewModel.startStreak()
+                    // Switch to the streak tab after starting
+                    selectedTab = 1
                 }
             }
         }) {

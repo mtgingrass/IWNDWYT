@@ -46,7 +46,7 @@ struct MainTabView: View {
                 // Active Streak Tab (only show if there's an active streak)
                 if viewModel.isActiveStreak {
                     NavigationView {
-                        ActiveStreakView()
+                        ActiveStreakView(selectedTab: $selectedTab)
                     }
                     .tag(1)
                 }
