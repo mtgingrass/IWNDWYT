@@ -1,35 +1,36 @@
 //
 //  StartDatePickerView.swift
-//  IWNDWYToday
+//  IWNDWYT
 //
-//  Created by Mark Gingrass on 6/25/25.
+//  Created by Mark Gingrass on [Date]
 //
 
 import SwiftUI
 
 struct StartDatePickerView: View {
-    @EnvironmentObject private var settings: AppSettingsViewModel
-    @EnvironmentObject private var viewModel: DayCounterViewModel
-    @State private var selectedDate = Date()
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var dayCounterViewModel: DayCounterViewModel
+    @EnvironmentObject private var appSettings: AppSettingsViewModel
+    
+    @State private var selectedDate = Date()
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 24) {
+            VStack(spacing: 30) {
                 Spacer()
                 
                 // Header
                 VStack(spacing: 16) {
                     Image(systemName: "calendar.badge.plus")
                         .font(.system(size: 60))
-                        .foregroundColor(.orange)
+                        .foregroundColor(.accentColor)
                     
                     Text("Choose Your Start Date")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                     
-                    Text("When did you start your journey? This will be used to calculate your progress.")
+                    Text("When did you start your journey? Select a date to track your progress from that point.")
                         .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -37,9 +38,10 @@ struct StartDatePickerView: View {
                 }
                 
                 // Date Picker
-                VStack(spacing: 16) {
-                    Text("Select Start Date")
+                VStack(spacing: 12) {
+                    Text("Start Date")
                         .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     
                     DatePicker(
                         "Start Date",
@@ -48,44 +50,24 @@ struct StartDatePickerView: View {
                         displayedComponents: .date
                     )
                     .datePickerStyle(.wheel)
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(12)
-                }
-                .padding(.horizontal)
-                
-                // Important Note
-                VStack(spacing: 8) {
-                    HStack {
-                        Image(systemName: "info.circle.fill")
-                            .foregroundColor(.blue)
-                        Text("Important")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-                        Spacer()
-                    }
-                    
-                    Text("This can only be set once, or when you reset all data. Choose carefully!")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.leading)
+                    .frame(height: 200)
                 }
                 .padding()
-                .background(Color.blue.opacity(0.1))
+                .background(Color(.systemGray6))
                 .cornerRadius(12)
                 .padding(.horizontal)
                 
                 Spacer()
                 
-                // Buttons
+                // Action Buttons
                 VStack(spacing: 12) {
-                    Button(action: confirmDate) {
+                    Button(action: confirmStartDate) {
                         Text("Confirm & Start Tracking")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.orange)
+                            .background(Color.accentColor)
                             .cornerRadius(12)
                     }
                     
@@ -96,44 +78,31 @@ struct StartDatePickerView: View {
                     }
                 }
                 .padding(.horizontal)
-                .padding(.bottom)
+                .padding(.bottom, 30)
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Cancel") {
-                        skipDateSelection()
-                    }
-                }
-            }
+            .navigationBarHidden(true)
+        }
+        .onAppear {
+            // Default to today
+            selectedDate = Date()
         }
     }
     
-    private func confirmDate() {
-        // Save the custom start date
-        settings.customStartDate = selectedDate
-        settings.hasChosenStartDate = true
-        
-        // Start the streak with the selected date
-        viewModel.startStreakWithCustomDate(selectedDate)
-        
+    private func confirmStartDate() {
+        dayCounterViewModel.startStreakWithCustomDate(selectedDate)
+        appSettings.markStartDateChosen()
         dismiss()
     }
     
     private func skipDateSelection() {
-        // Use today's date
-        settings.customStartDate = Date()
-        settings.hasChosenStartDate = true
-        
-        // Start the streak with today's date
-        viewModel.startStreakWithCustomDate(Date())
-        
+        dayCounterViewModel.startStreak()
+        appSettings.markStartDateChosen()
         dismiss()
     }
 }
 
 #Preview {
     StartDatePickerView()
-        .environmentObject(AppSettingsViewModel.shared)
         .environmentObject(DayCounterViewModel.shared)
+        .environmentObject(AppSettingsViewModel.shared)
 } 

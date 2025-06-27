@@ -65,6 +65,13 @@ class DayCounterViewModel: ObservableObject {
         save()
     }
     
+    // Start a new streak with custom date
+    func startStreakWithCustomDate(_ date: Date) {
+        sobrietyData.currentStartDate = date
+        sobrietyData.isActiveStreak = true
+        save()
+    }
+    
     func cancelStreak() {
         // Only cancel if the streak was started today
         if sobrietyData.isActiveStreak && 
@@ -80,6 +87,9 @@ class DayCounterViewModel: ObservableObject {
         
         // Clear UserDefaults for this key
         UserDefaults.standard.removeObject(forKey: storageKey)
+        
+        // Reset the start date flag so the picker shows again
+        AppSettingsViewModel.shared.resetStartDateFlag()
         
         // Save the fresh state
         save()
