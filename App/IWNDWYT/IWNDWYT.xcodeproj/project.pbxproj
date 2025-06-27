@@ -24,6 +24,7 @@
 		1E4F58FE2E0E30B3000EB7B9 /* DataNerdModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */; };
 		1E4F59002E0F1AC9000EB7B9 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58FF2E0F1AC9000EB7B9 /* IntroView.swift */; };
 		1E4F59022E0F1C40000EB7B9 /* PreviewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59012E0F1C40000EB7B9 /* PreviewHelpers.swift */; };
+		1E4F59042E0F38F3000EB7B9 /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
@@ -70,6 +71,7 @@
 		1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataNerdModeView.swift; sourceTree = "<group>"; };
 		1E4F58FF2E0F1AC9000EB7B9 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		1E4F59012E0F1C40000EB7B9 /* PreviewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreviewHelpers.swift; path = ../Views/PreviewHelpers.swift; sourceTree = SOURCE_ROOT; };
+		1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarView.swift; sourceTree = "<group>"; };
 		1ED34BC22E0C5A5F007C9143 /* IWNDWYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IWNDWYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BC72E0C5A5F007C9143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +202,7 @@
 				1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */,
 				1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */,
 				1ED34BC72E0C5A5F007C9143 /* ContentView.swift */,
+				1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */,
 				1E4F58FF2E0F1AC9000EB7B9 /* IntroView.swift */,
 				1E4F589B2E0DA834000EB7B9 /* ActiveStreakView.swift */,
 				1E4F58992E0D9117000EB7B9 /* MetricCardView.swift */,
@@ -373,6 +376,7 @@
 				1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */,
 				1E4F59002E0F1AC9000EB7B9 /* IntroView.swift in Sources */,
 				1E0B2F2D2E0CED5C00CF25EE /* AppSettingsViewModel.swift in Sources */,
+				1E4F59042E0F38F3000EB7B9 /* TipJarView.swift in Sources */,
 				1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */,
 				1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */,
 				1ED34BFD2E0CAFD7007C9143 /* MetricsView.swift in Sources */,

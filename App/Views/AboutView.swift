@@ -54,7 +54,11 @@ struct AboutView: View {
                     Text("About This App")
                         .font(.headline)
                     
-                    Text("IWNDWYToday is a habit breaking app designed to stop habits one day at a time. Track progress, celebrate milestones, and stay motivated.")
+                    Text("IWNDWYToday is designed to stop habits, track progress with milestones, and stay motivated.")
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                    
+                    Text("Start with getting through just one day.")
                         .font(.body)
                         .foregroundColor(.secondary)
                 }
@@ -111,11 +115,11 @@ struct AboutView: View {
                     Text("Acknowledgments")
                         .font(.headline)
                     
-                    Text("This app is inspired by the supportive community at r/stopdrinking and the daily commitment shared by millions: \"I Will Not Drink With You Today.\"")
+                    Text("This app is inspired by the community at r/stopdrinking and the daily commitment shared by millions")
                         .font(.body)
                         .foregroundColor(.secondary)
                     
-                    Text("Special thanks to all those who have stopped bad habits - you inspire others every day.")
+                    Text("Special thanks to all those who have stopped bad habits.")
                         .font(.body)
                         .foregroundColor(.secondary)
                         .italic()
@@ -130,9 +134,21 @@ struct AboutView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    Text("Like this App, leave a tip for the develper.")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    NavigationLink(destination: TipJarView()) {
+                        Text("Like this App\nLeave a Tip")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(
+                                Capsule()
+                                    .stroke(Color.blue, lineWidth: 1)
+                            )
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .frame(maxWidth: .infinity, alignment: .center)
+                        
                 }
                 
                 Spacer(minLength: 20)
