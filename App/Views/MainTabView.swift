@@ -49,7 +49,11 @@ struct MainTabView: View {
                 
                 
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+            .onAppear {
+                UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.black
+                UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
+            }
             
             // Custom Tab Bar
             HStack {
