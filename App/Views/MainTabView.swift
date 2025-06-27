@@ -11,6 +11,7 @@ struct MainTabView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
     @State private var selectedTab = 0
+    @AppStorage("hasSeenIntro") private var hasSeenIntro: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -88,7 +89,7 @@ struct MainTabView: View {
             .background(Color(.systemBackground))
             .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: -1)
         }
-        .fullScreenCover(isPresented: .constant(!settings.hasChosenStartDate)) {
+        .fullScreenCover(isPresented: .constant(hasSeenIntro && !settings.hasChosenStartDate)) {
             StartDatePickerView()
         }
     }

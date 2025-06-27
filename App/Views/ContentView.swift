@@ -25,6 +25,7 @@ struct ContentView: View {
     @State private var animateProgressSection = false
     @State private var timeUntilMidnight: TimeInterval = 0
     @State private var navigateToStreakView = false
+    @AppStorage("hasSeenIntro") private var hasSeenIntro: Bool = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -72,7 +73,8 @@ struct ContentView: View {
             .onReceive(timer) { _ in
                 updateTimeUntilMidnight()
             }
-
+            .sheet(isPresented: .constant(!hasSeenIntro)) {
+                IntroView(hasSeenIntro: $hasSeenIntro)}
     }
 }
 
