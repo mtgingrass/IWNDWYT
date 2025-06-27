@@ -21,6 +21,7 @@
 		1E4F58B82E0DF374000EB7B9 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58B72E0DF374000EB7B9 /* AboutView.swift */; };
 		1E4F58D02E0E17C2000EB7B9 /* StartDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58CF2E0E17C2000EB7B9 /* StartDatePickerView.swift */; };
 		1E4F58D42E0E22BB000EB7B9 /* ProgressSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58D32E0E22BB000EB7B9 /* ProgressSectionView.swift */; };
+		1E4F58FE2E0E30B3000EB7B9 /* DataNerdModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
@@ -64,6 +65,7 @@
 		1E4F58B72E0DF374000EB7B9 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		1E4F58CF2E0E17C2000EB7B9 /* StartDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDatePickerView.swift; sourceTree = "<group>"; };
 		1E4F58D32E0E22BB000EB7B9 /* ProgressSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSectionView.swift; sourceTree = "<group>"; };
+		1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataNerdModeView.swift; sourceTree = "<group>"; };
 		1ED34BC22E0C5A5F007C9143 /* IWNDWYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IWNDWYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BC72E0C5A5F007C9143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +178,7 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */,
 				1E4F58D32E0E22BB000EB7B9 /* ProgressSectionView.swift */,
 				1E4F58CF2E0E17C2000EB7B9 /* StartDatePickerView.swift */,
 				1E4F58B72E0DF374000EB7B9 /* AboutView.swift */,
@@ -352,6 +355,7 @@
 				1E4F58AE2E0DB05C000EB7B9 /* StreakActionButtonView.swift in Sources */,
 				1E4F58AF2E0DB05C000EB7B9 /* HistorySectionView.swift in Sources */,
 				1E4F58B02E0DB05C000EB7B9 /* ProgressSectionView.swift in Sources */,
+				1E4F58FE2E0E30B3000EB7B9 /* DataNerdModeView.swift in Sources */,
 				1E4F58B12E0DB05C000EB7B9 /* SectionHeaderView.swift in Sources */,
 				1E4F58B22E0DB05C000EB7B9 /* MetricRowView.swift in Sources */,
 				1ED34C002E0CB9B0007C9143 /* CalendarView.swift in Sources */,

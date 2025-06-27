@@ -26,7 +26,7 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 8) {
             // Month navigation
             HStack {
                 Button {

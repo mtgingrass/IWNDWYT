@@ -36,6 +36,37 @@ struct MetricsView: View {
                 .listStyle(InsetGroupedListStyle())
                 .frame(height: 320)
                 
+                // Data Nerd Mode Button
+                NavigationLink(destination: DataNerdModeView().environmentObject(viewModel)) {
+                    HStack {
+                        Image(systemName: "chart.bar.fill")
+                            .foregroundColor(.accentColor)
+                            .font(.title2)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Data Nerd Mode")
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+                            
+                            Text("Dive deep into your analytics")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                    }
+                    .padding()
+                    .background(Color(.systemBackground))
+                    .cornerRadius(12)
+                    .shadow(radius: 1)
+                }
+                .padding(.horizontal)
+                
                 // Calendar Section
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Calendar")
@@ -44,7 +75,7 @@ struct MetricsView: View {
                         .padding(.horizontal)
                     
                     CalendarView()
-                        .frame(height: 380)
+                        .frame(height: 210)
                         .padding(.horizontal)
                 }
                 .background(Color(.systemGroupedBackground))
