@@ -15,6 +15,13 @@ struct ProgressSectionView: View {
             SectionHeaderView(title: "YOUR PROGRESS", systemImage: "chart.bar.fill")
             
             VStack(spacing: 12) {
+                // Current Active Streak Status
+                if viewModel.isActiveStreak {
+                    MetricCardView(icon: "🔥", title: "Current Active Streak", value: "\(viewModel.currentStreak) days", valueColor: .green)
+                } else {
+                    MetricCardView(icon: "⭕", title: "No Active Streak", value: "Ready to start", valueColor: .secondary)
+                }
+                
                 MetricCardView(icon: "🏆", title: "Longest Streak", value: "\(viewModel.longestStreak) days", valueColor: .green)
 
                 if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
