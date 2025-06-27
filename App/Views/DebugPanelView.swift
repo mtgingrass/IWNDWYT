@@ -49,7 +49,8 @@ struct DebugPanelView: View {
         // Clear all UserDefaults keys used by the app
         UserDefaults.standard.removeObject(forKey: "sobriety_data")
         UserDefaults.standard.removeObject(forKey: "hasChosenStartDate") 
-        UserDefaults.standard.removeObject(forKey: "hasSeenIntro")
+        // Keep hasSeenIntro = true for debugging - we don't want to see intro again
+        // UserDefaults.standard.removeObject(forKey: "hasSeenIntro")
         
         // Reset DateProvider offset as well
         DateProvider.reset()
@@ -62,7 +63,7 @@ struct DebugPanelView: View {
             isActiveStreak: false
         )
         
-        // Reset app settings using shared instance
+        // Reset app settings using shared instance - this will trigger StartDatePickerView
         AppSettingsViewModel.shared.hasChosenStartDate = false
         
         // Force UI refresh
