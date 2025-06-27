@@ -46,7 +46,7 @@ struct ActiveStreakView: View {
                     NavigationLink(destination: MetricsView()) {
                         VStack(spacing: 12) {
                             Text("🟢 \(viewModel.currentStreak) days")
-                                .font(.system(size: 48, weight: .bold, design: .rounded))
+                                .font(.system(size: 32, weight: .bold, design: .rounded))
                                 .foregroundColor(.green)
                                 .padding(.top, 8)
 
@@ -68,25 +68,12 @@ struct ActiveStreakView: View {
                         .padding(.horizontal)
                     }
 
-                    // Start Date
-                    let dateFormatter: DateFormatter = {
-                        let formatter = DateFormatter()
-                        formatter.dateStyle = .long
-                        return formatter
-                    }()
 
-                    MetricCardView(
-                        icon: "🌅",
-                        title: "Current Streak Started",
-                        value: dateFormatter.string(from: viewModel.sobrietyData.currentStartDate),
-                        valueColor: .primary
-                    )
-                    .padding(.horizontal)
                 }
                 
                 // Milestones
                 VStack(spacing: 16) {
-                    Text("Progress Milestones")
+                    Text("Milestones")
                         .font(.headline)
                         .foregroundColor(.secondary)
 

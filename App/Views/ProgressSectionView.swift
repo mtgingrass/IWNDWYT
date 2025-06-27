@@ -17,7 +17,13 @@ struct ProgressSectionView: View {
             VStack(spacing: 12) {
                 // Current Active Streak Status
                 if viewModel.isActiveStreak {
-                    MetricCardView(icon: "🔥", title: "Current Active Streak", value: "\(viewModel.currentStreak) days", valueColor: .green)
+                    let dateFormatter: DateFormatter = {
+                        let formatter = DateFormatter()
+                        formatter.dateStyle = .medium
+                        return formatter
+                    }()
+                    let startDateText = dateFormatter.string(from: viewModel.sobrietyData.currentStartDate)
+                    MetricCardView(icon: "🔥", title: "Current Active Streak", value: "\(viewModel.currentStreak) days\nStarted \(startDateText)", valueColor: .green)
                 } else {
                     MetricCardView(icon: "⭕", title: "No Active Streak", value: "Ready to start", valueColor: .secondary)
                 }
