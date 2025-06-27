@@ -172,10 +172,8 @@ struct DataNerdModeView: View {
                         
                         VStack(spacing: 8) {
                             DataBreakdownRow(label: "Total Streaks Recorded", value: "\(totalStreaksRecorded)")
-                            DataBreakdownRow(label: "Shortest Streak", value: "\(shortestStreak) days")
                             DataBreakdownRow(label: "Median Streak Length", value: "\(medianStreakLength) days")
                             DataBreakdownRow(label: "Days Since First Attempt", value: "\(daysSinceFirstAttempt) days")
-                            DataBreakdownRow(label: "Current Month Rank", value: "#\(currentMonthRank)")
                         }
                         .padding()
                         .background(Color(.systemBackground))
@@ -584,12 +582,7 @@ extension DataNerdModeView {
         dayCounterViewModel.sobrietyData.pastStreaks.count + (dayCounterViewModel.isActiveStreak ? 1 : 0)
     }
     
-    private var shortestStreak: Int {
-        let pastStreaks = dayCounterViewModel.sobrietyData.pastStreaks.map { $0.length }
-        let allStreaks = dayCounterViewModel.isActiveStreak ? pastStreaks + [dayCounterViewModel.currentStreak] : pastStreaks
-        return allStreaks.min() ?? 0
-    }
-    
+
     private var medianStreakLength: Int {
         let pastStreaks = dayCounterViewModel.sobrietyData.pastStreaks.map { $0.length }
         let allStreaks = dayCounterViewModel.isActiveStreak ? pastStreaks + [dayCounterViewModel.currentStreak] : pastStreaks
@@ -616,31 +609,7 @@ extension DataNerdModeView {
         return Calendar.current.dateComponents([.day], from: startDate, to: DateProvider.now).day ?? 0
     }
     
-    private var currentMonthRank: Int {
-        let calendar = Calendar.current
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM"
-        
-        var monthlyTotals: [String: Int] = [:]
-        
-        // Calculate totals for each month
-        for streak in dayCounterViewModel.sobrietyData.pastStreaks {
-            let monthKey = formatter.string(from: streak.startDate)
-            monthlyTotals[monthKey, default: 0] += streak.length
-        }
-        
-        // Add current streak if active
-        if dayCounterViewModel.isActiveStreak {
-            let currentMonthKey = formatter.string(from: dayCounterViewModel.sobrietyData.currentStartDate)
-            monthlyTotals[currentMonthKey, default: 0] += dayCounterViewModel.currentStreak
-        }
-        
-        let currentMonthKey = formatter.string(from: DateProvider.now)
-        let currentMonthTotal = monthlyTotals[currentMonthKey] ?? 0
-        let sortedTotals = monthlyTotals.values.sorted(by: >)
-        
-        return (sortedTotals.firstIndex(of: currentMonthTotal) ?? 0) + 1
-    }
+
 }
 
 #Preview {
