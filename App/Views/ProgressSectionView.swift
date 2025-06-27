@@ -15,7 +15,7 @@ struct ProgressSectionView: View {
             SectionHeaderView(title: "YOUR PROGRESS", systemImage: "chart.bar.fill")
             
             VStack(spacing: 12) {
-                MetricCardView(icon: "🏆", title: "Best Streak", value: "\(viewModel.longestStreak) days", valueColor: .green)
+                MetricCardView(icon: "🏆", title: "Longest Streak", value: "\(viewModel.longestStreak) days", valueColor: .green)
 
                 if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
                     MetricCardView(icon: "⏱", title: "Previous Streak Ended", value: "\(lastStreak.length) days ago", valueColor: .primary)

@@ -150,6 +150,7 @@ struct ActiveStreakView: View {
             Button("Cancel", role: .cancel) { }
             Button("End Streak", role: .destructive) {
                 viewModel.endStreak()
+                selectedTab = 0
             }
         } message: {
             Text("Are you sure you want to end your current streak? This will mark today as the end date.")

@@ -21,16 +21,6 @@ struct MainTabView: View {
                     ContentView(selectedTab: $selectedTab)
                         .navigationBarTitle("IWNDWYT", displayMode: .inline)
                         .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Button {
-                                    settings.toggleColorScheme()
-                                } label: {
-                                    Image(systemName: settings.colorScheme == .dark ? "sun.max.fill" : "moon.fill")
-                                        .imageScale(.medium)
-                                        .foregroundColor(settings.colorScheme == .dark ? .yellow : .primary)
-                                }
-                            }
-                            
                             ToolbarItem(placement: .navigationBarTrailing) {
                                 NavigationLink {
                                     SettingsView()

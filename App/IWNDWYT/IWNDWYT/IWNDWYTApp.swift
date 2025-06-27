@@ -16,7 +16,7 @@ struct IWNDWYTApp: App {
             MainTabView()
                 .environmentObject(DayCounterViewModel.shared)
                 .environmentObject(settings)
-                .preferredColorScheme(settings.colorScheme)
+                .preferredColorScheme(.light)
         }
     }
 }
