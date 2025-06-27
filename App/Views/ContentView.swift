@@ -81,7 +81,21 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView(selectedTab: .constant(0))
-        .environmentObject(DayCounterViewModel.shared)
-        .environmentObject(AppSettingsViewModel.shared)
+    NavigationView {
+        ContentView(selectedTab: .constant(0))
+            .navigationBarTitle("IWNDWYT", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        // Preview placeholder
+                    } label: {
+                        Image(systemName: "gear")
+                            .imageScale(.medium)
+                    }
+                }
+            }
+    }
+    .environmentObject(DayCounterViewModel.shared)
+    .environmentObject(AppSettingsViewModel.shared)
+    .preferredColorScheme(.light)
 }
