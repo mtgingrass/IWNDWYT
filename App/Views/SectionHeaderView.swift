@@ -37,7 +37,7 @@ struct SectionHeaderView: View {
 
 #Preview {
     VStack(spacing: 20) {
-        SectionHeaderView(title: "YOUR PROGRESS", systemImage: "chart.bar.fill")
+        SectionHeaderView(title: "YOUR DASHBOARD", systemImage: "chart.bar.fill")
         SectionHeaderView(title: "DETAILED HISTORY", systemImage: "clock.fill")
         SectionHeaderView(title: "NO ICON", systemImage: nil)
     }

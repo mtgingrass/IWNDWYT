@@ -23,7 +23,6 @@ struct ContentView: View {
     @State private var showEndConfirmation = false
     @State private var showCancelConfirmation = false
     @State private var animateProgressSection = false
-    @State private var animateHistorySection = false
     @State private var timeUntilMidnight: TimeInterval = 0
     @State private var navigateToStreakView = false
     
@@ -54,8 +53,6 @@ struct ContentView: View {
 
                     ProgressSectionView()
 
-                    HistorySectionView(selectedTab: $selectedTab)
-
                     #if DEBUG
                     NavigationLink("Open Debug Panel") {
                         DebugPanelView()
@@ -69,7 +66,6 @@ struct ContentView: View {
             .onAppear {
                 withAnimation(.easeIn(duration: 0.4)) {
                     animateProgressSection = true
-                    animateHistorySection = true
                 }
                 updateTimeUntilMidnight()
             }

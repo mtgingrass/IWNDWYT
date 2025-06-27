@@ -12,7 +12,7 @@ struct ProgressSectionView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            SectionHeaderView(title: "YOUR PROGRESS", systemImage: "chart.bar.fill")
+            SectionHeaderView(title: "YOUR DASHBOARD", systemImage: "chart.bar.fill")
             
             VStack(spacing: 12) {
                 // Current Active Streak Status
