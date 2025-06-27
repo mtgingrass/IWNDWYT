@@ -18,7 +18,9 @@ struct ProgressSectionView: View {
                 MetricCardView(icon: "🏆", title: "Longest Streak", value: "\(viewModel.longestStreak) days", valueColor: .green)
 
                 if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
-                    MetricCardView(icon: "⏱", title: "Previous Streak Ended", value: "\(lastStreak.length) days ago", valueColor: .primary)
+                    let daysSinceEnded = Calendar.current.dateComponents([.day], from: lastStreak.endDate, to: Date()).day ?? 0
+                    let daysText = daysSinceEnded == 0 ? "today" : daysSinceEnded == 1 ? "1 day ago" : "\(daysSinceEnded) days ago"
+                    MetricCardView(icon: "⏱", title: "Previous Streak Ended", value: daysText, valueColor: .primary)
                 }
 
                 MetricCardView(icon: "📈", title: "Total Attempts", value: "\(viewModel.totalAttempts)", valueColor: .primary)
