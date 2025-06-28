@@ -5,83 +5,88 @@
 //  Created by Mark Gingrass on 6/25/25.
 //
 
+// Leave the imports and other parts unchanged
 import SwiftUI
 
 struct AboutView: View {
-    // Computed properties to get app metadata
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     }
-    
+
     private var buildNumber: String {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
     }
-    
+
     private var appName: String {
-        Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? 
+        Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ??
         Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "IWNDWYT"
     }
-    
+
     private var minimumOSVersion: String {
         Bundle.main.infoDictionary?["MinimumOSVersion"] as? String ?? "17.0"
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // App Icon and Name Section
+                // App Icon and Name
                 VStack(spacing: 16) {
-                    // You can replace this with your actual app icon
-                    Image(systemName: "heart.circle.fill")
-                        .font(.system(size: 80))
-                        .foregroundColor(.orange)
-                    
-                    Text("IWNDWYToday")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
+                    HStack(spacing: 16) {
+                        Image("AppIconLarge")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
+
+                        Text("IWNDWYToday")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                    }
+
                     Text("I Will Not Destruct With You Today")
                         .font(.title2)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                 }
                 .padding(.top)
-                
-                Divider()
-                
+
                 // App Description
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("About This App")
-                        .font(.headline)
-                    
-                    Text("IWNDWYToday is designed to stop habits, track progress with milestones, and stay motivated.")
+                    Text("Designed to stop habits, track progress with milestones, and stay motivated.")
                         .font(.body)
                         .foregroundColor(.secondary)
-                    
+
                     Text("Start with getting through just one day.")
                         .font(.body)
                         .foregroundColor(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Divider()
-                
-                // Version Information
-                VStack(spacing: 12) {
-                    InfoRow(title: "Version", value: appVersion)
-                    InfoRow(title: "Build", value: buildNumber)
-                    InfoRow(title: "Platform", value: "iOS \(minimumOSVersion)+")
+
+                // Features
+                VStack(alignment: .leading, spacing: 8) {
+                    FeatureRow(icon: "calendar", text: "Track daily progress")
+                    FeatureRow(icon: "chart.bar.fill", text: "View statistics and metrics")
+                    FeatureRow(icon: "flame.fill", text: "Celebrate milestones")
+                    FeatureRow(icon: "iphone", text: "Simple, intuitive interface")
                 }
-                
+                .frame(maxWidth: .infinity, alignment: .leading)
+
                 Divider()
-                
-                // Developer Information
+
+                // Acknowledgments
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Developer")
+                    Text("Acknowledgments")
                         .font(.headline)
-                    
-                    InfoRow(title: "Created by", value: "Mark Gingrass")
-                    
+
+                    Text("Inspired by the community at r/stopdrinking and the daily commitment shared by millions.")
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // Developer Contact
+                VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("Contact:")
                             .foregroundColor(.primary)
@@ -91,87 +96,40 @@ struct AboutView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 Divider()
-                
-                // Features
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Features")
-                        .font(.headline)
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        FeatureRow(icon: "calendar", text: "Track daily progress")
-                        FeatureRow(icon: "chart.bar.fill", text: "View detailed statistics and metrics")
-                        FeatureRow(icon: "flame.fill", text: "Celebrate streak milestones")
-                        FeatureRow(icon: "iphone", text: "Simple, intuitive interface")
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Divider()
-                
-                // Acknowledgments
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Acknowledgments")
-                        .font(.headline)
-                    
-                    Text("This app is inspired by the community at r/stopdrinking and the daily commitment shared by millions")
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                    
-                    Text("Special thanks to all those who have stopped bad habits.")
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .italic()
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Divider()
-                
-                // Copyright
-                VStack(spacing: 8) {
-                    Text("© 2025 Mark Gingrass")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    
+
+                VStack(spacing: 12) {
                     NavigationLink(destination: TipJarView()) {
-                        Text("Like this App\nLeave a Tip")
-                            .font(.caption)
+                        Text("💙 Leave a Tip")
+                            .font(.callout)
+                            .fontWeight(.semibold)
                             .foregroundColor(.blue)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 8)
                             .background(
                                 Capsule()
-                                    .stroke(Color.blue, lineWidth: 1)
+                                    .stroke(Color.blue, lineWidth: 1.5)
+                                    .shadow(color: Color.blue.opacity(0.2), radius: 2, x: 0, y: 1)
                             )
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .frame(maxWidth: .infinity, alignment: .center)
-                        
+
+                    Text("Version \(appVersion) • Build \(buildNumber) • iOS \(minimumOSVersion)+")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+
+                    Text("© 2025 Mark Gingrass")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
                 }
-                
-                Spacer(minLength: 20)
+                .frame(maxWidth: .infinity)
             }
             .padding()
         }
         .navigationTitle("About")
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct InfoRow: View {
-    let title: String
-    let value: String
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .foregroundColor(.primary)
-            Spacer()
-            Text(value)
-                .foregroundColor(.secondary)
-        }
     }
 }
 
