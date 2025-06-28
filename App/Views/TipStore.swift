@@ -13,6 +13,27 @@ class TipStore: ObservableObject {
     @Published var products: [Product] = []
     @Published var purchaseState: PurchaseState = .idle
     @Published var errorMessage: String?
+    @Published private(set) var purchasedProductIDs: Set<String> = [] {
+        didSet {
+            savePurchasedProducts()
+        }
+    }
+    
+    private let purchasedProductsKey = "TipStore.purchasedProducts"
+    
+    init() {
+        loadPurchasedProducts()
+    }
+    
+    private func loadPurchasedProducts() {
+        if let savedIDs = UserDefaults.standard.array(forKey: purchasedProductsKey) as? [String] {
+            purchasedProductIDs = Set(savedIDs)
+        }
+    }
+    
+    private func savePurchasedProducts() {
+        UserDefaults.standard.set(Array(purchasedProductIDs), forKey: purchasedProductsKey)
+    }
     
     enum PurchaseState {
         case idle
@@ -83,6 +104,8 @@ class TipStore: ObservableObject {
         switch verification {
         case .verified(let transaction):
             print("✅ Purchase successful: \(transaction.productID)")
+            // Store the purchased product ID
+            purchasedProductIDs.insert(transaction.productID)
             // Finish the transaction - this is crucial!
             await transaction.finish()
             purchaseState = .success
@@ -97,5 +120,13 @@ class TipStore: ObservableObject {
     func clearState() {
         purchaseState = .idle
         errorMessage = nil
+    }
+    
+    func hasBeenPurchased(_ productID: String) -> Bool {
+        purchasedProductIDs.contains(productID)
+    }
+    
+    func hasBeenPurchased(_ product: Product) -> Bool {
+        hasBeenPurchased(product.id)
     }
 }

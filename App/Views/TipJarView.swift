@@ -44,6 +44,12 @@ struct TipJarView: View {
                                     if store.purchaseState == .purchasing {
                                         ProgressView()
                                             .scaleEffect(0.8)
+                                    } else if store.hasBeenPurchased(product) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.green)
+                                            .imageScale(.small)
+                                        Text("Already Tipped")
+                                            .font(.footnote)
                                     } else {
                                         Text(product.displayPrice)
                                     }
@@ -52,12 +58,12 @@ struct TipJarView: View {
                                 .frame(maxWidth: .infinity)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.blue, lineWidth: 1)
+                                        .stroke(store.hasBeenPurchased(product) ? Color.gray : Color.blue, lineWidth: 1)
                                 )
                             }
-                            .foregroundColor(.blue)
-                            .disabled(store.purchaseState == .purchasing)
-                            .opacity(store.purchaseState == .purchasing ? 0.6 : 1.0)
+                            .foregroundColor(store.hasBeenPurchased(product) ? .gray : .blue)
+                            .disabled(store.purchaseState == .purchasing || store.hasBeenPurchased(product))
+                            .opacity(store.purchaseState == .purchasing || store.hasBeenPurchased(product) ? 0.6 : 1.0)
                             .padding(.horizontal)
                         }
                     }
