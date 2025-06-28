@@ -147,6 +147,7 @@ struct ActiveStreakView: View {
                 } label: {
                     Image(systemName: "gear")
                         .imageScale(.medium)
+                        .settingsButtonStyle()
                 }
             }
         }

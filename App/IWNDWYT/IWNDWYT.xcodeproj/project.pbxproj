@@ -28,6 +28,7 @@
 		1E4F59062E0F812B000EB7B9 /* TipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59052E0F812B000EB7B9 /* TipStore.swift */; };
 		1EAA16102E0F93D000B904B8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EAA160F2E0F93D000B904B8 /* StoreKit.framework */; };
 		1EAA16122E0F956A00B904B8 /* TipJarStoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */; };
+		1EAA16142E109B6A00B904B8 /* SettingsButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
@@ -78,6 +79,7 @@
 		1E4F59052E0F812B000EB7B9 /* TipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TipStore.swift; path = ../Views/TipStore.swift; sourceTree = "<group>"; };
 		1EAA160F2E0F93D000B904B8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = TipJarStoreKit.storekit; path = ../Views/TipJarStoreKit.storekit; sourceTree = SOURCE_ROOT; };
+		1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonStyle.swift; sourceTree = "<group>"; };
 		1ED34BC22E0C5A5F007C9143 /* IWNDWYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IWNDWYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BC72E0C5A5F007C9143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +205,7 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */,
 				1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */,
 				1E4F58D32E0E22BB000EB7B9 /* ProgressSectionView.swift */,
 				1E4F58CF2E0E17C2000EB7B9 /* StartDatePickerView.swift */,
@@ -400,6 +403,7 @@
 				1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */,
 				1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */,
 				1ED34BFD2E0CAFD7007C9143 /* MetricsView.swift in Sources */,
+				1EAA16142E109B6A00B904B8 /* SettingsButtonStyle.swift in Sources */,
 				1E4F58D42E0E22BB000EB7B9 /* ProgressSectionView.swift in Sources */,
 				1E4F589A2E0D9117000EB7B9 /* MetricCardView.swift in Sources */,
 				1E4F58B42E0DB898000EB7B9 /* MainTabView.swift in Sources */,

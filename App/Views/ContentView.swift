@@ -20,6 +20,7 @@ struct ContentView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
     @Binding var selectedTab: Int
+    @Binding var showingSettings: Bool
     @State private var showEndConfirmation = false
     @State private var showCancelConfirmation = false
     @State private var animateProgressSection = false
@@ -46,56 +47,64 @@ struct ContentView: View {
 
     var body: some View {
         ScrollView {
-                VStack(spacing: 24) {
-                    Spacer(minLength: 10)
+            VStack(spacing: 24) {
+                Spacer(minLength: 10)
 
-                    // Header Button
-                    StreakActionButtonView(selectedTab: $selectedTab)
+                // Header Button
+                StreakActionButtonView(selectedTab: $selectedTab)
 
-                    ProgressSectionView()
+                ProgressSectionView()
 
-                    #if DEBUG
-                    NavigationLink("Open Debug Panel") {
-                        DebugPanelView()
+                #if DEBUG
+                NavigationLink("Open Debug Panel") {
+                    DebugPanelView()
+                }
+                .font(.footnote)
+                .padding(.top)
+                #endif
+            }
+            .padding()
+        }
+        .onAppear {
+            withAnimation(.easeIn(duration: 0.4)) {
+                animateProgressSection = true
+            }
+            updateTimeUntilMidnight()
+        }
+        .onReceive(timer) { _ in
+            updateTimeUntilMidnight()
+        }
+        .sheet(isPresented: .constant(!hasSeenIntro)) {
+            IntroView(hasSeenIntro: $hasSeenIntro)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack(spacing: 8) {
+                    NavigationLink {
+                        AboutView()
+                    } label: {
+                        Image(systemName: "info.circle")
+                            .imageScale(.medium)
+                            .settingsButtonStyle()
                     }
-                    .font(.footnote)
-                    .padding(.top)
-                    #endif
-                }
-                .padding()
-            }
-            .onAppear {
-                withAnimation(.easeIn(duration: 0.4)) {
-                    animateProgressSection = true
-                }
-                updateTimeUntilMidnight()
-            }
-            .onReceive(timer) { _ in
-                updateTimeUntilMidnight()
-            }
-            .sheet(isPresented: .constant(!hasSeenIntro)) {
-                IntroView(hasSeenIntro: $hasSeenIntro)}
-    }
-}
-
-
-
-
-
-#Preview {
-    NavigationView {
-        ContentView(selectedTab: .constant(0))
-            .navigationBarTitle("IWNDWYT", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                    
                     Button {
-                        // Preview placeholder
+                        showingSettings = true
                     } label: {
                         Image(systemName: "gear")
                             .imageScale(.medium)
+                            .settingsButtonStyle()
                     }
                 }
             }
+        }
+    }
+}
+
+#Preview {
+    NavigationView {
+        ContentView(selectedTab: .constant(0), showingSettings: .constant(false))
+            .navigationBarTitle("IWNDWYT", displayMode: .inline)
     }
     .environmentObject(DayCounterViewModel.shared)
     .environmentObject(AppSettingsViewModel.shared)

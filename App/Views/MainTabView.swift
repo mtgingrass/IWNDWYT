@@ -20,18 +20,8 @@ struct MainTabView: View {
             TabView(selection: $selectedTab) {
                 // Home Tab
                 NavigationView {
-                    ContentView(selectedTab: $selectedTab)
+                    ContentView(selectedTab: $selectedTab, showingSettings: $showingSettings)
                         .navigationBarTitle("IWNDWYT", displayMode: .inline)
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button {
-                                    showingSettings = true
-                                } label: {
-                                    Image(systemName: "gear")
-                                        .imageScale(.medium)
-                                }
-                            }
-                        }
                 }
                 .tag(0)
                 

@@ -113,6 +113,7 @@ struct MetricsView: View {
                 } label: {
                     Image(systemName: "gear")
                         .imageScale(.medium)
+                        .settingsButtonStyle()
                 }
             }
         }
