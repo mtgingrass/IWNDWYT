@@ -17,6 +17,7 @@ import SwiftUI
 struct ActiveStreakView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @Binding var selectedTab: Int
+    @Binding var showingSettings: Bool
     @State private var showEndConfirmation = false
     @State private var showCancelConfirmation = false
     @State private var timeUntilMidnight: TimeInterval = 0
@@ -38,35 +39,41 @@ struct ActiveStreakView: View {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
+    private var streakCountdownBox: some View {
+        NavigationLink(destination: MetricsView(showingSettings: $showingSettings)) {
+            VStack(spacing: 12) {
+                Text("🟢 \(viewModel.currentStreak) days")
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.green)
+                    .padding(.top, 8)
+
+                HStack(spacing: 4) {
+                    Text("Countdown:")
+                        .foregroundColor(.primary)
+                    Text("\(formatTimeRemaining())")
+                        .font(.system(.title3, design: .monospaced))
+                        .foregroundColor(.orange)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(streakBoxBackground)
+            .padding(.horizontal)
+        }
+    }
+    
+    private var streakBoxBackground: some View {
+        RoundedRectangle(cornerRadius: 16)
+            .fill(Color(.systemGray6))
+            .shadow(color: Color.black.opacity(0.05), radius: 1, x: 0, y: 1)
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
                 VStack(spacing: 12) {
-                    // Current Streak and Countdown Box
-                    NavigationLink(destination: MetricsView()) {
-                        VStack(spacing: 12) {
-                            Text("🟢 \(viewModel.currentStreak) days")
-                                .font(.system(size: 32, weight: .bold, design: .rounded))
-                                .foregroundColor(.green)
-                                .padding(.top, 8)
-
-                            HStack(spacing: 4) {
-                                Text("Countdown:")
-                                    .foregroundColor(.primary)
-                                Text("\(formatTimeRemaining())")
-                                    .font(.system(.title3, design: .monospaced))
-                                    .foregroundColor(.orange)
-                            }
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(.systemGray6))
-                                .shadow(color: Color.black.opacity(0.05), radius: 1, x: 0, y: 1)
-                        )
-                        .padding(.horizontal)
-                    }
+                    // Current Streak and Countdown Box  
+                    streakCountdownBox
 
 
                 }
@@ -133,6 +140,16 @@ struct ActiveStreakView: View {
         }
         .navigationTitle("Streak Progress")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSettings = true
+                } label: {
+                    Image(systemName: "gear")
+                        .imageScale(.medium)
+                }
+            }
+        }
         .alert("End Current Streak?", isPresented: $showEndConfirmation) {
             Button("Cancel", role: .cancel) { }
             Button("End Streak", role: .destructive) {
@@ -155,10 +172,6 @@ struct ActiveStreakView: View {
 }
 
 #Preview {
-    ActiveStreakView(selectedTab: .constant(0))
+    ActiveStreakView(selectedTab: .constant(0), showingSettings: .constant(false))
         .environmentObject(DayCounterViewModel.shared)
-}
-
-#Preview {
-    ActiveStreakView(selectedTab: .constant(0))
 }

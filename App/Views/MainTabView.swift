@@ -11,6 +11,7 @@ struct MainTabView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
     @State private var selectedTab = 0
+    @State private var showingSettings = false
     @AppStorage("hasSeenIntro") private var hasSeenIntro: Bool = false
     
     var body: some View {
@@ -23,8 +24,8 @@ struct MainTabView: View {
                         .navigationBarTitle("IWNDWYT", displayMode: .inline)
                         .toolbar {
                             ToolbarItem(placement: .navigationBarTrailing) {
-                                NavigationLink {
-                                    SettingsView()
+                                Button {
+                                    showingSettings = true
                                 } label: {
                                     Image(systemName: "gear")
                                         .imageScale(.medium)
@@ -37,14 +38,14 @@ struct MainTabView: View {
                 // Active Streak Tab (only show if there's an active streak)
                 if viewModel.isActiveStreak {
                     NavigationView {
-                        ActiveStreakView(selectedTab: $selectedTab)
+                        ActiveStreakView(selectedTab: $selectedTab, showingSettings: $showingSettings)
                     }
                     .tag(1)
                 }
                 
                 // Metrics Tab
                 NavigationView {
-                    MetricsView()
+                    MetricsView(showingSettings: $showingSettings)
                 }
                 .tag(viewModel.isActiveStreak ? 2 : 1)
                 
@@ -54,6 +55,10 @@ struct MainTabView: View {
             .onAppear {
                 UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.black
                 UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
+            }
+            .onChange(of: selectedTab) {
+                // Dismiss settings when user switches tabs
+                showingSettings = false
             }
             
             // Custom Tab Bar
@@ -91,6 +96,13 @@ struct MainTabView: View {
         }
         .fullScreenCover(isPresented: .constant(hasSeenIntro && !settings.hasChosenStartDate)) {
             StartDatePickerView()
+        }
+        .sheet(isPresented: $showingSettings) {
+            NavigationView {
+                SettingsView()
+            }
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
         }
     }
 }

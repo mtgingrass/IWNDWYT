@@ -13,60 +13,58 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct TipJarView: View {
+    @StateObject private var store = TipStore()
+
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
-                Text("Tip Jar")
-                    .font(.title3)
-                    .fontWeight(.semibold)
+            VStack(spacing: 24) {
+                Text("Support the Developer")
+                    .font(.title2)
+                    .bold()
                     .padding(.top)
 
-                Text("This app is free and always will be. Tipping the developer is optional.")
+                Text("This app is free to use. If you’ve found it helpful and want to leave a tip, thank you! It's greatly appreciated.")
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
                     .padding(.horizontal)
 
-                VStack(spacing: 12) {
-                    HStack(spacing: 20) {
-                        TipButton(amount: "$0.99")
-                        TipButton(amount: "$2.99")
-                        TipButton(amount: "$4.99")
-                    }
-
-                    TipButton(amount: "Custom")
-                        .font(.footnote)
+                if store.products.isEmpty {
+                    ProgressView("Loading tips…")
+                } else {
+                    ForEach(store.products, id: \.id) { product in
+                        Button {
+                            Task {
+                                await store.purchase(product)
+                            }
+                        } label: {
+                            HStack {
+                                Text(product.displayName)
+                                Spacer()
+                                Text(product.displayPrice)
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.blue, lineWidth: 1)
+                            )
+                        }
                         .foregroundColor(.blue)
+                        .padding(.horizontal)
+                    }
                 }
-                .padding(.bottom, 40)
             }
-            .frame(maxWidth: .infinity)
             .padding()
         }
-        .navigationTitle("Support")
+        .navigationTitle("Leave a Tip")
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct TipButton: View {
-    var amount: String
-
-    var body: some View {
-        Button(action: {
-            // Placeholder for future in-app purchase logic
-        }) {
-            Text(amount)
-                .font(.callout)
-                .padding(.vertical, 8)
-                .padding(.horizontal, 16)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.secondary, lineWidth: 1)
-                )
+        .task {
+            await store.loadProducts()
         }
-        .buttonStyle(PlainButtonStyle())
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MetricsView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
+    @Binding var showingSettings: Bool
     
     // Metrics are now computed in the ViewModel
     
@@ -105,6 +106,16 @@ struct MetricsView: View {
         }
         .navigationTitle("Metrics")
         .background(Color(.systemGroupedBackground))
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSettings = true
+                } label: {
+                    Image(systemName: "gear")
+                        .imageScale(.medium)
+                }
+            }
+        }
     }
 }
 
@@ -112,7 +123,7 @@ struct MetricsView: View {
 
 #Preview {
     NavigationView {
-        MetricsView()
+        MetricsView(showingSettings: .constant(false))
             .environmentObject(DayCounterViewModel.shared)
             .environmentObject(AppSettingsViewModel.shared)
     }
