@@ -19,6 +19,9 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
+    @EnvironmentObject private var sessionTracker: SessionTracker
+    @State private var showTipAlert = false
+    
     @Binding var selectedTab: Int
     @Binding var showingSettings: Bool
     @State private var showEndConfirmation = false
@@ -26,6 +29,8 @@ struct ContentView: View {
     @State private var animateProgressSection = false
     @State private var timeUntilMidnight: TimeInterval = 0
     @State private var navigateToStreakView = false
+    @State private var navigateToTipJar = false
+    
     @AppStorage("hasSeenIntro") private var hasSeenIntro: Bool = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -63,6 +68,10 @@ struct ContentView: View {
                 .padding(.top)
                 #endif
             }
+            NavigationLink(destination: TipJarView(), isActive: $navigateToTipJar) {
+                EmptyView()
+            }
+            .hidden()
             .padding()
         }
         .onAppear {
@@ -98,6 +107,23 @@ struct ContentView: View {
                 }
             }
         }
+        // 👉 Tip Jar trigger logic
+            .onReceive(sessionTracker.$shouldShowTipPrompt) { shouldShow in
+                if shouldShow {
+                    showTipAlert = true
+                }
+            }
+            .alert("Enjoying the app?", isPresented: $showTipAlert) {
+                Button("Not Now", role: .cancel) {
+                    sessionTracker.dismissTipPrompt()
+                }
+                Button("Tip the Developer") {
+                    sessionTracker.dismissTipPrompt()
+                    navigateToTipJar = true
+                }
+            } message: {
+                Text("You've opened the app \(sessionTracker.openCount) times. Consider leaving a tip if it’s helped you!")
+            }
     }
 }
 
@@ -108,5 +134,6 @@ struct ContentView: View {
     }
     .environmentObject(DayCounterViewModel.shared)
     .environmentObject(AppSettingsViewModel.shared)
+    .environmentObject(SessionTracker()) // ✅ this was missing
     .preferredColorScheme(.light)
 }
