@@ -26,6 +26,8 @@
 		1E4F59022E0F1C40000EB7B9 /* PreviewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59012E0F1C40000EB7B9 /* PreviewHelpers.swift */; };
 		1E4F59042E0F38F3000EB7B9 /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */; };
 		1E4F59062E0F812B000EB7B9 /* TipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59052E0F812B000EB7B9 /* TipStore.swift */; };
+		1EAA16102E0F93D000B904B8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EAA160F2E0F93D000B904B8 /* StoreKit.framework */; };
+		1EAA16122E0F956A00B904B8 /* TipJarStoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
 		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
@@ -74,6 +76,8 @@
 		1E4F59012E0F1C40000EB7B9 /* PreviewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreviewHelpers.swift; path = ../Views/PreviewHelpers.swift; sourceTree = SOURCE_ROOT; };
 		1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarView.swift; sourceTree = "<group>"; };
 		1E4F59052E0F812B000EB7B9 /* TipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TipStore.swift; path = ../Views/TipStore.swift; sourceTree = "<group>"; };
+		1EAA160F2E0F93D000B904B8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = TipJarStoreKit.storekit; path = ../Views/TipJarStoreKit.storekit; sourceTree = SOURCE_ROOT; };
 		1ED34BC22E0C5A5F007C9143 /* IWNDWYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IWNDWYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BC72E0C5A5F007C9143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EAA16102E0F93D000B904B8 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +136,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EAA160E2E0F93D000B904B8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1EAA160F2E0F93D000B904B8 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1ED34BB92E0C5A5F007C9143 = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +154,7 @@
 				1ED34BC42E0C5A5F007C9143 /* IWNDWYT */,
 				1ED34BD22E0C5A60007C9143 /* IWNDWYTTests */,
 				1ED34BDC2E0C5A60007C9143 /* IWNDWYTUITests */,
+				1EAA160E2E0F93D000B904B8 /* Frameworks */,
 				1ED34BC32E0C5A5F007C9143 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -167,6 +181,7 @@
 		1ED34BED2E0C5EF4007C9143 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */,
 				1E4F59012E0F1C40000EB7B9 /* PreviewHelpers.swift */,
 				1E4F59052E0F812B000EB7B9 /* TipStore.swift */,
 			);
@@ -335,6 +350,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EAA16122E0F956A00B904B8 /* TipJarStoreKit.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,7 +563,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 8ST43C8H2Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -575,7 +591,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 8ST43C8H2Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

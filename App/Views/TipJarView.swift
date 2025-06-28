@@ -5,18 +5,12 @@
 //  Created by Mark Gingrass on 6/27/25.
 //
 
-//
-//  TipJarView.swift
-//  IWNDWYT
-//
-//  Created by Mark Gingrass on 6/27/25.
-//
-
 import SwiftUI
 import StoreKit
 
 struct TipJarView: View {
     @StateObject private var store = TipStore()
+    @State private var showingSuccessAlert = false
 
     var body: some View {
         ScrollView {
@@ -26,7 +20,7 @@ struct TipJarView: View {
                     .bold()
                     .padding(.top)
 
-                Text("This app is free to use. If you’ve found it helpful and want to leave a tip, thank you! It's greatly appreciated.")
+                Text("This app is free to use. If you've found it helpful and want to leave a tip, thank you! It's greatly appreciated.")
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
@@ -34,28 +28,78 @@ struct TipJarView: View {
 
                 if store.products.isEmpty {
                     ProgressView("Loading tips…")
+                        .padding()
                 } else {
-                    ForEach(store.products, id: \.id) { product in
-                        Button {
-                            Task {
-                                await store.purchase(product)
+                    VStack(spacing: 12) {
+                        ForEach(store.products, id: \.id) { product in
+                            Button {
+                                Task {
+                                    await store.purchase(product)
+                                }
+                            } label: {
+                                HStack {
+                                    Text(product.displayName)
+                                    Spacer()
+                                    
+                                    if store.purchaseState == .purchasing {
+                                        ProgressView()
+                                            .scaleEffect(0.8)
+                                    } else {
+                                        Text(product.displayPrice)
+                                    }
+                                }
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.blue, lineWidth: 1)
+                                )
                             }
-                        } label: {
-                            HStack {
-                                Text(product.displayName)
-                                Spacer()
-                                Text(product.displayPrice)
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color.blue, lineWidth: 1)
-                            )
+                            .foregroundColor(.blue)
+                            .disabled(store.purchaseState == .purchasing)
+                            .opacity(store.purchaseState == .purchasing ? 0.6 : 1.0)
+                            .padding(.horizontal)
                         }
-                        .foregroundColor(.blue)
-                        .padding(.horizontal)
                     }
+                }
+                
+                // Error message
+                if let errorMessage = store.errorMessage {
+                    Text(errorMessage)
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                }
+                
+                // Purchase state feedback
+                switch store.purchaseState {
+                case .purchasing:
+                    HStack {
+                        ProgressView()
+                            .scaleEffect(0.8)
+                        Text("Processing purchase...")
+                    }
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                case .success:
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                        Text("Thank you for your support!")
+                    }
+                    .font(.caption)
+                    .foregroundColor(.green)
+                case .failed:
+                    HStack {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .foregroundColor(.red)
+                        Text("Purchase failed")
+                    }
+                    .font(.caption)
+                    .foregroundColor(.red)
+                case .idle:
+                    EmptyView()
                 }
             }
             .padding()
@@ -64,6 +108,13 @@ struct TipJarView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await store.loadProducts()
+        }
+        .onChange(of: store.purchaseState) { _, newState in
+            if newState == .success {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    store.clearState()
+                }
+            }
         }
     }
 }
