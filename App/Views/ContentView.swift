@@ -43,11 +43,24 @@ struct ContentView: View {
     }
     
     private func formatTimeRemaining() -> String {
-        let hours = Int(timeUntilMidnight) / 3600
-        let minutes = Int(timeUntilMidnight) / 60 % 60
-        let seconds = Int(timeUntilMidnight) % 60
-        
-        return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+        let totalSeconds = Int(timeUntilMidnight)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+
+        var components: [String] = []
+
+        if hours > 0 {
+            components.append("\(hours)h")
+        }
+
+        if minutes > 0 || hours > 0 {
+            components.append("\(minutes)m")
+        }
+
+        components.append("\(seconds)s")
+
+        return components.joined(separator: " ")
     }
 
     var body: some View {
@@ -122,7 +135,7 @@ struct ContentView: View {
                     navigateToTipJar = true
                 }
             } message: {
-                Text("You've opened the app \(sessionTracker.openCount) times. Consider leaving a tip if it’s helped you!")
+                Text("Hi, you've opened the app over \(sessionTracker.openCount) times. Consider leaving a tip if it’s helped you!")
             }
     }
 }
