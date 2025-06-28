@@ -49,8 +49,7 @@ struct DebugPanelView: View {
         // Clear all UserDefaults keys used by the app
         UserDefaults.standard.removeObject(forKey: "sobriety_data")
         UserDefaults.standard.removeObject(forKey: "hasChosenStartDate") 
-        // Keep hasSeenIntro = true for debugging - we don't want to see intro again
-        // UserDefaults.standard.removeObject(forKey: "hasSeenIntro")
+        UserDefaults.standard.removeObject(forKey: "hasSeenIntro")
         
         // Reset DateProvider offset as well
         DateProvider.reset()
