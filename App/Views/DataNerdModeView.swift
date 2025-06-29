@@ -79,7 +79,7 @@ struct DataNerdModeView: View {
                         )
                         
                         QuickStatCard(
-                            title: "Total Sober Days",
+                            title: "Total Success Days",
                             value: "\(dayCounterViewModel.totalSoberDays)",
                             subtitle: "days",
                             icon: "calendar.circle.fill",

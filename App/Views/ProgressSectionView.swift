@@ -54,7 +54,7 @@ struct ProgressSectionView: View {
                         return formatter
                     }()
                     let startDateText = dateFormatter.string(from: viewModel.sobrietyData.currentStartDate)
-                    MetricCardView(icon: "🔥", title: "Current Active Streak", value: "\(viewModel.currentStreak) days\nStarted \(startDateText)", valueColor: .green)
+                    MetricCardView(icon: "🔥", title: "Active Streak Started \(startDateText)", value: "\(viewModel.currentStreak) days", valueColor: .green)
                 } else {
                     MetricCardView(icon: "⭕", title: "No Active Streak", value: "Ready to start", valueColor: .secondary)
                 }

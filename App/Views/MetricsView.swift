@@ -27,7 +27,7 @@ struct MetricsView: View {
                     }
                     
                     Section {
-                        MetricRowView(title: "Total Sober Days", value: "\(viewModel.totalSoberDays) days", icon: "sum")
+                        MetricRowView(title: "Total Success Days", value: "\(viewModel.totalSoberDays) days", icon: "sum")
                         MetricRowView(title: "Average Streak", value: "\(viewModel.averageStreakLength) days", icon: "chart.bar.fill")
                         MetricRowView(title: "Success Rate", value: String(format: "%.1f%%", viewModel.successRate), icon: "percent")
                     } header: {
