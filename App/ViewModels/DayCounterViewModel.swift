@@ -56,6 +56,7 @@ class DayCounterViewModel: ObservableObject {
         sobrietyData.pastStreaks.append(finishedStreak)
         sobrietyData.isActiveStreak = false
         save()
+        MotivationManager.shared.scheduleMotivationalNotifications()
     }
     
     // Start a new streak
@@ -63,6 +64,7 @@ class DayCounterViewModel: ObservableObject {
         sobrietyData.currentStartDate = DateProvider.now
         sobrietyData.isActiveStreak = true
         save()
+        MotivationManager.shared.cancelAllNotifications()
     }
     
     // Start a new streak with custom date
@@ -70,6 +72,7 @@ class DayCounterViewModel: ObservableObject {
         sobrietyData.currentStartDate = date
         sobrietyData.isActiveStreak = true
         save()
+        MotivationManager.shared.cancelAllNotifications()
     }
     
     func cancelStreak() {
@@ -78,6 +81,7 @@ class DayCounterViewModel: ObservableObject {
            Calendar.current.isDate(sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
             sobrietyData.isActiveStreak = false
             save()
+            MotivationManager.shared.scheduleMotivationalNotifications()
         }
     }
     
@@ -96,6 +100,7 @@ class DayCounterViewModel: ObservableObject {
         
         // Force a refresh of the UI
         objectWillChange.send()
+        MotivationManager.shared.scheduleMotivationalNotifications()
     }
     
     func refresh() {
@@ -150,5 +155,4 @@ class DayCounterViewModel: ObservableObject {
         // Success rate is total sober days divided by total tracked days
         return (Double(totalSoberDays) / Double(totalTrackedDays)) * 100
     }
-    
 }

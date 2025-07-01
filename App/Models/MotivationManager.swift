@@ -1,0 +1,95 @@
+//
+//  MotivationManager.swift
+//  IWNDWYT
+//
+//  Created by Mark Gingrass on 6/25/25.
+//
+
+import Foundation
+import UserNotifications
+
+class MotivationManager {
+    static let shared = MotivationManager()
+
+    private let motivationMessages = [
+        "Today's a good day to begin again.",
+        "You owe it to yourself to try.",
+        "Start small. Start now.",
+        "You don't have to be perfect—just start.",
+        "The first step is the hardest. Take it today.",
+        "You're stronger than this habit.",
+        "Your future self will thank you.",
+        "This is your reset button. Tap it.",
+        "Every streak starts with Day One.",
+        "Change begins the moment you decide.",
+        "You deserve a life free from this cycle.",
+        "Nothing changes if nothing changes.",
+        "Start now. Not later. Now.",
+        "Let this be the last time you restart.",
+        "You're not alone in this. Start fresh.",
+        "One day can turn into many.",
+        "Progress beats perfection.",
+        "You've waited long enough. Begin.",
+        "This moment is your turning point.",
+        "Make today count for something bigger."
+    ]
+
+    private init() {}
+
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
+            if granted {
+                print("Notification permission granted.")
+            } else if let error = error {
+                print("Notification permission error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func scheduleMotivationalNotifications() {
+        cancelAllNotifications()
+
+        let center = UNUserNotificationCenter.current()
+        var dateComponents = DateComponents()
+        dateComponents.hour = 9
+        dateComponents.minute = 0
+        
+        var triggerDate = Calendar.current.date(from: dateComponents) ?? Date()
+        
+        if triggerDate < Date() {
+            triggerDate = Calendar.current.date(byAdding: .day, value: 1, to: triggerDate) ?? Date()
+        }
+
+        for (index, message) in motivationMessages.enumerated() {
+            let content = UNMutableNotificationContent()
+            content.title = "IWNDWYT"
+            content.body = message
+            content.sound = .default
+
+            guard let notificationDate = Calendar.current.date(byAdding: .day, value: index, to: triggerDate) else { continue }
+            let triggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
+
+            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: false)
+            let request = UNNotificationRequest(identifier: "motivation_notif_\(index)", content: content, trigger: trigger)
+            
+            center.add(request) { error in
+                if let error = error {
+                    print("Error scheduling notification: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    func cancelAllNotifications() {
+        let center = UNUserNotificationCenter.current()
+        center.getPendingNotificationRequests { requests in
+            let motivationIdentifiers = requests
+                .map { $0.identifier }
+                .filter { $0.hasPrefix("motivation_notif_") }
+            
+            if !motivationIdentifiers.isEmpty {
+                center.removePendingNotificationRequests(withIdentifiers: motivationIdentifiers)
+            }
+        }
+    }
+} 
