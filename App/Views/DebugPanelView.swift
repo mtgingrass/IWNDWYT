@@ -3,9 +3,13 @@ import SwiftUI
 #if DEBUG
 struct DebugPanelView: View {
     @EnvironmentObject private var dayCounterViewModel: DayCounterViewModel
+    @EnvironmentObject private var settings: AppSettingsViewModel
     
     @State private var offset = DateProvider.offsetInDays
     @State private var showingResetAlert = false
+    @State private var debugNotificationHour = MotivationManager.debugNotificationHour
+    @State private var debugNotificationMinute = MotivationManager.debugNotificationMinute
+    @State private var testNotificationMinutes = 1
 
     var body: some View {
         Form {
@@ -21,6 +25,61 @@ struct DebugPanelView: View {
                     DateProvider.reset()
                     offset = 0
                 }
+            }
+            
+            Section(header: Text("Debug: Notifications")) {
+                HStack {
+                    Text("Notification Time:")
+                    Spacer()
+                    Stepper("\(debugNotificationHour):\(String(format: "%02d", debugNotificationMinute))", value: $debugNotificationHour, in: 0...23)
+                        .onChange(of: debugNotificationHour) {
+                            MotivationManager.debugNotificationHour = debugNotificationHour
+                            // Reschedule notifications with new time if enabled
+                            if settings.motivationalNotificationsEnabled {
+                                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: settings.hasChosenStartDate)
+                            }
+                        }
+                }
+                
+                HStack {
+                    Text("Minute:")
+                    Spacer()
+                    Stepper("\(debugNotificationMinute)", value: $debugNotificationMinute, in: 0...59)
+                        .onChange(of: debugNotificationMinute) {
+                            MotivationManager.debugNotificationMinute = debugNotificationMinute
+                            // Reschedule notifications with new time if enabled
+                            if settings.motivationalNotificationsEnabled {
+                                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: settings.hasChosenStartDate)
+                            }
+                        }
+                }
+                
+                Divider()
+                
+                HStack {
+                    Text("Test Notification:")
+                    Spacer()
+                    Stepper("\(testNotificationMinutes) min", value: $testNotificationMinutes, in: 1...60)
+                }
+                
+                Button("Schedule Test Notification") {
+                    MotivationManager.shared.scheduleTestNotification(minutesFromNow: testNotificationMinutes)
+                }
+                .foregroundColor(.blue)
+                
+                Button("Cancel Test Notifications") {
+                    MotivationManager.shared.cancelTestNotifications()
+                }
+                .foregroundColor(.orange)
+                
+                Button("Reschedule Daily Notifications") {
+                    MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: settings.hasChosenStartDate)
+                }
+                .foregroundColor(.green)
+                
+                Text("Current notification time will be used for daily motivational notifications")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
             
             Section(header: Text("Debug: App State")) {

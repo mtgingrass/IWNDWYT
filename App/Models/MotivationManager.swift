@@ -12,6 +12,12 @@ import UIKit
 class MotivationManager {
     static let shared = MotivationManager()
 
+    #if DEBUG
+    // Debug scheduling time - can be modified from Debug Panel
+    static var debugNotificationHour: Int = 9
+    static var debugNotificationMinute: Int = 0
+    #endif
+
     private let motivationMessages = [
         "Today's a good day to begin again.",
         "You owe it to yourself to try.",
@@ -37,13 +43,22 @@ class MotivationManager {
 
     private init() {}
 
+    #if DEBUG
+    private func getNotificationTime() -> (hour: Int, minute: Int) {
+        return (MotivationManager.debugNotificationHour, MotivationManager.debugNotificationMinute)
+    }
+    #else
+    private func getNotificationTime() -> (hour: Int, minute: Int) {
+        return (9, 0) // Always 9:00 AM in release
+    }
+    #endif
+
     func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
-            if granted {
-                print("Notification permission granted.")
-            } else if let error = error {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if let error = error {
                 print("Notification permission error: \(error.localizedDescription)")
             }
+            print("Notification permission granted: \(granted)")
         }
     }
     
@@ -79,8 +94,9 @@ class MotivationManager {
 
         let center = UNUserNotificationCenter.current()
         var dateComponents = DateComponents()
-        dateComponents.hour = 9
-        dateComponents.minute = 0
+        let notificationTime = getNotificationTime()
+        dateComponents.hour = notificationTime.hour
+        dateComponents.minute = notificationTime.minute
         
         var triggerDate = Calendar.current.date(from: dateComponents) ?? Date()
         
@@ -120,4 +136,60 @@ class MotivationManager {
             }
         }
     }
+
+    /// Schedules a single daily motivational notification at 9am if streak hasn't started. Cancels if streak started.
+    func scheduleDailyMotivationIfNeeded(streakStarted: Bool) {
+        let center = UNUserNotificationCenter.current()
+        if streakStarted {
+            center.removePendingNotificationRequests(withIdentifiers: ["dailyMotivation"])
+            return
+        }
+        let message = motivationMessages.randomElement() ?? "You've got this. Start today."
+        let content = UNMutableNotificationContent()
+        content.title = "Motivation for Today"
+        content.body = message
+        content.sound = .default
+        var dateComponents = DateComponents()
+        let notificationTime = getNotificationTime()
+        dateComponents.hour = notificationTime.hour
+        dateComponents.minute = notificationTime.minute
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let request = UNNotificationRequest(
+            identifier: "dailyMotivation",
+            content: content,
+            trigger: trigger
+        )
+        center.add(request) { error in
+            if let error = error {
+                print("Failed to schedule notification: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    #if DEBUG
+    /// Test method to schedule a notification for testing purposes
+    func scheduleTestNotification(minutesFromNow: Int = 1) {
+        let center = UNUserNotificationCenter.current()
+        let content = UNMutableNotificationContent()
+        content.title = "Test Notification"
+        content.body = "This is a test notification from IWNDWYT"
+        content.sound = .default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(minutesFromNow * 60), repeats: false)
+        let request = UNNotificationRequest(identifier: "testNotification", content: content, trigger: trigger)
+        
+        center.add(request) { error in
+            if let error = error {
+                print("Failed to schedule test notification: \(error.localizedDescription)")
+            } else {
+                print("Test notification scheduled for \(minutesFromNow) minute(s) from now")
+            }
+        }
+    }
+    
+    /// Cancel all test notifications
+    func cancelTestNotifications() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["testNotification"])
+    }
+    #endif
 } 

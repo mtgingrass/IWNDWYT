@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import UIKit
+
+class AppDelegate: NSObject, UIApplicationDelegate {}
 
 @main
 struct IWNDWYTApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var dayCounterViewModel = DayCounterViewModel.shared
     @StateObject private var appSettingsViewModel = AppSettingsViewModel.shared
     @StateObject private var sessionTracker = SessionTracker()

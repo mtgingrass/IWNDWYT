@@ -23,10 +23,12 @@ class AppSettingsViewModel: ObservableObject {
 
     func markStartDateChosen() {
         hasChosenStartDate = true
+        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: hasChosenStartDate)
     }
 
     func resetStartDateFlag() {
         hasChosenStartDate = false
+        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: hasChosenStartDate)
     }
     
     func checkNotificationPermission() {
