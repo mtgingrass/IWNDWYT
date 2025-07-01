@@ -135,7 +135,7 @@ struct ContentView: View {
                     navigateToTipJar = true
                 }
             } message: {
-                Text("Hi, you've opened the app over \(sessionTracker.openCount) times. Consider leaving a tip if it’s helped you!")
+                Text("Hi, you've opened the app over \(sessionTracker.openCount) times. Consider leaving a tip if it's helped you!")
             }
     }
 }
@@ -147,6 +147,6 @@ struct ContentView: View {
     }
     .environmentObject(DayCounterViewModel.shared)
     .environmentObject(AppSettingsViewModel.shared)
-    .environmentObject(SessionTracker()) // ✅ this was missing
+    .environmentObject(SessionTracker.shared)
     .preferredColorScheme(.light)
 }

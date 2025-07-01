@@ -4,6 +4,7 @@ import SwiftUI
 struct DebugPanelView: View {
     @EnvironmentObject private var dayCounterViewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
+    @EnvironmentObject private var sessionTracker: SessionTracker
     
     @State private var offset = DateProvider.offsetInDays
     @State private var showingResetAlert = false
@@ -76,6 +77,13 @@ struct DebugPanelView: View {
                     MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: settings.hasChosenStartDate)
                 }
                 .foregroundColor(.green)
+                
+                Divider()
+                
+                Button("Test Motivational Popup") {
+                    sessionTracker.showMotivationalPopup()
+                }
+                .foregroundColor(.purple)
                 
                 Text("Current notification time will be used for daily motivational notifications")
                     .font(.caption)

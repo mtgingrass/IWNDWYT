@@ -1,6 +1,8 @@
 import SwiftUI
 
 class SessionTracker: ObservableObject {
+    static let shared = SessionTracker()
+    
     private let lastOpenKey = "lastOpenDate"
     private let openCountKey = "openCount"
     private let sessionTimeout: TimeInterval = 60 * 15 // 15 minutes
@@ -8,6 +10,22 @@ class SessionTracker: ObservableObject {
 
     @Published var openCount: Int = UserDefaults.standard.integer(forKey: "openCount")
     @Published var shouldShowTipPrompt: Bool = false
+    @Published var shouldShowMotivationalPopup: Bool = false
+    @Published var motivationalMessage: String = ""
+
+    private init() {
+        // Listen for notification to show motivational popup
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showMotivationalPopup),
+            name: .showMotivationalPopup,
+            object: nil
+        )
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     func handleScenePhaseChange(to phase: ScenePhase) {
         guard phase == .active else { return }
@@ -41,5 +59,14 @@ class SessionTracker: ObservableObject {
 
     func dismissTipPrompt() {
         shouldShowTipPrompt = false
+    }
+    
+    @objc func showMotivationalPopup() {
+        motivationalMessage = MotivationManager.shared.getRandomMotivationalMessage()
+        shouldShowMotivationalPopup = true
+    }
+    
+    func dismissMotivationalPopup() {
+        shouldShowMotivationalPopup = false
     }
 }

@@ -10,89 +10,100 @@ import SwiftUI
 struct MainTabView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
+    @EnvironmentObject private var sessionTracker: SessionTracker
     @State private var selectedTab = 0
     @State private var showingSettings = false
     @AppStorage("hasSeenIntro") private var hasSeenIntro: Bool = false
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Main content area with swipe support
-            TabView(selection: $selectedTab) {
-                // Home Tab
-                NavigationView {
-                    ContentView(selectedTab: $selectedTab, showingSettings: $showingSettings)
-                        .navigationBarTitle("IWNDWYT", displayMode: .inline)
-                }
-                .tag(0)
-                
-                // Active Streak Tab (only show if there's an active streak)
-                if viewModel.isActiveStreak {
+        ZStack {
+            VStack(spacing: 0) {
+                // Main content area with swipe support
+                TabView(selection: $selectedTab) {
+                    // Home Tab
                     NavigationView {
-                        ActiveStreakView(selectedTab: $selectedTab, showingSettings: $showingSettings)
+                        ContentView(selectedTab: $selectedTab, showingSettings: $showingSettings)
+                            .navigationBarTitle("IWNDWYT", displayMode: .inline)
                     }
-                    .tag(1)
+                    .tag(0)
+                    
+                    // Active Streak Tab (only show if there's an active streak)
+                    if viewModel.isActiveStreak {
+                        NavigationView {
+                            ActiveStreakView(selectedTab: $selectedTab, showingSettings: $showingSettings)
+                        }
+                        .tag(1)
+                    }
+                    
+                    // Metrics Tab
+                    NavigationView {
+                        MetricsView(showingSettings: $showingSettings)
+                    }
+                    .tag(viewModel.isActiveStreak ? 2 : 1)
+                    
+                    
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .onAppear {
+                    UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.black
+                    UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
+                }
+                .onChange(of: selectedTab) {
+                    // Dismiss settings when user switches tabs
+                    showingSettings = false
                 }
                 
-                // Metrics Tab
+                // Custom Tab Bar
+                HStack {
+                    TabBarButton(
+                        icon: "house.fill",
+                        title: "Home",
+                        isSelected: selectedTab == 0
+                    ) {
+                        selectedTab = 0
+                    }
+                    
+                    if viewModel.isActiveStreak {
+                        TabBarButton(
+                            icon: "flame.fill",
+                            title: "Streak",
+                            isSelected: selectedTab == 1
+                        ) {
+                            selectedTab = 1
+                        }
+                    }
+                    
+                    TabBarButton(
+                        icon: "chart.bar.fill",
+                        title: "Metrics",
+                        isSelected: selectedTab == (viewModel.isActiveStreak ? 2 : 1)
+                    ) {
+                        selectedTab = viewModel.isActiveStreak ? 2 : 1
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top, 8)
+                .background(Color(.systemBackground))
+                .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: -1)
+            }
+            .fullScreenCover(isPresented: .constant(hasSeenIntro && !settings.hasChosenStartDate)) {
+                StartDatePickerView()
+            }
+            .sheet(isPresented: $showingSettings) {
                 NavigationView {
-                    MetricsView(showingSettings: $showingSettings)
+                    SettingsView()
                 }
-                .tag(viewModel.isActiveStreak ? 2 : 1)
-                
-                
-            }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .onAppear {
-                UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.black
-                UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
-            }
-            .onChange(of: selectedTab) {
-                // Dismiss settings when user switches tabs
-                showingSettings = false
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
             }
             
-            // Custom Tab Bar
-            HStack {
-                TabBarButton(
-                    icon: "house.fill",
-                    title: "Home",
-                    isSelected: selectedTab == 0
-                ) {
-                    selectedTab = 0
-                }
-                
-                if viewModel.isActiveStreak {
-                    TabBarButton(
-                        icon: "flame.fill",
-                        title: "Streak",
-                        isSelected: selectedTab == 1
-                    ) {
-                        selectedTab = 1
-                    }
-                }
-                
-                TabBarButton(
-                    icon: "chart.bar.fill",
-                    title: "Metrics",
-                    isSelected: selectedTab == (viewModel.isActiveStreak ? 2 : 1)
-                ) {
-                    selectedTab = viewModel.isActiveStreak ? 2 : 1
-                }
+            // Motivational Popup
+            if sessionTracker.shouldShowMotivationalPopup {
+                MotivationalPopupView(
+                    isPresented: $sessionTracker.shouldShowMotivationalPopup,
+                    message: sessionTracker.motivationalMessage
+                )
             }
-            .padding(.horizontal)
-            .padding(.top, 8)
-            .background(Color(.systemBackground))
-            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: -1)
-        }
-        .fullScreenCover(isPresented: .constant(hasSeenIntro && !settings.hasChosenStartDate)) {
-            StartDatePickerView()
-        }
-        .sheet(isPresented: $showingSettings) {
-            NavigationView {
-                SettingsView()
-            }
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.visible)
         }
     }
 }
@@ -101,5 +112,6 @@ struct MainTabView: View {
     MainTabView()
         .environmentObject(DayCounterViewModel.shared)
         .environmentObject(AppSettingsViewModel.shared)
+        .environmentObject(SessionTracker.shared)
         .preferredColorScheme(.light)
 } 

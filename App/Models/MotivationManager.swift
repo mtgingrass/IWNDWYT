@@ -192,4 +192,9 @@ class MotivationManager {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["testNotification"])
     }
     #endif
+    
+    /// Get a random motivational message for popups
+    func getRandomMotivationalMessage() -> String {
+        return motivationMessages.randomElement() ?? "You've got this. Start today."
+    }
 } 

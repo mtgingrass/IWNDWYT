@@ -27,6 +27,7 @@
 		1E4F59022E0F1C40000EB7B9 /* PreviewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59012E0F1C40000EB7B9 /* PreviewHelpers.swift */; };
 		1E4F59042E0F38F3000EB7B9 /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */; };
 		1E4F59062E0F812B000EB7B9 /* TipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59052E0F812B000EB7B9 /* TipStore.swift */; };
+		1E7A936D2E1446ED00C38E0F /* MotivationalPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A936C2E1446ED00C38E0F /* MotivationalPopupView.swift */; };
 		1EAA16102E0F93D000B904B8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EAA160F2E0F93D000B904B8 /* StoreKit.framework */; };
 		1EAA16122E0F956A00B904B8 /* TipJarStoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */; };
 		1EAA16142E109B6A00B904B8 /* SettingsButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */; };
@@ -80,6 +81,7 @@
 		1E4F59012E0F1C40000EB7B9 /* PreviewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreviewHelpers.swift; path = ../Views/PreviewHelpers.swift; sourceTree = SOURCE_ROOT; };
 		1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarView.swift; sourceTree = "<group>"; };
 		1E4F59052E0F812B000EB7B9 /* TipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TipStore.swift; path = ../Views/TipStore.swift; sourceTree = "<group>"; };
+		1E7A936C2E1446ED00C38E0F /* MotivationalPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivationalPopupView.swift; sourceTree = "<group>"; };
 		1EAA160F2E0F93D000B904B8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = TipJarStoreKit.storekit; path = ../Views/TipJarStoreKit.storekit; sourceTree = SOURCE_ROOT; };
 		1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonStyle.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1E7A936C2E1446ED00C38E0F /* MotivationalPopupView.swift */,
 				1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */,
 				1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */,
 				1E4F58D32E0E22BB000EB7B9 /* ProgressSectionView.swift */,
@@ -403,6 +406,7 @@
 				1E4F58B62E0DC181000EB7B9 /* TabBarButton.swift in Sources */,
 				1E4F59022E0F1C40000EB7B9 /* PreviewHelpers.swift in Sources */,
 				1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */,
+				1E7A936D2E1446ED00C38E0F /* MotivationalPopupView.swift in Sources */,
 				1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */,
 				1E4F59002E0F1AC9000EB7B9 /* IntroView.swift in Sources */,
 				1E0B2F2D2E0CED5C00CF25EE /* AppSettingsViewModel.swift in Sources */,
