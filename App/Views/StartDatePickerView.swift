@@ -72,7 +72,7 @@ struct StartDatePickerView: View {
                     }
                     
                     Button(action: skipDateSelection) {
-                        Text("Skip - Use Today's Date")
+                        Text("Not Today - I will start another time")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
