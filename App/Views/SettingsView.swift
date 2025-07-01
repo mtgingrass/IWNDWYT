@@ -11,6 +11,7 @@ struct SettingsView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @State private var showResetConfirmation = false
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var settings: AppSettingsViewModel
     
     var body: some View {
         List {
@@ -33,7 +34,19 @@ struct SettingsView: View {
             } header: {
                 Text("Resources")
             }
-            
+            Section {
+                Toggle(isOn: $settings.motivationalNotificationsEnabled) {
+                    Label("Motivational Reminders", systemImage: "bell")
+                }
+                
+                if settings.motivationalNotificationsEnabled {
+                    NotificationPermissionView()
+                }
+            } header: {
+                Text("Notifications")
+            } footer: {
+                Text("Receive daily motivational messages to help you stay on track.")
+            }
             Section {
                 Link(destination: URL(string: "mailto:iwndwytoday@markgingrass.com")!) {
                     Label("Contact Support", systemImage: "envelope")
@@ -56,6 +69,80 @@ struct SettingsView: View {
             }
         } message: {
             Text("Are you sure you want to reset all data? This action cannot be undone.")
+        }
+    }
+}
+
+struct NotificationPermissionView: View {
+    @EnvironmentObject private var settings: AppSettingsViewModel
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: permissionIcon)
+                    .foregroundColor(permissionColor)
+                Text(permissionText)
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                Spacer()
+            }
+            
+            if settings.notificationPermissionStatus == .denied {
+                Button("Open Settings") {
+                    settings.openSystemSettings()
+                }
+                .font(.footnote)
+                .foregroundColor(.blue)
+            } else if settings.notificationPermissionStatus == .notDetermined {
+                Button("Request Permission") {
+                    settings.requestNotificationPermission()
+                }
+                .font(.footnote)
+                .foregroundColor(.blue)
+            }
+        }
+        .padding(.vertical, 4)
+        .onAppear {
+            settings.checkNotificationPermission()
+        }
+    }
+    
+    private var permissionIcon: String {
+        switch settings.notificationPermissionStatus {
+        case .authorized, .provisional, .ephemeral:
+            return "checkmark.circle.fill"
+        case .denied:
+            return "xmark.circle.fill"
+        case .notDetermined:
+            return "questionmark.circle.fill"
+        @unknown default:
+            return "questionmark.circle.fill"
+        }
+    }
+    
+    private var permissionColor: Color {
+        switch settings.notificationPermissionStatus {
+        case .authorized, .provisional, .ephemeral:
+            return .green
+        case .denied:
+            return .red
+        case .notDetermined:
+            return .orange
+        @unknown default:
+            return .orange
+        }
+    }
+    
+    private var permissionText: String {
+        switch settings.notificationPermissionStatus {
+        case .authorized, .provisional, .ephemeral:
+            return "Notifications enabled"
+        case .denied:
+            return "Notifications disabled in system settings"
+        case .notDetermined:
+            return "Notification permission not determined"
+        @unknown default:
+            return "Unknown notification status"
         }
     }
 }

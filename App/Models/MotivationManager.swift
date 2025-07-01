@@ -7,6 +7,7 @@
 
 import Foundation
 import UserNotifications
+import UIKit
 
 class MotivationManager {
     static let shared = MotivationManager()
@@ -46,7 +47,34 @@ class MotivationManager {
         }
     }
     
+    func checkNotificationPermission(completion: @escaping (UNAuthorizationStatus) -> Void) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                completion(settings.authorizationStatus)
+            }
+        }
+    }
+    
+    func openSystemSettings() {
+        if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingsUrl)
+        }
+    }
+    
     func scheduleMotivationalNotifications() {
+        checkNotificationPermission { [weak self] status in
+            switch status {
+            case .authorized, .provisional, .ephemeral:
+                self?.scheduleNotifications()
+            case .denied, .notDetermined:
+                print("Notifications not authorized. Status: \(status.rawValue)")
+            @unknown default:
+                print("Unknown notification authorization status")
+            }
+        }
+    }
+    
+    private func scheduleNotifications() {
         cancelAllNotifications()
 
         let center = UNUserNotificationCenter.current()
