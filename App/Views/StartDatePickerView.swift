@@ -95,7 +95,7 @@ struct StartDatePickerView: View {
     }
     
     private func skipDateSelection() {
-        dayCounterViewModel.startStreak()
+        // Don't start a streak - just mark that they've seen the picker
         appSettings.markStartDateChosen()
         dismiss()
     }

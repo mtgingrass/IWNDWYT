@@ -98,17 +98,28 @@ class MotivationManager {
         dateComponents.hour = notificationTime.hour
         dateComponents.minute = notificationTime.minute
         
+        #if DEBUG
+        // In debug mode, use the current date with the debug time
+        var triggerDate = Calendar.current.date(from: dateComponents) ?? Date()
+        
+        // If the debug time has already passed today, schedule for tomorrow
+        if triggerDate < DateProvider.now {
+            triggerDate = Calendar.current.date(byAdding: .day, value: 1, to: triggerDate) ?? Date()
+        }
+        #else
         var triggerDate = Calendar.current.date(from: dateComponents) ?? Date()
         
         if triggerDate < Date() {
             triggerDate = Calendar.current.date(byAdding: .day, value: 1, to: triggerDate) ?? Date()
         }
+        #endif
 
         for (index, message) in motivationMessages.enumerated() {
             let content = UNMutableNotificationContent()
             content.title = "IWNDWYT"
             content.body = message
             content.sound = .default
+            content.badge = NSNumber(value: index + 1)
 
             guard let notificationDate = Calendar.current.date(byAdding: .day, value: index, to: triggerDate) else { continue }
             let triggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
@@ -119,6 +130,8 @@ class MotivationManager {
             center.add(request) { error in
                 if let error = error {
                     print("Error scheduling notification: \(error.localizedDescription)")
+                } else {
+                    print("✅ Scheduled notification \(index) for: \(notificationDate)")
                 }
             }
         }
@@ -133,35 +146,105 @@ class MotivationManager {
             
             if !motivationIdentifiers.isEmpty {
                 center.removePendingNotificationRequests(withIdentifiers: motivationIdentifiers)
+                print("🗑️ Cancelled \(motivationIdentifiers.count) motivation notifications")
             }
         }
     }
 
-    /// Schedules a single daily motivational notification at 9am if streak hasn't started. Cancels if streak started.
+    /// Schedules a single daily motivational notification at specified time if streak hasn't started. Cancels if streak started.
     func scheduleDailyMotivationIfNeeded(streakStarted: Bool) {
+        print("🔔 scheduleDailyMotivationIfNeeded called with streakStarted: \(streakStarted)")
+        
         let center = UNUserNotificationCenter.current()
         if streakStarted {
+            print("🔔 Streak started - cancelling daily motivation")
             center.removePendingNotificationRequests(withIdentifiers: ["dailyMotivation"])
             return
         }
+        
+        // First, cancel any existing daily motivation
+        center.removePendingNotificationRequests(withIdentifiers: ["dailyMotivation"])
+        
         let message = motivationMessages.randomElement() ?? "You've got this. Start today."
         let content = UNMutableNotificationContent()
         content.title = "Motivation for Today"
         content.body = message
         content.sound = .default
+        content.badge = NSNumber(value: 1)
+        
         var dateComponents = DateComponents()
         let notificationTime = getNotificationTime()
         dateComponents.hour = notificationTime.hour
         dateComponents.minute = notificationTime.minute
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        print("🔔 Debug notification time: \(notificationTime.hour):\(notificationTime.minute)")
+        
+        #if DEBUG
+        // In debug mode, use DateProvider.now instead of Date()
+        let currentDate = DateProvider.now
+        print("🔔 Current debug date: \(currentDate)")
+        
+        // Create the trigger date for today using current debug date
+        let calendar = Calendar.current
+        var triggerComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+        triggerComponents.hour = notificationTime.hour
+        triggerComponents.minute = notificationTime.minute
+        
+        guard let triggerDate = calendar.date(from: triggerComponents) else {
+            print("❌ Could not create trigger date")
+            return
+        }
+        
+        print("🔔 Initial trigger date: \(triggerDate)")
+        
+        // If the time has already passed today, schedule for tomorrow
+        let finalTriggerDate: Date
+        if triggerDate <= currentDate {
+            finalTriggerDate = calendar.date(byAdding: .day, value: 1, to: triggerDate) ?? triggerDate
+            print("🔔 Time passed today, scheduling for tomorrow: \(finalTriggerDate)")
+        } else {
+            finalTriggerDate = triggerDate
+            print("🔔 Time is in future, scheduling for today: \(finalTriggerDate)")
+        }
+        
+        // Create final trigger components
+        let finalTriggerComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: finalTriggerDate)
+        
+        #else
+        // Release mode - use normal Date()
+        var triggerDate = Calendar.current.date(from: dateComponents) ?? Date()
+        
+        // If the time has already passed today, schedule for tomorrow
+        if triggerDate < Date() {
+            triggerDate = Calendar.current.date(byAdding: .day, value: 1, to: triggerDate) ?? Date()
+            print("🔔 Time passed today, scheduling for tomorrow: \(triggerDate)")
+        } else {
+            print("🔔 Time is in future, scheduling for today: \(triggerDate)")
+        }
+        
+        let finalTriggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate)
+        #endif
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: finalTriggerComponents, repeats: false)
+        
+        print("🔔 Final trigger components: \(finalTriggerComponents)")
+        print("🔔 Trigger next fire date: \(trigger.nextTriggerDate() ?? Date())")
+        
         let request = UNNotificationRequest(
             identifier: "dailyMotivation",
             content: content,
             trigger: trigger
         )
+        
         center.add(request) { error in
             if let error = error {
-                print("Failed to schedule notification: \(error.localizedDescription)")
+                print("❌ Failed to schedule notification: \(error.localizedDescription)")
+            } else {
+                #if DEBUG
+                print("✅ Daily motivation scheduled for: \(finalTriggerDate)")
+                #else
+                print("✅ Daily motivation scheduled for: \(triggerDate)")
+                #endif
             }
         }
     }
@@ -169,27 +252,71 @@ class MotivationManager {
     #if DEBUG
     /// Test method to schedule a notification for testing purposes
     func scheduleTestNotification(minutesFromNow: Int = 1) {
+        print("🧪 Scheduling test notification for \(minutesFromNow) minute(s) from now")
         let center = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
         content.title = "Test Notification"
-        content.body = "This is a test notification from IWNDWYT"
+        content.body = "This is a test notification from IWNDWYT at \(DateFormatter.localizedString(from: DateProvider.now, dateStyle: .none, timeStyle: .medium))"
         content.sound = .default
+        content.badge = NSNumber(value: 1)
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(minutesFromNow * 60), repeats: false)
         let request = UNNotificationRequest(identifier: "testNotification", content: content, trigger: trigger)
         
         center.add(request) { error in
             if let error = error {
-                print("Failed to schedule test notification: \(error.localizedDescription)")
+                print("❌ Failed to schedule test notification: \(error.localizedDescription)")
             } else {
-                print("Test notification scheduled for \(minutesFromNow) minute(s) from now")
+                print("✅ Test notification scheduled for \(minutesFromNow) minute(s) from now")
             }
         }
     }
     
-    /// Cancel all test notifications
+    /// Schedule a debug notification that respects the DateProvider offset
+    func scheduleDebugNotification(minutesFromNow: Int = 1) {
+        print("🧪 Scheduling debug notification for \(minutesFromNow) minute(s) from DateProvider.now")
+        let center = UNUserNotificationCenter.current()
+        let content = UNMutableNotificationContent()
+        content.title = "Debug Notification"
+        content.body = "Debug notification fired at \(DateFormatter.localizedString(from: DateProvider.now, dateStyle: .short, timeStyle: .medium))"
+        content.sound = .default
+        content.badge = NSNumber(value: 1)
+        
+        // Calculate the real-world time when this should fire
+        let realTriggerTime = Date().addingTimeInterval(TimeInterval(minutesFromNow * 60))
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(minutesFromNow * 60), repeats: false)
+        let request = UNNotificationRequest(identifier: "debugNotification", content: content, trigger: trigger)
+        
+        center.add(request) { error in
+            if let error = error {
+                print("❌ Failed to schedule debug notification: \(error.localizedDescription)")
+            } else {
+                print("✅ Debug notification scheduled to fire at real time: \(realTriggerTime)")
+            }
+        }
+    }
+    
+    /// Cancel all test and debug notifications
     func cancelTestNotifications() {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["testNotification"])
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["testNotification", "debugNotification"])
+        print("🗑️ Cancelled test notifications")
+    }
+    
+    /// Debug method to list all pending notifications
+    func listPendingNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            print("📋 Pending notifications (\(requests.count)):")
+            for request in requests {
+                var triggerInfo = "Unknown trigger"
+                if let calendarTrigger = request.trigger as? UNCalendarNotificationTrigger {
+                    triggerInfo = "Calendar: \(calendarTrigger.nextTriggerDate() ?? Date())"
+                } else if let intervalTrigger = request.trigger as? UNTimeIntervalNotificationTrigger {
+                    triggerInfo = "Interval: \(intervalTrigger.timeInterval)s"
+                }
+                print("  - \(request.identifier): \(triggerInfo)")
+            }
+        }
     }
     #endif
     
@@ -197,4 +324,4 @@ class MotivationManager {
     func getRandomMotivationalMessage() -> String {
         return motivationMessages.randomElement() ?? "You've got this. Start today."
     }
-} 
+}

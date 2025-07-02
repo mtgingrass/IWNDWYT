@@ -33,6 +33,13 @@ class SessionTracker: ObservableObject {
         let now = Date()
         let lastOpen = UserDefaults.standard.object(forKey: lastOpenKey) as? Date ?? .distantPast
 
+        // Check if app was opened with a badge
+        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        if currentBadgeNumber > 0 {
+            // App was opened with a badge - show motivational popup
+            showMotivationalPopup()
+        }
+
         if now.timeIntervalSince(lastOpen) > sessionTimeout {
             incrementOpenCount()
             UserDefaults.standard.set(now, forKey: lastOpenKey)

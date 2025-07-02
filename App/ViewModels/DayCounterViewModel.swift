@@ -56,7 +56,7 @@ class DayCounterViewModel: ObservableObject {
         sobrietyData.pastStreaks.append(finishedStreak)
         sobrietyData.isActiveStreak = false
         save()
-        MotivationManager.shared.scheduleMotivationalNotifications()
+        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
     }
     
     // Start a new streak
@@ -81,7 +81,7 @@ class DayCounterViewModel: ObservableObject {
            Calendar.current.isDate(sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
             sobrietyData.isActiveStreak = false
             save()
-            MotivationManager.shared.scheduleMotivationalNotifications()
+            MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
         }
     }
     
@@ -100,7 +100,7 @@ class DayCounterViewModel: ObservableObject {
         
         // Force a refresh of the UI
         objectWillChange.send()
-        MotivationManager.shared.scheduleMotivationalNotifications()
+        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
     }
     
     func refresh() {

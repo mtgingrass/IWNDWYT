@@ -37,7 +37,8 @@ struct DebugPanelView: View {
                             MotivationManager.debugNotificationHour = debugNotificationHour
                             // Reschedule notifications with new time if enabled
                             if settings.motivationalNotificationsEnabled {
-                                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: settings.hasChosenStartDate)
+                                let isActiveStreak = dayCounterViewModel.isActiveStreak
+                                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
                             }
                         }
                 }
@@ -50,7 +51,8 @@ struct DebugPanelView: View {
                             MotivationManager.debugNotificationMinute = debugNotificationMinute
                             // Reschedule notifications with new time if enabled
                             if settings.motivationalNotificationsEnabled {
-                                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: settings.hasChosenStartDate)
+                                let isActiveStreak = dayCounterViewModel.isActiveStreak
+                                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
                             }
                         }
                 }
@@ -74,7 +76,8 @@ struct DebugPanelView: View {
                 .foregroundColor(.orange)
                 
                 Button("Reschedule Daily Notifications") {
-                    MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: settings.hasChosenStartDate)
+                    let isActiveStreak = dayCounterViewModel.isActiveStreak
+                    MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
                 }
                 .foregroundColor(.green)
                 
@@ -84,6 +87,36 @@ struct DebugPanelView: View {
                     sessionTracker.showMotivationalPopup()
                 }
                 .foregroundColor(.purple)
+                
+                Button("Set Badge (1)") {
+                    UIApplication.shared.applicationIconBadgeNumber = 1
+                }
+                .foregroundColor(.orange)
+                
+                Button("Clear Badge") {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                }
+                .foregroundColor(.red)
+                
+                Divider()
+                
+                Button("Check Streak Status") {
+                    print("🔍 Streak status: hasChosenStartDate = \(settings.hasChosenStartDate)")
+                    print("🔍 Active streak: \(dayCounterViewModel.isActiveStreak)")
+                    print("🔍 Current badge number: \(UIApplication.shared.applicationIconBadgeNumber)")
+                }
+                .foregroundColor(.gray)
+                
+                Button("Check Notification Permissions") {
+                    UNUserNotificationCenter.current().getNotificationSettings { settings in
+                        print("🔍 Notification settings:")
+                        print("   - Authorization status: \(settings.authorizationStatus.rawValue)")
+                        print("   - Alert setting: \(settings.alertSetting.rawValue)")
+                        print("   - Badge setting: \(settings.badgeSetting.rawValue)")
+                        print("   - Sound setting: \(settings.soundSetting.rawValue)")
+                    }
+                }
+                .foregroundColor(.gray)
                 
                 Text("Current notification time will be used for daily motivational notifications")
                     .font(.caption)

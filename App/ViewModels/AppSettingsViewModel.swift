@@ -23,12 +23,16 @@ class AppSettingsViewModel: ObservableObject {
 
     func markStartDateChosen() {
         hasChosenStartDate = true
-        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: hasChosenStartDate)
+        // Check if there's an active streak to determine notification scheduling
+        let isActiveStreak = DayCounterViewModel.shared.isActiveStreak
+        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
     }
 
     func resetStartDateFlag() {
         hasChosenStartDate = false
-        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: hasChosenStartDate)
+        // Check if there's an active streak to determine notification scheduling
+        let isActiveStreak = DayCounterViewModel.shared.isActiveStreak
+        MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
     }
     
     func checkNotificationPermission() {
