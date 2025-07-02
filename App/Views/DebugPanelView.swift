@@ -11,6 +11,8 @@ struct DebugPanelView: View {
     @State private var debugNotificationHour = MotivationManager.debugNotificationHour
     @State private var debugNotificationMinute = MotivationManager.debugNotificationMinute
     @State private var testNotificationMinutes = 1
+    @State private var feedbackMessage = ""
+    @State private var showingFeedback = false
 
     var body: some View {
         Form {
@@ -28,14 +30,22 @@ struct DebugPanelView: View {
                 }
             }
             
-            Section(header: Text("Debug: Notifications")) {
+            Section(header: Text("Notifications")) {
+                // Notification Time
                 HStack {
-                    Text("Notification Time:")
+                    Text("Daily Time:")
                     Spacer()
-                    Stepper("\(debugNotificationHour):\(String(format: "%02d", debugNotificationMinute))", value: $debugNotificationHour, in: 0...23)
+                    Text("\(debugNotificationHour):\(String(format: "%02d", debugNotificationMinute))")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.blue)
+                }
+                
+                HStack {
+                    Stepper("Hour: \(debugNotificationHour)", value: $debugNotificationHour, in: 0...23)
                         .onChange(of: debugNotificationHour) {
                             MotivationManager.debugNotificationHour = debugNotificationHour
-                            // Reschedule notifications with new time if enabled
+                            showFeedback("Time updated to \(debugNotificationHour):\(String(format: "%02d", debugNotificationMinute))")
                             if settings.motivationalNotificationsEnabled {
                                 let isActiveStreak = dayCounterViewModel.isActiveStreak
                                 MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
@@ -44,12 +54,10 @@ struct DebugPanelView: View {
                 }
                 
                 HStack {
-                    Text("Minute:")
-                    Spacer()
-                    Stepper("\(debugNotificationMinute)", value: $debugNotificationMinute, in: 0...59)
+                    Stepper("Minute: \(debugNotificationMinute)", value: $debugNotificationMinute, in: 0...59, step: 15)
                         .onChange(of: debugNotificationMinute) {
                             MotivationManager.debugNotificationMinute = debugNotificationMinute
-                            // Reschedule notifications with new time if enabled
+                            showFeedback("Time updated to \(debugNotificationHour):\(String(format: "%02d", debugNotificationMinute))")
                             if settings.motivationalNotificationsEnabled {
                                 let isActiveStreak = dayCounterViewModel.isActiveStreak
                                 MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
@@ -59,68 +67,76 @@ struct DebugPanelView: View {
                 
                 Divider()
                 
-                HStack {
-                    Text("Test Notification:")
-                    Spacer()
-                    Stepper("\(testNotificationMinutes) min", value: $testNotificationMinutes, in: 1...60)
-                }
-                
-                Button("Schedule Test Notification") {
-                    MotivationManager.shared.scheduleTestNotification(minutesFromNow: testNotificationMinutes)
-                }
-                .foregroundColor(.blue)
-                
-                Button("Cancel Test Notifications") {
-                    MotivationManager.shared.cancelTestNotifications()
-                }
-                .foregroundColor(.orange)
-                
-                Button("Reschedule Daily Notifications") {
-                    let isActiveStreak = dayCounterViewModel.isActiveStreak
-                    MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
-                }
-                .foregroundColor(.green)
-                
-                Divider()
-                
-                Button("Test Motivational Popup") {
-                    sessionTracker.showMotivationalPopup()
-                }
-                .foregroundColor(.purple)
-                
-                Button("Set Badge (1)") {
-                    UIApplication.shared.applicationIconBadgeNumber = 1
-                }
-                .foregroundColor(.orange)
-                
-                Button("Clear Badge") {
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                }
-                .foregroundColor(.red)
-                
-                Divider()
-                
-                Button("Check Streak Status") {
-                    print("🔍 Streak status: hasChosenStartDate = \(settings.hasChosenStartDate)")
-                    print("🔍 Active streak: \(dayCounterViewModel.isActiveStreak)")
-                    print("🔍 Current badge number: \(UIApplication.shared.applicationIconBadgeNumber)")
-                }
-                .foregroundColor(.gray)
-                
-                Button("Check Notification Permissions") {
-                    UNUserNotificationCenter.current().getNotificationSettings { settings in
-                        print("🔍 Notification settings:")
-                        print("   - Authorization status: \(settings.authorizationStatus.rawValue)")
-                        print("   - Alert setting: \(settings.alertSetting.rawValue)")
-                        print("   - Badge setting: \(settings.badgeSetting.rawValue)")
-                        print("   - Sound setting: \(settings.soundSetting.rawValue)")
+                // Quick Test
+                VStack(spacing: 12) {
+                    Text("Quick Test")
+                        .font(.headline)
+                    
+                    HStack(spacing: 12) {
+                        Button("30 sec") {
+                            MotivationManager.shared.scheduleDebugNotification(secondsFromNow: 30)
+                            showFeedback("✅ Notification scheduled for 30 seconds")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .foregroundColor(.white)
+                        .tint(.orange)
+                        
+                        Button("1 min") {
+                            MotivationManager.shared.scheduleTestNotification(minutesFromNow: 1)
+                            showFeedback("✅ Notification scheduled for 1 minute")
+                        }
+                        .buttonStyle(.bordered)
+                        
+                        Button("Test Popup") {
+                            sessionTracker.showMotivationalPopup()
+                            showFeedback("✅ Motivational popup triggered")
+                        }
+                        .buttonStyle(.bordered)
+                        .foregroundColor(.purple)
                     }
                 }
-                .foregroundColor(.gray)
                 
-                Text("Current notification time will be used for daily motivational notifications")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                Divider()
+                
+                // Management
+                VStack(spacing: 8) {
+                    Text("Management")
+                        .font(.headline)
+                    
+                    HStack {
+                        Button("Reschedule Daily") {
+                            let isActiveStreak = dayCounterViewModel.isActiveStreak
+                            MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
+                            showFeedback("✅ Daily notifications rescheduled")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .foregroundColor(.white)
+                        .tint(.green)
+                        
+                        Button("Cancel All") {
+                            MotivationManager.shared.cancelAllNotifications()
+                            showFeedback("❌ All notifications cancelled")
+                        }
+                        .buttonStyle(.bordered)
+                        .foregroundColor(.red)
+                    }
+                }
+                
+                // Feedback Display
+                if showingFeedback {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                        Text(feedbackMessage)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    .padding(8)
+                    .background(Color.green.opacity(0.1))
+                    .cornerRadius(8)
+                    .transition(.opacity)
+                }
             }
             
             RatingDebugSection()
@@ -144,6 +160,25 @@ struct DebugPanelView: View {
             }
         } message: {
             Text("This will clear all user defaults and reset the app to a fresh install state. This action cannot be undone.")
+        }
+        .onAppear {
+            // Sync debug panel state with MotivationManager
+            debugNotificationHour = MotivationManager.debugNotificationHour
+            debugNotificationMinute = MotivationManager.debugNotificationMinute
+        }
+    }
+    
+    private func showFeedback(_ message: String) {
+        feedbackMessage = message
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showingFeedback = true
+        }
+        
+        // Auto-hide after 2.5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                showingFeedback = false
+            }
         }
     }
     

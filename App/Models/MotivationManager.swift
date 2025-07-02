@@ -140,13 +140,15 @@ class MotivationManager {
     func cancelAllNotifications() {
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests { requests in
-            let motivationIdentifiers = requests
+            let allNotificationIdentifiers = requests
                 .map { $0.identifier }
-                .filter { $0.hasPrefix("motivation_notif_") }
+                .filter { $0.hasPrefix("motivation_notif_") || $0 == "dailyMotivation" }
             
-            if !motivationIdentifiers.isEmpty {
-                center.removePendingNotificationRequests(withIdentifiers: motivationIdentifiers)
-                print("🗑️ Cancelled \(motivationIdentifiers.count) motivation notifications")
+            if !allNotificationIdentifiers.isEmpty {
+                center.removePendingNotificationRequests(withIdentifiers: allNotificationIdentifiers)
+                print("🗑️ Cancelled \(allNotificationIdentifiers.count) notifications: \(allNotificationIdentifiers)")
+            } else {
+                print("🗑️ No motivation notifications to cancel")
             }
         }
     }
@@ -167,7 +169,7 @@ class MotivationManager {
         
         let message = motivationMessages.randomElement() ?? "You've got this. Start today."
         let content = UNMutableNotificationContent()
-        content.title = "Motivation for Today"
+        content.title = "IWNDWYT"
         content.body = message
         content.sound = .default
         content.badge = NSNumber(value: 1)
@@ -225,7 +227,7 @@ class MotivationManager {
         let finalTriggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate)
         #endif
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: finalTriggerComponents, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: finalTriggerComponents, repeats: true)
         
         print("🔔 Final trigger components: \(finalTriggerComponents)")
         print("🔔 Trigger next fire date: \(trigger.nextTriggerDate() ?? Date())")
@@ -253,46 +255,83 @@ class MotivationManager {
     /// Test method to schedule a notification for testing purposes
     func scheduleTestNotification(minutesFromNow: Int = 1) {
         print("🧪 Scheduling test notification for \(minutesFromNow) minute(s) from now")
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "Test Notification"
-        content.body = "This is a test notification from IWNDWYT at \(DateFormatter.localizedString(from: DateProvider.now, dateStyle: .none, timeStyle: .medium))"
-        content.sound = .default
-        content.badge = NSNumber(value: 1)
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(minutesFromNow * 60), repeats: false)
-        let request = UNNotificationRequest(identifier: "testNotification", content: content, trigger: trigger)
-        
-        center.add(request) { error in
-            if let error = error {
-                print("❌ Failed to schedule test notification: \(error.localizedDescription)")
-            } else {
-                print("✅ Test notification scheduled for \(minutesFromNow) minute(s) from now")
+        // First check permissions
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("🔍 Test notification permission status: \(settings.authorizationStatus.rawValue)")
+            
+            guard settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional else {
+                print("❌ Test notification failed: Not authorized")
+                return
+            }
+            
+            let center = UNUserNotificationCenter.current()
+            let message = self.motivationMessages.randomElement() ?? "Test notification"
+            let content = UNMutableNotificationContent()
+            content.title = "IWNDWYT"
+            content.subtitle = message
+            content.body = "Tap for motivation"
+            content.sound = .default
+            content.badge = NSNumber(value: 1)
+            
+            let timeInterval = TimeInterval(minutesFromNow * 60)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
+            
+            // Use unique identifier with timestamp
+            let identifier = "testNotification_\(Date().timeIntervalSince1970)"
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+            
+            center.add(request) { error in
+                if let error = error {
+                    print("❌ Failed to schedule test notification: \(error.localizedDescription)")
+                } else {
+                    let fireTime = Date().addingTimeInterval(timeInterval)
+                    print("✅ Test notification scheduled for \(minutesFromNow) minute(s) from now")
+                    print("✅ Will fire at: \(DateFormatter.localizedString(from: fireTime, dateStyle: .none, timeStyle: .medium))")
+                    print("✅ Identifier: \(identifier)")
+                }
             }
         }
     }
     
     /// Schedule a debug notification that respects the DateProvider offset
-    func scheduleDebugNotification(minutesFromNow: Int = 1) {
-        print("🧪 Scheduling debug notification for \(minutesFromNow) minute(s) from DateProvider.now")
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "Debug Notification"
-        content.body = "Debug notification fired at \(DateFormatter.localizedString(from: DateProvider.now, dateStyle: .short, timeStyle: .medium))"
-        content.sound = .default
-        content.badge = NSNumber(value: 1)
+    func scheduleDebugNotification(secondsFromNow: Int = 30) {
+        let timeInterval = max(1, secondsFromNow) // Ensure minimum 1 second
+        print("🧪 Scheduling debug notification for \(timeInterval) second(s) from now")
         
-        // Calculate the real-world time when this should fire
-        let realTriggerTime = Date().addingTimeInterval(TimeInterval(minutesFromNow * 60))
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(minutesFromNow * 60), repeats: false)
-        let request = UNNotificationRequest(identifier: "debugNotification", content: content, trigger: trigger)
-        
-        center.add(request) { error in
-            if let error = error {
-                print("❌ Failed to schedule debug notification: \(error.localizedDescription)")
-            } else {
-                print("✅ Debug notification scheduled to fire at real time: \(realTriggerTime)")
+        // First check permissions
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("🔍 Debug notification permission status: \(settings.authorizationStatus.rawValue)")
+            
+            guard settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional else {
+                print("❌ Debug notification failed: Not authorized")
+                return
+            }
+            
+            let center = UNUserNotificationCenter.current()
+            let content = UNMutableNotificationContent()
+            let message = self.motivationMessages.randomElement() ?? "Test notification"
+            content.title = "IWNDWYT"
+            content.subtitle = message
+            content.body = "Quick test - tap for motivation"
+            content.sound = .default
+            content.badge = NSNumber(value: 1)
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeInterval), repeats: false)
+            
+            // Use unique identifier with timestamp
+            let identifier = "debugNotification_\(Date().timeIntervalSince1970)"
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+            
+            center.add(request) { error in
+                if let error = error {
+                    print("❌ Failed to schedule debug notification: \(error.localizedDescription)")
+                } else {
+                    let fireTime = Date().addingTimeInterval(TimeInterval(timeInterval))
+                    print("✅ Debug notification scheduled for \(timeInterval) seconds from now")
+                    print("✅ Will fire at: \(DateFormatter.localizedString(from: fireTime, dateStyle: .none, timeStyle: .medium))")
+                    print("✅ Identifier: \(identifier)")
+                }
             }
         }
     }
