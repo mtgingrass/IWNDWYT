@@ -4,8 +4,6 @@ struct MilestoneProgressView: View {
     let currentStreak: Int
     @State private var celebratingMilestones: Set<Int> = []
     @State private var lastCelebrated: Int = -1
-    @State private var showingMajorCelebration = false
-    @State private var celebrationMilestone: Milestone?
     
     private let milestones = [
         // Row 1 - Early Wins
@@ -182,18 +180,6 @@ struct MilestoneProgressView: View {
             // Initialize celebration state
             lastCelebrated = currentStreak
         }
-        .overlay(
-            // Major milestone celebration overlay
-            Group {
-                if showingMajorCelebration, let milestone = celebrationMilestone {
-                    MilestoneCelebrationView(
-                        isPresented: $showingMajorCelebration,
-                        milestone: milestone,
-                        currentStreak: currentStreak
-                    )
-                }
-            }
-        )
     }
     
     private func checkForNewMilestones(newStreak: Int) {
@@ -220,13 +206,7 @@ struct MilestoneProgressView: View {
             celebratingMilestones.insert(milestoneDay)
         }
         
-        // Show major celebration popup for significant milestones
-        if isMajorMilestone(milestoneDay) {
-            if let milestone = milestones.first(where: { $0.days == milestoneDay }) {
-                celebrationMilestone = milestone
-                showingMajorCelebration = true
-            }
-        }
+        // Major milestone celebrations are now handled globally by DayCounterViewModel
         
         // Auto-remove celebration after 3 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
@@ -241,13 +221,6 @@ struct MilestoneProgressView: View {
         let majorMilestones = [7, 14, 30, 60, 90, 180, 365, 730, 1095]
         return majorMilestones.contains(days)
     }
-}
-
-struct Milestone: Identifiable {
-    let id = UUID()
-    let days: Int
-    let title: String
-    let emoji: String
 }
 
 #Preview {

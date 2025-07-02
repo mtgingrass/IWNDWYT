@@ -199,6 +199,9 @@ struct DebugPanelView: View {
             isActiveStreak: false
         )
         
+        // Reset milestone tracking
+        dayCounterViewModel.resetMilestoneTracking()
+        
         // Reset app settings using shared instance - this will trigger StartDatePickerView
         AppSettingsViewModel.shared.hasChosenStartDate = false
         

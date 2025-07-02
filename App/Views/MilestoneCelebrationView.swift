@@ -75,7 +75,7 @@ struct MilestoneCelebrationView: View {
                             .animation(.spring(response: 0.6, dampingFraction: 0.7).delay(0.6), value: showContent)
                         
                         // Streak count with emphasis
-                        Text("\\(currentStreak) DAYS STRONG!")
+                        Text("\(currentStreak) DAYS STRONG!")
                             .font(.system(size: 16, weight: .semibold, design: .rounded))
                             .foregroundColor(.white.opacity(0.9))
                             .tracking(1)

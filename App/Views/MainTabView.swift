@@ -104,6 +104,15 @@ struct MainTabView: View {
                     message: sessionTracker.motivationalMessage
                 )
             }
+            
+            // Global Milestone Celebration
+            if viewModel.showingMilestoneCelebration, let milestone = viewModel.celebrationMilestone {
+                MilestoneCelebrationView(
+                    isPresented: $viewModel.showingMilestoneCelebration,
+                    milestone: milestone,
+                    currentStreak: viewModel.currentStreak
+                )
+            }
         }
     }
 }
