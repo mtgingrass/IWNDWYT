@@ -29,6 +29,7 @@
 		1E4F59062E0F812B000EB7B9 /* TipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F59052E0F812B000EB7B9 /* TipStore.swift */; };
 		1E7A936D2E1446ED00C38E0F /* MotivationalPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A936C2E1446ED00C38E0F /* MotivationalPopupView.swift */; };
 		1E7A93712E14AF4400C38E0F /* RatingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A93702E14AF4400C38E0F /* RatingManager.swift */; };
+		1E7A93732E15872F00C38E0F /* MilestoneCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A93722E15872F00C38E0F /* MilestoneCelebrationView.swift */; };
 		1EAA16102E0F93D000B904B8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EAA160F2E0F93D000B904B8 /* StoreKit.framework */; };
 		1EAA16122E0F956A00B904B8 /* TipJarStoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */; };
 		1EAA16142E109B6A00B904B8 /* SettingsButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */; };
@@ -84,6 +85,7 @@
 		1E4F59052E0F812B000EB7B9 /* TipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TipStore.swift; path = ../Views/TipStore.swift; sourceTree = "<group>"; };
 		1E7A936C2E1446ED00C38E0F /* MotivationalPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivationalPopupView.swift; sourceTree = "<group>"; };
 		1E7A93702E14AF4400C38E0F /* RatingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingManager.swift; sourceTree = "<group>"; };
+		1E7A93722E15872F00C38E0F /* MilestoneCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCelebrationView.swift; sourceTree = "<group>"; };
 		1EAA160F2E0F93D000B904B8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1EAA16112E0F956A00B904B8 /* TipJarStoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = TipJarStoreKit.storekit; path = ../Views/TipJarStoreKit.storekit; sourceTree = SOURCE_ROOT; };
 		1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonStyle.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		1ED34BEF2E0C5EF4007C9143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1E7A93722E15872F00C38E0F /* MilestoneCelebrationView.swift */,
 				1E7A936C2E1446ED00C38E0F /* MotivationalPopupView.swift */,
 				1EAA16132E109B6A00B904B8 /* SettingsButtonStyle.swift */,
 				1E4F58FD2E0E30B3000EB7B9 /* DataNerdModeView.swift */,
@@ -407,6 +410,7 @@
 				1EAA16162E10A8B000B904B8 /* SessionTracker.swift in Sources */,
 				1E0B2F2B2E0CE67F00CF25EE /* MilestoneProgressView.swift in Sources */,
 				1ED34C012E0CB9B0007C9143 /* DebugPanelView.swift in Sources */,
+				1E7A93732E15872F00C38E0F /* MilestoneCelebrationView.swift in Sources */,
 				1E4F58B62E0DC181000EB7B9 /* TabBarButton.swift in Sources */,
 				1E4F59022E0F1C40000EB7B9 /* PreviewHelpers.swift in Sources */,
 				1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */,
@@ -583,7 +587,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8ST43C8H2Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -596,7 +600,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.00;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.markgingrass.IWNDWYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -615,7 +619,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8ST43C8H2Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -628,7 +632,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.00;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.markgingrass.IWNDWYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
