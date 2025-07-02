@@ -2,6 +2,10 @@ import SwiftUI
 
 struct MilestoneProgressView: View {
     let currentStreak: Int
+    @State private var celebratingMilestones: Set<Int> = []
+    @State private var lastCelebrated: Int = -1
+    @State private var showingMajorCelebration = false
+    @State private var celebrationMilestone: Milestone?
     
     private let milestones = [
         // Row 1 - Early Wins
@@ -49,26 +53,110 @@ struct MilestoneProgressView: View {
                         Circle()
                             .stroke(Color(.systemGray5), lineWidth: 4)
                         
-                        // Progress circle
+                        // Progress circle with gradient
                         Circle()
                             .trim(from: 0, to: min(CGFloat(currentStreak) / CGFloat(milestone.days), 1.0))
                             .stroke(
-                                currentStreak >= milestone.days ? Color.green : Color.green.opacity(0.5),
-                                style: StrokeStyle(lineWidth: 4, lineCap: .round)
+                                currentStreak >= milestone.days ? 
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.green, .mint, .cyan]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ) : 
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.green.opacity(0.5), .green.opacity(0.3)]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                style: StrokeStyle(lineWidth: 6, lineCap: .round)
                             )
                             .rotationEffect(.degrees(-90))
+                            .scaleEffect(currentStreak >= milestone.days && celebratingMilestones.contains(milestone.days) ? 1.2 : 1.0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.7), value: currentStreak)
                         
-                        // Center content
+                        // Glow effect for completed milestones
+                        if currentStreak >= milestone.days {
+                            Circle()
+                                .stroke(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [.cyan.opacity(0.3), .green.opacity(0.3)]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 12
+                                )
+                                .blur(radius: 4)
+                                .scaleEffect(celebratingMilestones.contains(milestone.days) ? 1.3 : 1.1)
+                                .opacity(celebratingMilestones.contains(milestone.days) ? 0.8 : 0.4)
+                                .animation(.easeInOut(duration: 2).repeatForever(autoreverses: true), value: celebratingMilestones.contains(milestone.days))
+                        }
+                        
+                        // Celebration particles
+                        if celebratingMilestones.contains(milestone.days) {
+                            ForEach(0..<8, id: \.self) { index in
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [.yellow, .orange, .red]),
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .frame(width: 4, height: 4)
+                                    .offset(
+                                        x: cos(Double(index) * .pi / 4) * 30,
+                                        y: sin(Double(index) * .pi / 4) * 30
+                                    )
+                                    .scaleEffect(celebratingMilestones.contains(milestone.days) ? 1.5 : 0)
+                                    .opacity(celebratingMilestones.contains(milestone.days) ? 1 : 0)
+                                    .animation(
+                                        .spring(response: 0.6, dampingFraction: 0.8)
+                                        .delay(Double(index) * 0.1),
+                                        value: celebratingMilestones.contains(milestone.days)
+                                    )
+                            }
+                        }
+                        
+                        // Center content with enhanced styling
                         VStack(spacing: 2) {
                             Text(milestone.emoji)
                                 .font(.title2)
-                                .opacity(currentStreak >= milestone.days ? 1 : 0.3)
+                                .scaleEffect(currentStreak >= milestone.days ? 
+                                    (celebratingMilestones.contains(milestone.days) ? 1.5 : 1.2) : 0.8)
+                                .opacity(currentStreak >= milestone.days ? 1 : 0.4)
+                                .shadow(
+                                    color: currentStreak >= milestone.days ? .yellow.opacity(0.6) : .clear,
+                                    radius: celebratingMilestones.contains(milestone.days) ? 8 : 0
+                                )
+                                .animation(.spring(response: 0.5, dampingFraction: 0.6), value: currentStreak)
                             
                             if currentStreak < milestone.days {
                                 Text("\(currentStreak)/\(milestone.days)")
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
+                                    .fontWeight(.medium)
                             }
+                        }
+                        
+                        // Completion checkmark
+                        if currentStreak >= milestone.days {
+                            VStack {
+                                HStack {
+                                    Spacer()
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .background(
+                                            Circle()
+                                                .fill(.green)
+                                                .frame(width: 16, height: 16)
+                                        )
+                                        .scaleEffect(celebratingMilestones.contains(milestone.days) ? 1.3 : 1.0)
+                                        .animation(.spring(response: 0.4, dampingFraction: 0.6), value: celebratingMilestones.contains(milestone.days))
+                                }
+                                Spacer()
+                            }
+                            .frame(width: 55, height: 55)
                         }
                     }
                     .frame(width: 55, height: 55)
@@ -79,13 +167,79 @@ struct MilestoneProgressView: View {
                         .multilineTextAlignment(.center)
                         .frame(height: 28)
                 }
-                .animation(.spring(response: 0.3), value: currentStreak)
+                .scaleEffect(celebratingMilestones.contains(milestone.days) ? 1.1 : 1.0)
+                .animation(.spring(response: 0.5, dampingFraction: 0.7), value: currentStreak)
+                .onChange(of: currentStreak) { _, newValue in
+                    checkForNewMilestones(newStreak: newValue)
+                }
             }
             //Spacer()  // Center the items if row is not full
         }
     }
 }
         .padding(.horizontal)
+        .onAppear {
+            // Initialize celebration state
+            lastCelebrated = currentStreak
+        }
+        .overlay(
+            // Major milestone celebration overlay
+            Group {
+                if showingMajorCelebration, let milestone = celebrationMilestone {
+                    MilestoneCelebrationView(
+                        isPresented: $showingMajorCelebration,
+                        milestone: milestone,
+                        currentStreak: currentStreak
+                    )
+                }
+            }
+        )
+    }
+    
+    private func checkForNewMilestones(newStreak: Int) {
+        // Find newly completed milestones
+        let newlyCompleted = milestones.filter { milestone in
+            newStreak >= milestone.days && lastCelebrated < milestone.days
+        }
+        
+        // Trigger celebrations for new milestones
+        for milestone in newlyCompleted {
+            triggerCelebration(for: milestone.days)
+        }
+        
+        lastCelebrated = newStreak
+    }
+    
+    private func triggerCelebration(for milestoneDay: Int) {
+        // Add haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
+        impactFeedback.impactOccurred()
+        
+        // Start visual celebration
+        withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+            celebratingMilestones.insert(milestoneDay)
+        }
+        
+        // Show major celebration popup for significant milestones
+        if isMajorMilestone(milestoneDay) {
+            if let milestone = milestones.first(where: { $0.days == milestoneDay }) {
+                celebrationMilestone = milestone
+                showingMajorCelebration = true
+            }
+        }
+        
+        // Auto-remove celebration after 3 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            withAnimation(.easeOut(duration: 0.5)) {
+                _ = celebratingMilestones.remove(milestoneDay)
+            }
+        }
+    }
+    
+    private func isMajorMilestone(_ days: Int) -> Bool {
+        // Define which milestones get the full celebration treatment
+        let majorMilestones = [7, 14, 30, 60, 90, 180, 365, 730, 1095]
+        return majorMilestones.contains(days)
     }
 }
 
