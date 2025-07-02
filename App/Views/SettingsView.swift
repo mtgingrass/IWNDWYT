@@ -59,6 +59,26 @@ struct SettingsView: View {
             } header: {
                 Text("Support")
             }
+            Section {
+                if RatingManager.shared.shouldShowRateAppOption {
+                    Button {
+                        RatingManager.shared.forceRatingRequest()
+                    } label: {
+                        Label("Rate IWNDWYT", systemImage: "star")
+                    }
+                }
+                
+                Link(destination: URL(string: "mailto:iwndwytoday@markgingrass.com")!) {
+                    Label("Contact Support", systemImage: "envelope")
+                }
+                NavigationLink {
+                    AboutView()
+                } label: {
+                    Label("About", systemImage: "info.circle")
+                }
+            } header: {
+                Text("Support")
+            }
         }
         .navigationTitle("Settings")
         .alert("Reset All Data", isPresented: $showResetConfirmation) {

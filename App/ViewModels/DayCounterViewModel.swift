@@ -12,6 +12,7 @@ class DayCounterViewModel: ObservableObject {
     static let shared = DayCounterViewModel()
     
     @Published var sobrietyData: SobrietyData
+    @Published var showingRatingRequest = false
 
     private let storageKey = "sobriety_data"
 
@@ -110,7 +111,17 @@ class DayCounterViewModel: ObservableObject {
     // Calculate days since currentStartDate
     var currentStreak: Int {
         guard sobrietyData.isActiveStreak else { return 0 }
-        return Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: DateProvider.now).day ?? 0
+        let streak = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: DateProvider.now).day ?? 0
+        
+        // Check for rating request when streak is calculated
+        DispatchQueue.main.async {
+            RatingManager.shared.checkForRatingRequest(
+                currentStreak: streak,
+                isActiveStreak: self.sobrietyData.isActiveStreak
+            )
+        }
+        
+        return streak
     }
 
     var totalAttempts: Int {
@@ -155,4 +166,11 @@ class DayCounterViewModel: ObservableObject {
         // Success rate is total sober days divided by total tracked days
         return (Double(totalSoberDays) / Double(totalTrackedDays)) * 100
     }
+    func checkForRatingRequest() {
+        RatingManager.shared.checkForRatingRequest(
+            currentStreak: currentStreak,
+            isActiveStreak: isActiveStreak
+        )
+    }
+    
 }

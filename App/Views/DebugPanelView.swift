@@ -123,6 +123,8 @@ struct DebugPanelView: View {
                     .foregroundColor(.secondary)
             }
             
+            RatingDebugSection()
+            
             Section(header: Text("Debug: App State")) {
                 Button("Reset All User Defaults", role: .destructive) {
                     showingResetAlert = true
@@ -148,7 +150,7 @@ struct DebugPanelView: View {
     private func resetAllUserDefaults() {
         // Clear all UserDefaults keys used by the app
         UserDefaults.standard.removeObject(forKey: "sobriety_data")
-        UserDefaults.standard.removeObject(forKey: "hasChosenStartDate") 
+        UserDefaults.standard.removeObject(forKey: "hasChosenStartDate")
         UserDefaults.standard.removeObject(forKey: "hasSeenIntro")
         
         // Reset DateProvider offset as well
@@ -157,8 +159,8 @@ struct DebugPanelView: View {
         
         // Reset ViewModels to fresh state
         dayCounterViewModel.sobrietyData = SobrietyData(
-            currentStartDate: DateProvider.now, 
-            pastStreaks: [], 
+            currentStartDate: DateProvider.now,
+            pastStreaks: [],
             isActiveStreak: false
         )
         
@@ -170,6 +172,123 @@ struct DebugPanelView: View {
         AppSettingsViewModel.shared.objectWillChange.send()
     }
 }
+
+struct RatingDebugSection: View {
+    @StateObject private var ratingManager = RatingManager.shared
+    @EnvironmentObject private var dayCounter: DayCounterViewModel
+    
+    var body: some View {
+        Section("Rating System Debug") {
+            VStack(alignment: .leading, spacing: 12) {
+                // Debug Info Display - use detailedDebugInfo if you added the extension, otherwise debugInfo
+                Text(ratingManager.detailedDebugInfo)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(8)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+                
+                // Test Controls
+                HStack {
+                    Button("Force Rating Request") {
+                        ratingManager.forceRatingRequest()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    Button("Reset Rating Data") {
+                        ratingManager.resetRatingData()
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    Button("Complete Reset") {
+                        ratingManager.completeReset()
+                    }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(.red)
+                }
+                
+                // Simulate Optimal Conditions
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Test Scenarios:")
+                        .font(.headline)
+                    
+                    HStack {
+                        Button("Day 3") {
+                            simulateStreakDay(3)
+                        }
+                        .buttonStyle(.bordered)
+                        
+                        Button("Day 7") {
+                            simulateStreakDay(7)
+                        }
+                        .buttonStyle(.bordered)
+                        
+                        Button("Day 14") {
+                            simulateStreakDay(14)
+                        }
+                        .buttonStyle(.bordered)
+                        
+                        Button("Day 30") {
+                            simulateStreakDay(30)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+                
+                // Current State
+                HStack {
+                    Text("Current Streak:")
+                    Text("\(dayCounter.currentStreak) days")
+                        .fontWeight(.bold)
+                    Text("Active:")
+                    Text(dayCounter.isActiveStreak ? "Yes" : "No")
+                        .fontWeight(.bold)
+                        .foregroundColor(dayCounter.isActiveStreak ? .green : .red)
+                }
+                .font(.caption)
+                
+                // Test rating eligibility
+                Button("Test Rating Eligibility") {
+                    let currentStreak = dayCounter.currentStreak
+                    let isActive = dayCounter.isActiveStreak
+                    let wouldShow = ratingManager.wouldShowRatingFor(streak: currentStreak, isActive: isActive)
+                    let optimalConditions = ratingManager.testOptimalConditions(currentStreak: currentStreak)
+                    
+                    print("🧪 Rating Test Results:")
+                    print("   Current streak: \(currentStreak), Active: \(isActive)")
+                    print("   Would show rating: \(wouldShow)")
+                    print("   Optimal conditions: \(optimalConditions)")
+                    
+                    if let nextMilestone = ratingManager.getNextMilestone(currentStreak: currentStreak) {
+                        print("   Next milestone: Day \(nextMilestone)")
+                    }
+                }
+                .buttonStyle(.bordered)
+                .foregroundColor(.blue)
+            }
+        }
+    }
+    
+    private func simulateStreakDay(_ targetDay: Int) {
+        // Calculate how many days to offset to reach target streak
+        let currentStreak = dayCounter.currentStreak
+        let daysToOffset = targetDay - currentStreak
+        
+        #if DEBUG
+        // Temporarily set the date offset
+        DateProvider.offsetInDays += daysToOffset
+        
+        // Trigger the rating check
+        ratingManager.checkForRatingRequest(
+            currentStreak: targetDay,
+            isActiveStreak: true
+        )
+        
+        // Post notification for UI refresh
+        NotificationCenter.default.post(name: .dateOffsetChanged, object: nil)
+        
+        print("🧪 Simulated streak day \(targetDay), offset: \(DateProvider.offsetInDays)")
+        #endif
+    }
+}
 #endif
-
-
