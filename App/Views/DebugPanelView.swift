@@ -2,6 +2,7 @@ import SwiftUI
 
 #if DEBUG
 struct DebugPanelView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var dayCounterViewModel: DayCounterViewModel
     @EnvironmentObject private var settings: AppSettingsViewModel
     @EnvironmentObject private var sessionTracker: SessionTracker
@@ -153,6 +154,14 @@ struct DebugPanelView: View {
             }
         }
         .navigationTitle("Debug Panel")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done") {
+                    // This will be handled by the presenting view's @Environment
+                    dismiss()
+                }
+            }
+        }
         .alert("Reset All Data", isPresented: $showingResetAlert) {
             Button("Cancel", role: .cancel) { }
             Button("Reset", role: .destructive) {

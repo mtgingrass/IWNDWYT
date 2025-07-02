@@ -30,6 +30,7 @@ struct ContentView: View {
     @State private var timeUntilMidnight: TimeInterval = 0
     @State private var navigateToStreakView = false
     @State private var navigateToTipJar = false
+    @State private var showingDebugPanel = false
     
     @AppStorage("hasSeenIntro") private var hasSeenIntro: Bool = false
     
@@ -74,8 +75,8 @@ struct ContentView: View {
                 ProgressSectionView()
 
                 #if DEBUG
-                NavigationLink("Open Debug Panel") {
-                    DebugPanelView()
+                Button("Open Debug Panel") {
+                    showingDebugPanel = true
                 }
                 .font(.footnote)
                 .padding(.top)
@@ -137,6 +138,13 @@ struct ContentView: View {
             } message: {
                 Text("Hi, you've opened the app over \(sessionTracker.openCount) times. Consider leaving a tip if it's helped you!")
             }
+            #if DEBUG
+            .fullScreenCover(isPresented: $showingDebugPanel) {
+                NavigationView {
+                    DebugPanelView()
+                }
+            }
+            #endif
     }
 }
 
