@@ -81,7 +81,8 @@ struct CalendarView: View {
                         DayCell(date: date,
                                isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
                                status: getDayStatus(date),
-                               isInDisplayedMonth: calendar.isDate(date, equalTo: displayedMonth, toGranularity: .month))
+                               isInDisplayedMonth: calendar.isDate(date, equalTo: displayedMonth, toGranularity: .month),
+                               isToday: calendar.isDate(date, inSameDayAs: DateProvider.now))
                             .onTapGesture {
                                 selectedDate = date
                             }
@@ -137,10 +138,24 @@ struct CalendarView: View {
     private func getDayStatus(_ date: Date) -> DayStatus {
         guard date <= DateProvider.now else { return .future }
         
-        // Check if it's within any streak
+        // Check if it's within any past streak (end date is the relapse day, so exclude it)
         for streak in viewModel.sobrietyData.pastStreaks {
-            if date >= streak.startDate && date <= streak.endDate {
-                return .sober
+            // Special case: if start date equals end date, it means streak started and ended same day (relapse day)
+            if Calendar.current.isDate(streak.startDate, inSameDayAs: streak.endDate) {
+                if Calendar.current.isDate(date, inSameDayAs: streak.endDate) {
+                    return .nonSober
+                }
+            } else {
+                // Normal streak: days within range are sober, end date is relapse
+                let isEndDate = Calendar.current.isDate(date, inSameDayAs: streak.endDate)
+                let isWithinStreak = date >= streak.startDate && !isEndDate
+                
+                if isEndDate {
+                    return .nonSober
+                }
+                if isWithinStreak {
+                    return .sober
+                }
             }
         }
         
@@ -173,6 +188,7 @@ struct DayCell: View {
     let isSelected: Bool
     let status: DayStatus
     let isInDisplayedMonth: Bool
+    let isToday: Bool
     
     private var backgroundColor: Color {
         switch status {
@@ -200,16 +216,34 @@ struct DayCell: View {
     }
     
     var body: some View {
-        Text(date.formatted(.dateTime.day()))
-            .font(.callout)
-            .frame(maxWidth: .infinity)
-            .aspectRatio(1, contentMode: .fill)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
-            .overlay(
-                RoundedRectangle(cornerRadius: 4)
-                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 1)
-            )
+        ZStack {
+            Text(date.formatted(.dateTime.day()))
+                .font(.callout)
+                .fontWeight(isToday ? .bold : .regular)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fill)
+                .background(backgroundColor)
+                .foregroundColor(textColor)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 1)
+                )
+            
+            // Today indicator
+            if isToday {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 6, height: 6)
+                            .padding(.trailing, 4)
+                            .padding(.bottom, 4)
+                    }
+                }
+            }
+        }
     }
 }
 
