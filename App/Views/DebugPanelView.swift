@@ -142,6 +142,8 @@ struct DebugPanelView: View {
             
             RatingDebugSection()
             
+            DummyDataSection()
+            
             Section(header: Text("Debug: App State")) {
                 Button("Reset All User Defaults", role: .destructive) {
                     showingResetAlert = true
@@ -197,9 +199,23 @@ struct DebugPanelView: View {
         UserDefaults.standard.removeObject(forKey: "hasChosenStartDate")
         UserDefaults.standard.removeObject(forKey: "hasSeenIntro")
         
+        // Clear session tracking data
+        UserDefaults.standard.removeObject(forKey: "openCount")
+        UserDefaults.standard.removeObject(forKey: "lastOpenDate")
+        UserDefaults.standard.removeObject(forKey: "lastMilestoneShown")
+        
+        // Clear dummy data flag
+        UserDefaults.standard.removeObject(forKey: "dummy_data_active")
+        
+        // Clear tip store data
+        UserDefaults.standard.removeObject(forKey: "purchased_products")
+        
         // Reset DateProvider offset as well
         DateProvider.reset()
         offset = 0
+        
+        // Reset DummyDataManager state
+        DummyDataManager.shared.isDummyDataActive = false
         
         // Reset ViewModels to fresh state
         dayCounterViewModel.sobrietyData = SobrietyData(
@@ -214,9 +230,15 @@ struct DebugPanelView: View {
         // Reset app settings using shared instance - this will trigger StartDatePickerView
         AppSettingsViewModel.shared.hasChosenStartDate = false
         
+        // Reset session tracker
+        SessionTracker.shared.openCount = 0
+        SessionTracker.shared.shouldShowTipPrompt = false
+        SessionTracker.shared.shouldShowMotivationalPopup = false
+        
         // Force UI refresh
         dayCounterViewModel.objectWillChange.send()
         AppSettingsViewModel.shared.objectWillChange.send()
+        SessionTracker.shared.objectWillChange.send()
     }
 }
 
@@ -336,6 +358,168 @@ struct RatingDebugSection: View {
         
         print("🧪 Simulated streak day \(targetDay), offset: \(DateProvider.offsetInDays)")
         #endif
+    }
+}
+
+struct DummyDataSection: View {
+    @EnvironmentObject private var dayCounterViewModel: DayCounterViewModel
+    @State private var selectedScenario: DummyDataManager.DummyDataScenario = .successStory
+    @State private var showingScenarioStats = false
+    @State private var feedbackMessage = ""
+    @State private var showingFeedback = false
+    
+    private var isDummyDataActive: Bool {
+        DummyDataManager.shared.isDummyDataActive
+    }
+    
+    var body: some View {
+        Section("Screenshot Data Generator") {
+            VStack(alignment: .leading, spacing: 16) {
+                // Status indicator
+                HStack {
+                    Image(systemName: isDummyDataActive ? "camera.fill" : "person.fill")
+                        .foregroundColor(isDummyDataActive ? .orange : .blue)
+                    Text(isDummyDataActive ? "Dummy Data Active" : "Real Data Active")
+                        .font(.headline)
+                        .foregroundColor(isDummyDataActive ? .orange : .blue)
+                    Spacer()
+                }
+                .padding(8)
+                .background((isDummyDataActive ? Color.orange : Color.blue).opacity(0.1))
+                .cornerRadius(8)
+                
+                // Scenario selection
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Select Scenario:")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                    
+                    Picker("Scenario", selection: $selectedScenario) {
+                        ForEach(DummyDataManager.DummyDataScenario.allCases, id: \.self) { scenario in
+                            Text(scenario.rawValue).tag(scenario)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    
+                    Text(selectedScenario.description)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 8)
+                }
+                
+                // Preview stats
+                Button("Preview Stats") {
+                    showScenarioPreview()
+                }
+                .buttonStyle(.bordered)
+                
+                // Action buttons
+                HStack(spacing: 12) {
+                    Button("Apply Dummy Data") {
+                        applyDummyData()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .foregroundColor(.white)
+                    .tint(.orange)
+                    .disabled(isDummyDataActive)
+                    
+                    Button("Restore Real Data") {
+                        restoreRealData()
+                    }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(.blue)
+                    .disabled(!isDummyDataActive)
+                }
+                
+                // Feedback display
+                if showingFeedback {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                        Text(feedbackMessage)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    .padding(8)
+                    .background(Color.green.opacity(0.1))
+                    .cornerRadius(8)
+                    .transition(.opacity)
+                }
+                
+                // Current stats display
+                if isDummyDataActive {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Current Stats:")
+                            .font(.caption)
+                            .fontWeight(.medium)
+                        
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Streak: \(dayCounterViewModel.currentStreak)d")
+                                Text("Total: \(dayCounterViewModel.totalSoberDays)d")
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing) {
+                                Text("Longest: \(dayCounterViewModel.longestStreak)d")
+                                Text("Attempts: \(dayCounterViewModel.totalAttempts)")
+                            }
+                        }
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    }
+                    .padding(8)
+                    .background(Color.gray.opacity(0.05))
+                    .cornerRadius(8)
+                }
+                
+                // Warning
+                Text("⚠️ Dummy data is for screenshots only. Remember to restore real data when done.")
+                    .font(.caption)
+                    .foregroundColor(.orange)
+                    .padding(8)
+                    .background(Color.orange.opacity(0.1))
+                    .cornerRadius(8)
+            }
+        }
+    }
+    
+    private func applyDummyData() {
+        DummyDataManager.shared.applyDummyData(scenario: selectedScenario, to: dayCounterViewModel)
+        showFeedback("🎭 Applied \(selectedScenario.rawValue) dummy data")
+    }
+    
+    private func restoreRealData() {
+        DummyDataManager.shared.restoreRealData(to: dayCounterViewModel)
+        showFeedback("🔄 Restored real data - app reset")
+    }
+    
+    private func showScenarioPreview() {
+        let stats = DummyDataManager.shared.getScenarioStats(scenario: selectedScenario)
+        let message = "Preview: \(stats.currentStreak)d streak, \(stats.totalDays)d total, \(stats.longestStreak)d longest, \(stats.attempts) attempts"
+        showFeedback(message)
+    }
+    
+    private func showFeedback(_ message: String) {
+        feedbackMessage = message
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showingFeedback = true
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                showingFeedback = false
+            }
+        }
+    }
+}
+
+#Preview {
+    NavigationView {
+        DebugPanelView()
+            .environmentObject(DayCounterViewModel.shared)
+            .environmentObject(AppSettingsViewModel.shared)
+            .environmentObject(SessionTracker.shared)
     }
 }
 #endif

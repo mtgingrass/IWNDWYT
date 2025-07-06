@@ -34,3 +34,12 @@ struct MetricCardView: View {
         .cornerRadius(12)
     }
 }
+
+#Preview {
+    VStack(spacing: 16) {
+        MetricCardView(icon: "🔥", title: "Current Streak", value: "7 days", valueColor: .primary)
+        MetricCardView(icon: "⭐️", title: "Longest Streak", value: "30 days", valueColor: .green)
+        MetricCardView(icon: "📊", title: "Success Rate", value: "85.2%", valueColor: .blue)
+    }
+    .padding()
+}

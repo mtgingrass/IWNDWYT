@@ -12,4 +12,25 @@ extension View {
     func settingsButtonStyle() -> some View {
         modifier(SettingsButtonStyle())
     }
+}
+
+#Preview {
+    HStack(spacing: 20) {
+        Button("Regular") { }
+        
+        Button {
+            // Action
+        } label: {
+            Image(systemName: "gear")
+        }
+        .settingsButtonStyle()
+        
+        Button {
+            // Action
+        } label: {
+            Image(systemName: "plus")
+        }
+        .settingsButtonStyle()
+    }
+    .padding()
 } 

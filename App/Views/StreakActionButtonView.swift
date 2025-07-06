@@ -24,17 +24,36 @@ struct StreakActionButtonView: View {
                 }
             }
         }) {
-            HStack {
+            HStack(spacing: 12) {
                 Image(systemName: viewModel.isActiveStreak ? "flame.fill" : "sunrise.fill")
-                    .imageScale(.large)
+                    .font(.title2)
+                    .foregroundColor(.white)
                 Text(viewModel.isActiveStreak ? "View Active Streak" : "Start New Streak")
                     .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
             }
-            .foregroundColor(.white)
-            .padding()
+            .padding(.vertical, 18)
+            .padding(.horizontal, 24)
             .frame(maxWidth: .infinity)
-            .background(viewModel.isActiveStreak ? Color.orange : Color.green)
-            .cornerRadius(10)
+            .background(
+                LinearGradient(
+                    colors: viewModel.isActiveStreak ? 
+                        [Color.green.opacity(0.8), Color.green] : 
+                        [Color.red.opacity(0.8), Color.red],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .cornerRadius(16)
+            .shadow(
+                color: viewModel.isActiveStreak ? 
+                    Color.green.opacity(0.4) : 
+                    Color.red.opacity(0.4),
+                radius: 10,
+                x: 0,
+                y: 5
+            )
         }
         .disabled(false)
         .padding(.horizontal)

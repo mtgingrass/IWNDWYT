@@ -69,11 +69,12 @@ struct MetricsView: View {
                 .padding(.horizontal)
                 
                 // Calendar Section
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text("Calendar")
                         .font(.headline)
                         .foregroundColor(.secondary)
                         .padding(.horizontal)
+                        .padding(.bottom, 4)
                     
                     CalendarView()
                         .frame(height: 210)

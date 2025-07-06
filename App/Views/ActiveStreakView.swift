@@ -106,33 +106,56 @@ struct ActiveStreakView: View {
                 }
 
                 // End/Cancel Buttons
-                VStack(spacing: 12) {
+                VStack(spacing: 16) {
                     Button(action: {
                         showEndConfirmation = true
                     }) {
-                        Text("End Streak")
-                            .foregroundColor(.red)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(10)
+                        HStack(spacing: 8) {
+                            Image(systemName: "stop.circle.fill")
+                                .font(.title3)
+                            Text("End Streak")
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                        }
+                        .foregroundColor(.white)
+                        .padding(.vertical, 16)
+                        .padding(.horizontal, 24)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            LinearGradient(
+                                colors: [Color.red.opacity(0.8), Color.red],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .cornerRadius(16)
+                        .shadow(color: Color.red.opacity(0.3), radius: 8, x: 0, y: 4)
                     }
 
                     if Calendar.current.isDate(viewModel.sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
                         Button(action: {
                             showCancelConfirmation = true
                         }) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "arrow.uturn.backward")
+                            HStack(spacing: 8) {
+                                Image(systemName: "arrow.uturn.backward.circle")
+                                    .font(.title3)
                                 Text("Cancel Streak")
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
                             }
-                            .font(.subheadline)
                             .foregroundColor(.red)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 20)
                             .frame(maxWidth: .infinity)
-                            .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
-                            .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.red.opacity(0.3), lineWidth: 1))
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemBackground))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .strokeBorder(Color.red.opacity(0.4), lineWidth: 1.5)
+                                    )
+                            )
+                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
                         }
                     }
                 }

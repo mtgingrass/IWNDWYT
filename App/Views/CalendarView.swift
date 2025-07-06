@@ -27,6 +27,17 @@ struct CalendarView: View {
     
     var body: some View {
         VStack(spacing: 8) {
+            // Explanatory note
+            Text("If a streak ends on the same day a new streak begins, that day will appear neutral but won't count against the new streak")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
+            
             // Month navigation
             HStack {
                 Button {
