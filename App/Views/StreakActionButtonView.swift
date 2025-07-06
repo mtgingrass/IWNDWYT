@@ -10,6 +10,7 @@ import SwiftUI
 struct StreakActionButtonView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @Binding var selectedTab: Int
+    @State private var pulseScale: CGFloat = 1.0
     
     var body: some View {
         Button(action: {
@@ -27,7 +28,21 @@ struct StreakActionButtonView: View {
             HStack(spacing: 12) {
                 Image(systemName: viewModel.isActiveStreak ? "flame.fill" : "sunrise.fill")
                     .font(.title2)
-                    .foregroundColor(.white)
+                    .foregroundColor(viewModel.isActiveStreak ? 
+                        Color.orange.mix(with: .red, by: 0.3) : .white)
+                    .scaleEffect(viewModel.isActiveStreak && !UIAccessibility.isReduceMotionEnabled ? pulseScale : 1.0)
+                    .onAppear {
+                        if viewModel.isActiveStreak && !UIAccessibility.isReduceMotionEnabled {
+                            startPulseAnimation()
+                        }
+                    }
+                    .onChange(of: viewModel.isActiveStreak) {
+                        if viewModel.isActiveStreak && !UIAccessibility.isReduceMotionEnabled {
+                            startPulseAnimation()
+                        } else {
+                            stopPulseAnimation()
+                        }
+                    }
                 Text(viewModel.isActiveStreak ? "View Active Streak" : "Start New Streak")
                     .font(.headline)
                     .fontWeight(.semibold)
@@ -58,6 +73,18 @@ struct StreakActionButtonView: View {
         .disabled(false)
         .padding(.horizontal)
         .padding(.bottom, 8)
+    }
+    
+    private func startPulseAnimation() {
+        withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
+            pulseScale = 1.15
+        }
+    }
+    
+    private func stopPulseAnimation() {
+        withAnimation(.easeOut(duration: 0.5)) {
+            pulseScale = 1.0
+        }
     }
 }
 
