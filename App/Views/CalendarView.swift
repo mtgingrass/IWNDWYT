@@ -138,40 +138,37 @@ struct CalendarView: View {
     private func getDayStatus(_ date: Date) -> DayStatus {
         guard date <= DateProvider.now else { return .future }
         
-        // Check if it's within any past streak (end date is the relapse day, so exclude it)
+        let isToday = Calendar.current.isDate(date, inSameDayAs: DateProvider.now)
+        
+        // Rule 1: Past streaks = green (successful days)
         for streak in viewModel.sobrietyData.pastStreaks {
-            // Special case: if start date equals end date, it means streak started and ended same day (relapse day)
-            if Calendar.current.isDate(streak.startDate, inSameDayAs: streak.endDate) {
-                if Calendar.current.isDate(date, inSameDayAs: streak.endDate) {
-                    return .nonSober
-                }
-            } else {
-                // Normal streak: days within range are sober, end date is relapse
-                let isEndDate = Calendar.current.isDate(date, inSameDayAs: streak.endDate)
-                let isWithinStreak = date >= streak.startDate && !isEndDate
-                
-                if isEndDate {
-                    return .nonSober
-                }
-                if isWithinStreak {
-                    return .sober
-                }
+            if date >= streak.startDate && date <= streak.endDate {
+                return .sober
             }
         }
         
-        // Check current streak
+        // Rule 2: Active streak days (excluding today) = green  
         if viewModel.sobrietyData.isActiveStreak &&
            date >= viewModel.sobrietyData.currentStartDate &&
-           date <= DateProvider.now {
+           !isToday { // Explicitly exclude today regardless of date comparison
             return .sober
         }
         
-        // If the date is before the first streak or between streaks
-        let firstTrackingDate = viewModel.sobrietyData.pastStreaks.first?.startDate ?? viewModel.sobrietyData.currentStartDate
-        if date >= firstTrackingDate {
-            return .nonSober
+        // Rule 3: Today = always neutral (blank slate)
+        if isToday {
+            return .beforeTracking
         }
         
+        // Rule 4: Any other tracked day = red (relapse days)
+        let hasAnyData = !viewModel.sobrietyData.pastStreaks.isEmpty || viewModel.sobrietyData.isActiveStreak
+        if hasAnyData {
+            let firstTrackingDate = viewModel.sobrietyData.pastStreaks.first?.startDate ?? viewModel.sobrietyData.currentStartDate
+            if date >= firstTrackingDate {
+                return .nonSober
+            }
+        }
+        
+        // Rule 5: Before tracking = clear
         return .beforeTracking
     }
 }

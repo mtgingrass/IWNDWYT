@@ -27,8 +27,7 @@ class DayCounterViewModel: ObservableObject {
     @Published var celebrationMilestone: Milestone?
     private var lastCelebratedStreak: Int = 0
     
-    // Same-day restart alert state
-    @Published var showingSameDayRestartAlert = false
+    // Removed same-day restart feature for simplicity
 
     private let storageKey = "sobriety_data"
 
@@ -64,16 +63,22 @@ class DayCounterViewModel: ObservableObject {
         guard sobrietyData.isActiveStreak else { return }
         
         let today = DateProvider.now
-        let length = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: today).day ?? 0
-
-        let finishedStreak = Streak(
-            id: UUID(),
-            startDate: sobrietyData.currentStartDate,
-            endDate: today,
-            length: length
-        )
-
-        sobrietyData.pastStreaks.append(finishedStreak)
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today) ?? today
+        
+        // Only create a streak if there were successful days (length > 0)
+        let length = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: yesterday).day ?? 0
+        
+        if length > 0 {
+            let finishedStreak = Streak(
+                id: UUID(),
+                startDate: sobrietyData.currentStartDate,
+                endDate: yesterday, // Last successful day
+                length: length
+            )
+            sobrietyData.pastStreaks.append(finishedStreak)
+        }
+        
+        // Streak ended - no same-day restart allowed
         sobrietyData.isActiveStreak = false
         save()
         MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
@@ -81,14 +86,6 @@ class DayCounterViewModel: ObservableObject {
     
     // Start a new streak
     func startStreak() {
-        // Check if user ended a streak today
-        if let lastStreak = sobrietyData.pastStreaks.last,
-           Calendar.current.isDate(lastStreak.endDate, inSameDayAs: DateProvider.now) {
-            // Show alert for same-day restart
-            showingSameDayRestartAlert = true
-            return
-        }
-        
         performStartStreak()
     }
     
@@ -138,7 +135,7 @@ class DayCounterViewModel: ObservableObject {
         // Clear UserDefaults for this key
         UserDefaults.standard.removeObject(forKey: storageKey)
         
-        // Reset milestone tracking completely
+        // Reset milestone tracking
         resetMilestoneTracking()
         
         // Reset the start date flag so the picker shows again
@@ -255,35 +252,7 @@ class DayCounterViewModel: ObservableObject {
         print("🔄 Milestone tracking reset")
     }
     
-    // MARK: - Same-Day Restart Handling
-    
-    // User chose to start fresh tomorrow
-    func startStreakTomorrow() {
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: DateProvider.now) ?? DateProvider.now
-        performStartStreak(startDate: tomorrow)
-        showingSameDayRestartAlert = false
-    }
-    
-    // User chose to override and start today (removes today's relapse)
-    func overrideAndStartToday() {
-        // Remove the last streak (the one that ended today)
-        if let lastStreak = sobrietyData.pastStreaks.last,
-           Calendar.current.isDate(lastStreak.endDate, inSameDayAs: DateProvider.now) {
-            sobrietyData.pastStreaks.removeLast()
-            print("🔄 Removed today's relapse streak, starting fresh")
-        }
-        
-        performStartStreak()
-        showingSameDayRestartAlert = false
-        
-        // Force UI refresh
-        objectWillChange.send()
-    }
-    
-    // User chose to cancel the restart
-    func cancelSameDayRestart() {
-        showingSameDayRestartAlert = false
-    }
+    // Same-day restart feature removed for simplicity
     
     // MARK: - Metrics
     

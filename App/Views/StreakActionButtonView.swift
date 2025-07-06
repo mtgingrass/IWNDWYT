@@ -39,19 +39,6 @@ struct StreakActionButtonView: View {
         .disabled(false)
         .padding(.horizontal)
         .padding(.bottom, 8)
-        .alert("Same-Day Restart", isPresented: $viewModel.showingSameDayRestartAlert) {
-            Button("Start Tomorrow", role: .cancel) {
-                viewModel.startStreakTomorrow()
-            }
-            Button("Override (Start Today)") {
-                viewModel.overrideAndStartToday()
-            }
-            Button("Cancel") {
-                viewModel.cancelSameDayRestart()
-            }
-        } message: {
-            Text("You ended a streak today. Would you like to start fresh tomorrow (recommended) or override and make today a successful day?")
-        }
     }
 }
 
