@@ -6,16 +6,45 @@
 //
 
 import SwiftUI
+import UIKit
+import UniformTypeIdentifiers
 
 struct SettingsView: View {
     @EnvironmentObject private var viewModel: DayCounterViewModel
     @State private var showResetConfirmation = false
+    @State private var showingDataManagement = false
+    @State private var showingImportPicker = false
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var settings: AppSettingsViewModel
     
     var body: some View {
         List {
             Section {
+                HStack {
+                    Image(systemName: "square.and.arrow.up")
+                    Text("Export Data")
+                    Spacer()
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    print("🔍 Export Data HStack tapped!")
+                    performDirectExport()
+                }
+                
+                HStack {
+                    Image(systemName: "square.and.arrow.down")
+                    Text("Import Data")
+                    Spacer()
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    print("🔍 Import Data HStack tapped!")
+                    showingImportPicker = true
+                }
+                
                 Button(role: .destructive) {
                     showResetConfirmation = true
                 } label: {
@@ -24,7 +53,7 @@ struct SettingsView: View {
             } header: {
                 Text("Data Management")
             } footer: {
-                Text("This will permanently delete all your progress, streaks, and records.")
+                Text("Export your data for backup or transfer to another device. Reset will permanently delete all your progress.")
             }
             
             Section {
@@ -76,7 +105,112 @@ struct SettingsView: View {
         } message: {
             Text("Are you sure you want to reset all data? This action cannot be undone.")
         }
+        .sheet(isPresented: $showingDataManagement) {
+            DataImportExportView()
+                .environmentObject(viewModel)
+                .onAppear {
+                    print("🔍 Sheet content appeared")
+                }
+        }
+        .fileImporter(
+            isPresented: $showingImportPicker,
+            allowedContentTypes: [.json],
+            allowsMultipleSelection: false
+        ) { result in
+            handleImportSelection(result)
+        }
+        .alert(alertTitle, isPresented: $showingAlert) {
+            Button("OK") { }
+        } message: {
+            Text(alertMessage)
+        }
     }
+    
+    private func performDirectExport() {
+        let result = viewModel.exportData()
+        
+        switch result {
+        case .success(let url):
+            presentActivityViewController(with: url)
+            // No success alert - the share sheet appearance is confirmation enough
+            
+        case .failure(let error):
+            alertTitle = "Export Failed"
+            alertMessage = error.localizedDescription
+            showingAlert = true
+        }
+    }
+    
+    private func presentActivityViewController(with url: URL) {
+        DispatchQueue.main.async {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first,
+                  let rootViewController = window.rootViewController else {
+                return
+            }
+            
+            // Find the topmost presented view controller
+            var topViewController = rootViewController
+            while let presentedViewController = topViewController.presentedViewController {
+                topViewController = presentedViewController
+            }
+            
+            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            
+            // For iPad compatibility
+            if let popoverController = activityViewController.popoverPresentationController {
+                popoverController.sourceView = topViewController.view
+                popoverController.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
+            }
+            
+            topViewController.present(activityViewController, animated: true)
+        }
+    }
+    
+    private func handleImportSelection(_ result: Result<[URL], Error>) {
+        switch result {
+        case .success(let urls):
+            guard let url = urls.first else { return }
+            
+            // Start accessing the security-scoped resource
+            let accessing = url.startAccessingSecurityScopedResource()
+            defer {
+                if accessing {
+                    url.stopAccessingSecurityScopedResource()
+                }
+            }
+            
+            let importResult = viewModel.importData(from: url)
+            switch importResult {
+            case .success(let message):
+                alertTitle = "Import Complete"
+                alertMessage = message
+                showingAlert = true
+                
+            case .failure(let error):
+                alertTitle = "Import Failed"
+                alertMessage = error.localizedDescription
+                showingAlert = true
+            }
+            
+        case .failure(let error):
+            alertTitle = "File Selection Error"
+            alertMessage = error.localizedDescription
+            showingAlert = true
+        }
+    }
+}
+
+struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+    
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 struct NotificationPermissionView: View {

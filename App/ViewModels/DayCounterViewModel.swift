@@ -19,7 +19,7 @@ struct Milestone: Identifiable {
 class DayCounterViewModel: ObservableObject {
     static let shared = DayCounterViewModel()
     
-    @Published var sobrietyData: SobrietyData
+    @Published var streakData: StreakData
     @Published var showingRatingRequest = false
     
     // Milestone celebration state
@@ -29,15 +29,15 @@ class DayCounterViewModel: ObservableObject {
     
     // Removed same-day restart feature for simplicity
 
-    private let storageKey = "sobriety_data"
+    private let storageKey = "streak_data"
 
     init() {
         if let data = UserDefaults.standard.data(forKey: storageKey),
-           let decoded = try? JSONDecoder().decode(SobrietyData.self, from: data) {
-            sobrietyData = decoded
+           let decoded = try? JSONDecoder().decode(StreakData.self, from: data) {
+            streakData = decoded
         } else {
             // First time user
-            sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [], isActiveStreak: false)
+            streakData = StreakData(currentStartDate: DateProvider.now, pastStreaks: [], isActiveStreak: false)
             save()
         }
         
@@ -53,33 +53,33 @@ class DayCounterViewModel: ObservableObject {
 
     // Save to UserDefaults
     func save() {
-        if let encoded = try? JSONEncoder().encode(sobrietyData) {
+        if let encoded = try? JSONEncoder().encode(streakData) {
             UserDefaults.standard.set(encoded, forKey: storageKey)
         }
     }
 
     // End current streak without starting a new one
     func endStreak() {
-        guard sobrietyData.isActiveStreak else { return }
+        guard streakData.isActiveStreak else { return }
         
         let today = DateProvider.now
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today) ?? today
         
         // Only create a streak if there were successful days (length > 0)
-        let length = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: yesterday).day ?? 0
+        let length = Calendar.current.dateComponents([.day], from: streakData.currentStartDate, to: yesterday).day ?? 0
         
         if length > 0 {
             let finishedStreak = Streak(
                 id: UUID(),
-                startDate: sobrietyData.currentStartDate,
+                startDate: streakData.currentStartDate,
                 endDate: yesterday, // Last successful day
                 length: length
             )
-            sobrietyData.pastStreaks.append(finishedStreak)
+            streakData.pastStreaks.append(finishedStreak)
         }
         
         // Streak ended - no same-day restart allowed
-        sobrietyData.isActiveStreak = false
+        streakData.isActiveStreak = false
         save()
         MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
     }
@@ -90,8 +90,8 @@ class DayCounterViewModel: ObservableObject {
     }
     
     private func performStartStreak(startDate: Date = DateProvider.now) {
-        sobrietyData.currentStartDate = startDate
-        sobrietyData.isActiveStreak = true
+        streakData.currentStartDate = startDate
+        streakData.isActiveStreak = true
         
         // Reset milestone tracking for new streak
         lastCelebratedStreak = -1  // Set to -1 so day 0 and day 1 can be detected properly
@@ -105,8 +105,8 @@ class DayCounterViewModel: ObservableObject {
     
     // Start a new streak with custom date
     func startStreakWithCustomDate(_ date: Date) {
-        sobrietyData.currentStartDate = date
-        sobrietyData.isActiveStreak = true
+        streakData.currentStartDate = date
+        streakData.isActiveStreak = true
         
         // Reset milestone tracking for new streak
         lastCelebratedStreak = -1
@@ -120,9 +120,9 @@ class DayCounterViewModel: ObservableObject {
     
     func cancelStreak() {
         // Only cancel if the streak was started today
-        if sobrietyData.isActiveStreak && 
-           Calendar.current.isDate(sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
-            sobrietyData.isActiveStreak = false
+        if streakData.isActiveStreak && 
+           Calendar.current.isDate(streakData.currentStartDate, inSameDayAs: DateProvider.now) {
+            streakData.isActiveStreak = false
             save()
             MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
         }
@@ -130,7 +130,7 @@ class DayCounterViewModel: ObservableObject {
     
     // Reset all data
     func resetAllData() {
-        sobrietyData = SobrietyData(currentStartDate: DateProvider.now, pastStreaks: [], isActiveStreak: false)
+        streakData = StreakData(currentStartDate: DateProvider.now, pastStreaks: [], isActiveStreak: false)
         
         // Clear UserDefaults for this key
         UserDefaults.standard.removeObject(forKey: storageKey)
@@ -157,8 +157,8 @@ class DayCounterViewModel: ObservableObject {
 
     // Calculate days since currentStartDate
     var currentStreak: Int {
-        guard sobrietyData.isActiveStreak else { return 0 }
-        let streak = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: DateProvider.now).day ?? 0
+        guard streakData.isActiveStreak else { return 0 }
+        let streak = Calendar.current.dateComponents([.day], from: streakData.currentStartDate, to: DateProvider.now).day ?? 0
         
         // Check for milestone celebrations and rating requests when streak is calculated
         DispatchQueue.main.async {
@@ -166,7 +166,7 @@ class DayCounterViewModel: ObservableObject {
             
             RatingManager.shared.checkForRatingRequest(
                 currentStreak: streak,
-                isActiveStreak: self.sobrietyData.isActiveStreak
+                isActiveStreak: self.streakData.isActiveStreak
             )
         }
         
@@ -174,16 +174,16 @@ class DayCounterViewModel: ObservableObject {
     }
 
     var totalAttempts: Int {
-        sobrietyData.pastStreaks.count + (sobrietyData.isActiveStreak ? 1 : 0)
+        streakData.pastStreaks.count + (streakData.isActiveStreak ? 1 : 0)
     }
 
     var longestStreak: Int {
-        let past = sobrietyData.pastStreaks.map { $0.length }.max() ?? 0
+        let past = streakData.pastStreaks.map { $0.length }.max() ?? 0
         return max(past, currentStreak)
     }
     
     var isActiveStreak: Bool {
-        sobrietyData.isActiveStreak
+        streakData.isActiveStreak
     }
     
     // MARK: - Milestone Celebrations
@@ -204,11 +204,11 @@ class DayCounterViewModel: ObservableObject {
     ]
     
     private func checkForMilestoneCelebration(newStreak: Int) {
-        print("🔍 Checking milestones: newStreak=\(newStreak), lastCelebrated=\(lastCelebratedStreak), isActive=\(sobrietyData.isActiveStreak)")
+        print("🔍 Checking milestones: newStreak=\(newStreak), lastCelebrated=\(lastCelebratedStreak), isActive=\(streakData.isActiveStreak)")
         
         // Only check if we have an active streak and streak has increased
-        guard sobrietyData.isActiveStreak, newStreak > lastCelebratedStreak else { 
-            print("🔍 Milestone check skipped: active=\(sobrietyData.isActiveStreak), increased=\(newStreak > lastCelebratedStreak)")
+        guard streakData.isActiveStreak, newStreak > lastCelebratedStreak else { 
+            print("🔍 Milestone check skipped: active=\(streakData.isActiveStreak), increased=\(newStreak > lastCelebratedStreak)")
             return 
         }
         
@@ -257,23 +257,23 @@ class DayCounterViewModel: ObservableObject {
     // MARK: - Metrics
     
     var averageStreakLength: Int {
-        let streaks = sobrietyData.pastStreaks
+        let streaks = streakData.pastStreaks
         guard !streaks.isEmpty else { return currentStreak }
         let totalDays = streaks.reduce(0) { $0 + $1.length } + currentStreak
         return totalDays / (streaks.count + 1)
     }
     
     var totalSoberDays: Int {
-        sobrietyData.pastStreaks.reduce(0) { $0 + $1.length } + currentStreak
+        streakData.pastStreaks.reduce(0) { $0 + $1.length } + currentStreak
     }
     
     var successRate: Double {
         // Count total tracked days (only days within streaks)
-        var totalTrackedDays = sobrietyData.pastStreaks.reduce(0) { $0 + $1.length }
+        var totalTrackedDays = streakData.pastStreaks.reduce(0) { $0 + $1.length }
         
         // Add current streak days if active
-        if sobrietyData.isActiveStreak {
-            let currentDays = Calendar.current.dateComponents([.day], from: sobrietyData.currentStartDate, to: DateProvider.now).day ?? 0
+        if streakData.isActiveStreak {
+            let currentDays = Calendar.current.dateComponents([.day], from: streakData.currentStartDate, to: DateProvider.now).day ?? 0
             totalTrackedDays += currentDays
         }
         
@@ -288,6 +288,58 @@ class DayCounterViewModel: ObservableObject {
             currentStreak: currentStreak,
             isActiveStreak: isActiveStreak
         )
+    }
+    
+    // MARK: - Data Export/Import
+    
+    func exportData() -> Result<URL, DataExportError> {
+        return DataExportManager.shared.exportData(streakData)
+    }
+    
+    func importData(from url: URL) -> Result<String, DataExportError> {
+        let result = DataExportManager.shared.importData(from: url)
+        
+        switch result {
+        case .success(let importedData):
+            // Create backup of current data before importing
+            let backupResult = DataExportManager.shared.exportData(streakData)
+            
+            // Import the new data
+            streakData = importedData
+            
+            // Reset milestone tracking for imported data
+            resetMilestoneTracking()
+            
+            // Save imported data
+            save()
+            
+            // Force UI refresh
+            objectWillChange.send()
+            
+            // Update notifications based on new streak state
+            MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: streakData.isActiveStreak)
+            
+            let message = "Data imported successfully! Your streak data has been restored."
+            if case .success(let backupURL) = backupResult {
+                return .success(message + " A backup of your previous data was created at: \(backupURL.lastPathComponent)")
+            } else {
+                return .success(message)
+            }
+            
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getExportPreview() -> String {
+        print("🔍 DayCounterViewModel.getExportPreview called")
+        let preview = DataExportManager.shared.getExportPreview(streakData)
+        print("🔍 Generated preview: \(preview)")
+        return preview
+    }
+    
+    func getImportPreview(from url: URL) -> Result<String, DataExportError> {
+        return DataExportManager.shared.getImportPreview(url)
     }
     
 }

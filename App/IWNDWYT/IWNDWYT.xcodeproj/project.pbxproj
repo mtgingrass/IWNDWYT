@@ -36,9 +36,11 @@
 		1EAA16162E10A8B000B904B8 /* SessionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA16152E10A8B000B904B8 /* SessionTracker.swift */; };
 		1ED34BC82E0C5A5F007C9143 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BC72E0C5A5F007C9143 /* ContentView.swift */; };
 		1ED34BF32E0C7FA4007C9143 /* DayCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */; };
-		1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* SobrietyData.swift */; };
+		1ED34BF52E0C802C007C9143 /* StreakData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF42E0C802C007C9143 /* StreakData.swift */; };
 		1ED34BF72E0CA05D007C9143 /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF62E0CA05D007C9143 /* DateProvider.swift */; };
 		1ED34BF92E0CA1BE007C9143 /* DebugPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BF82E0CA1BE007C9143 /* DebugPanelView.swift */; };
+		1ED34C102E0D1001007C9143 /* DataExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34C0F2E0D1001007C9143 /* DataExportManager.swift */; };
+		1ED34C122E0D1002007C9143 /* DataImportExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34C112E0D1002007C9143 /* DataImportExportView.swift */; };
 		1ED34BFB2E0CAACC007C9143 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */; };
 		1ED34BFD2E0CAFD7007C9143 /* MetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */; };
 		1ED34C002E0CB9B0007C9143 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED34BFE2E0CB9B0007C9143 /* CalendarView.swift */; };
@@ -95,9 +97,11 @@
 		1ED34BCF2E0C5A60007C9143 /* IWNDWYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BD92E0C5A60007C9143 /* IWNDWYTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IWNDWYTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED34BF22E0C7FA4007C9143 /* DayCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCounterViewModel.swift; sourceTree = "<group>"; };
-		1ED34BF42E0C802C007C9143 /* SobrietyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SobrietyData.swift; path = ../Models/SobrietyData.swift; sourceTree = SOURCE_ROOT; };
+		1ED34BF42E0C802C007C9143 /* StreakData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StreakData.swift; path = ../Models/StreakData.swift; sourceTree = SOURCE_ROOT; };
 		1ED34BF62E0CA05D007C9143 /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateProvider.swift; path = ../Models/DateProvider.swift; sourceTree = SOURCE_ROOT; };
 		1ED34BF82E0CA1BE007C9143 /* DebugPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DebugPanelView.swift; path = ../Views/DebugPanelView.swift; sourceTree = SOURCE_ROOT; };
+		1ED34C0F2E0D1001007C9143 /* DataExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataExportManager.swift; path = ../Models/DataExportManager.swift; sourceTree = SOURCE_ROOT; };
+		1ED34C112E0D1002007C9143 /* DataImportExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataImportExportView.swift; path = ../Views/DataImportExportView.swift; sourceTree = SOURCE_ROOT; };
 		1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsView.swift; sourceTree = "<group>"; };
 		1ED34BFE2E0CB9B0007C9143 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -184,7 +188,10 @@
 		1ED34BEC2E0C5EF4007C9143 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1ED34BF42E0C802C007C9143 /* SobrietyData.swift */,
+				1ED34BF42E0C802C007C9143 /* StreakData.swift */,
+				1ED34BF62E0CA05D007C9143 /* DateProvider.swift */,
+				1E002D032E1363A800FAB932 /* MotivationManager.swift */,
+				1ED34C0F2E0D1001007C9143 /* DataExportManager.swift */,
 			);
 			name = Models;
 			path = ../Models;
@@ -237,6 +244,7 @@
 				1ED34BFF2E0CB9B0007C9143 /* DebugPanelView.swift */,
 				1ED34BFC2E0CAFD7007C9143 /* MetricsView.swift */,
 				1ED34BFA2E0CAACC007C9143 /* SettingsView.swift */,
+				1ED34C112E0D1002007C9143 /* DataImportExportView.swift */,
 				1ED34BC72E0C5A5F007C9143 /* ContentView.swift */,
 				1E4F59032E0F38F3000EB7B9 /* TipJarView.swift */,
 				1E4F58FF2E0F1AC9000EB7B9 /* IntroView.swift */,
@@ -395,7 +403,7 @@
 			files = (
 				1ED34BFB2E0CAACC007C9143 /* SettingsView.swift in Sources */,
 				1E7A93712E14AF4400C38E0F /* RatingManager.swift in Sources */,
-				1ED34BF52E0C802C007C9143 /* SobrietyData.swift in Sources */,
+				1ED34BF52E0C802C007C9143 /* StreakData.swift in Sources */,
 				1E4F58B82E0DF374000EB7B9 /* AboutView.swift in Sources */,
 				1E4F58D02E0E17C2000EB7B9 /* StartDatePickerView.swift in Sources */,
 				1E4F589C2E0DA834000EB7B9 /* ActiveStreakView.swift in Sources */,
@@ -427,6 +435,8 @@
 				1E4F58D42E0E22BB000EB7B9 /* ProgressSectionView.swift in Sources */,
 				1E4F589A2E0D9117000EB7B9 /* MetricCardView.swift in Sources */,
 				1E4F58B42E0DB898000EB7B9 /* MainTabView.swift in Sources */,
+				1ED34C102E0D1001007C9143 /* DataExportManager.swift in Sources */,
+				1ED34C122E0D1002007C9143 /* DataImportExportView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,7 +597,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8ST43C8H2Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -600,7 +610,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.markgingrass.IWNDWYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -619,7 +629,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8ST43C8H2Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -632,7 +642,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.markgingrass.IWNDWYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -1,5 +1,5 @@
 //
-//  SobrietyData.swift
+//  StreakData.swift
 //  IWNDWYT
 //
 //  Created by Mark Gingrass on 6/25/25.
@@ -15,7 +15,7 @@ struct Streak: Codable, Identifiable {
     let length: Int
 }
 
-struct SobrietyData: Codable {
+struct StreakData: Codable {
     var currentStartDate: Date
     var pastStreaks: [Streak]
     var isActiveStreak: Bool
