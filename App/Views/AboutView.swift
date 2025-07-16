@@ -1,3 +1,4 @@
+
 //
 //  AboutView.swift
 //  IWNDWYT
@@ -39,12 +40,12 @@ struct AboutView: View {
                             .cornerRadius(20)
                             .shadow(radius: 5)
 
-                        Text("IWNDWYToday")
+                        Text(NSLocalizedString("about_app_name", comment: "App name"))
                             .font(.largeTitle)
                             .fontWeight(.bold)
                     }
 
-                    Text("I Will Not Destruct With You Today")
+                    Text(NSLocalizedString("about_app_full_name", comment: "App full name"))
                         .font(.title2)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -53,11 +54,11 @@ struct AboutView: View {
 
                 // App Description
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Designed to stop habits, track progress with milestones, and stay motivated.")
+                    Text(NSLocalizedString("about_app_description", comment: "App description"))
                         .font(.body)
                         .foregroundColor(.secondary)
 
-                    Text("Start with getting through just one day.")
+                    Text(NSLocalizedString("about_app_tagline", comment: "App tagline"))
                         .font(.body)
                         .foregroundColor(.secondary)
                 }
@@ -65,10 +66,10 @@ struct AboutView: View {
 
                 // Features
                 VStack(alignment: .leading, spacing: 8) {
-                    FeatureRow(icon: "calendar", text: "Track daily progress")
-                    FeatureRow(icon: "chart.bar.fill", text: "View statistics and metrics")
-                    FeatureRow(icon: "flame.fill", text: "Celebrate milestones")
-                    FeatureRow(icon: "iphone", text: "Simple, intuitive interface")
+                    FeatureRow(icon: "calendar", text: NSLocalizedString("about_feature_track", comment: "Track daily progress feature"))
+                    FeatureRow(icon: "chart.bar.fill", text: NSLocalizedString("about_feature_stats", comment: "View statistics feature"))
+                    FeatureRow(icon: "flame.fill", text: NSLocalizedString("about_feature_milestones", comment: "Celebrate milestones feature"))
+                    FeatureRow(icon: "iphone", text: NSLocalizedString("about_feature_interface", comment: "Simple interface feature"))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -76,10 +77,10 @@ struct AboutView: View {
 
                 // Acknowledgments
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Acknowledgments")
+                    Text(NSLocalizedString("about_acknowledgments", comment: "Acknowledgments section title"))
                         .font(.headline)
 
-                    Text("Inspired by the community at r/stopdrinking and the daily commitment shared by millions.")
+                    Text(NSLocalizedString("about_inspiration", comment: "Inspiration text"))
                         .font(.body)
                         .foregroundColor(.secondary)
                 }
@@ -88,7 +89,7 @@ struct AboutView: View {
                 // Developer Contact
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Text("Contact:")
+                        Text(NSLocalizedString("about_contact", comment: "Contact label"))
                             .foregroundColor(.primary)
                         Spacer()
                         Link("iwndwytoday@markgingrass.com", destination: URL(string: "mailto:iwndwytoday@markgingrass.com")!)
@@ -101,7 +102,7 @@ struct AboutView: View {
 
                 VStack(spacing: 12) {
                     NavigationLink(destination: TipJarView()) {
-                        Text("💙 Leave a Tip")
+                        Text(NSLocalizedString("about_leave_tip", comment: "Leave a tip button"))
                             .font(.callout)
                             .fontWeight(.semibold)
                             .foregroundColor(.blue)
@@ -115,12 +116,12 @@ struct AboutView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
 
-                    Text("Version \(appVersion) • Build \(buildNumber) • iOS \(minimumOSVersion)+")
+                    Text(String(format: NSLocalizedString("about_version_format", comment: "Version format string"), appVersion, buildNumber, minimumOSVersion))
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
 
-                    Text("© 2025 Mark Gingrass")
+                    Text(NSLocalizedString("about_copyright", comment: "Copyright text"))
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }
@@ -128,7 +129,7 @@ struct AboutView: View {
             }
             .padding()
         }
-        .navigationTitle("About")
+        .navigationTitle(NSLocalizedString("nav_about", comment: "About navigation title"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

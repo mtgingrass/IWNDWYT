@@ -20,12 +20,16 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var settings: AppSettingsViewModel
     
+    #if DEBUG
+    @State private var showingDebugPanel = false
+    #endif
+    
     var body: some View {
         List {
             Section {
                 HStack {
                     Image(systemName: "square.and.arrow.up")
-                    Text("Export Data")
+                    Text(NSLocalizedString("settings_export_data", comment: "Export data button"))
                     Spacer()
                 }
                 .contentShape(Rectangle())
@@ -36,7 +40,7 @@ struct SettingsView: View {
                 
                 HStack {
                     Image(systemName: "square.and.arrow.down")
-                    Text("Import Data")
+                    Text(NSLocalizedString("settings_import_data", comment: "Import data button"))
                     Spacer()
                 }
                 .contentShape(Rectangle())
@@ -48,12 +52,12 @@ struct SettingsView: View {
                 Button(role: .destructive) {
                     showResetConfirmation = true
                 } label: {
-                    Label("Reset All Data", systemImage: "trash")
+                    Label(NSLocalizedString("alert_reset_data_title", comment: "Reset all data button"), systemImage: "trash")
                 }
             } header: {
-                Text("Data Management")
+                Text(NSLocalizedString("header_data_management", comment: "Data management section header"))
             } footer: {
-                Text("Export your data for backup or transfer to another device. Reset will permanently delete all your progress.")
+                Text(NSLocalizedString("settings_data_export_desc", comment: "Data export description"))
             }
             
             Section {
@@ -61,49 +65,55 @@ struct SettingsView: View {
                     Label("r/stopdrinking", systemImage: "link")
                 }
             } header: {
-                Text("Resources")
+                Text(NSLocalizedString("header_resources", comment: "Resources section header"))
             }
             Section {
                 Toggle(isOn: $settings.motivationalNotificationsEnabled) {
-                    Label("Motivational Reminders", systemImage: "bell")
+                    Label(NSLocalizedString("settings_motivational_reminders", comment: "Motivational reminders toggle"), systemImage: "bell")
                 }
                 
                 if settings.motivationalNotificationsEnabled {
                     NotificationPermissionView()
                 }
             } header: {
-                Text("Notifications")
+                Text(NSLocalizedString("header_notifications", comment: "Notifications section header"))
             } footer: {
-                Text("Receive daily motivational messages to help you stay on track.")
+                Text(NSLocalizedString("settings_notifications_desc", comment: "Notifications description"))
             }
             Section {
                 Button {
                     RatingManager.shared.forceRatingRequest()
                 } label: {
-                    Label("Rate IWNDWYT", systemImage: "star")
+                    Label(NSLocalizedString("settings_rate_app", comment: "Rate app button"), systemImage: "star")
                 }
                 
                 Link(destination: URL(string: "mailto:iwndwytoday@markgingrass.com")!) {
-                    Label("Contact Support", systemImage: "envelope")
+                    Label(NSLocalizedString("settings_contact_support", comment: "Contact support button"), systemImage: "envelope")
                 }
                 NavigationLink {
                     AboutView()
                 } label: {
-                    Label("About", systemImage: "info.circle")
+                    Label(NSLocalizedString("nav_about", comment: "About button"), systemImage: "info.circle")
                 }
+                
+                #if DEBUG
+                Button("Open Debug Panel") {
+                    showingDebugPanel = true
+                }
+                #endif
             } header: {
-                Text("Support")
+                Text(NSLocalizedString("header_support", comment: "Support section header"))
             }
         }
-        .navigationTitle("Settings")
-        .alert("Reset All Data", isPresented: $showResetConfirmation) {
-            Button("Cancel", role: .cancel) { }
-            Button("Reset", role: .destructive) {
+        .navigationTitle(NSLocalizedString("nav_settings", comment: "Settings navigation title"))
+        .alert(NSLocalizedString("alert_reset_data_title", comment: "Reset alert title"), isPresented: $showResetConfirmation) {
+            Button(NSLocalizedString("btn_cancel", comment: "Cancel button"), role: .cancel) { }
+            Button(NSLocalizedString("action_reset", comment: "Reset button"), role: .destructive) {
                 viewModel.resetAllData()
                 dismiss()
             }
         } message: {
-            Text("Are you sure you want to reset all data? This action cannot be undone.")
+            Text(NSLocalizedString("settings_reset_confirm", comment: "Reset confirmation message"))
         }
         .sheet(isPresented: $showingDataManagement) {
             DataImportExportView()
@@ -120,10 +130,18 @@ struct SettingsView: View {
             handleImportSelection(result)
         }
         .alert(alertTitle, isPresented: $showingAlert) {
-            Button("OK") { }
+            Button(NSLocalizedString("btn_ok", comment: "OK button")) { }
         } message: {
             Text(alertMessage)
         }
+        
+        #if DEBUG
+        .sheet(isPresented: $showingDebugPanel) {
+            DebugPanelView()
+                .environmentObject(viewModel)
+                .environmentObject(settings)
+        }
+        #endif
     }
     
     private func performDirectExport() {
@@ -228,13 +246,13 @@ struct NotificationPermissionView: View {
             }
             
             if settings.notificationPermissionStatus == .denied {
-                Button("Open Settings") {
+                Button(NSLocalizedString("settings_open_settings", comment: "Open settings button")) {
                     settings.openSystemSettings()
                 }
                 .font(.footnote)
                 .foregroundColor(.blue)
             } else if settings.notificationPermissionStatus == .notDetermined {
-                Button("Request Permission") {
+                Button(NSLocalizedString("settings_request_permission", comment: "Request permission button")) {
                     settings.requestNotificationPermission()
                 }
                 .font(.footnote)

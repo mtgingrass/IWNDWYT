@@ -43,7 +43,7 @@ struct StreakActionButtonView: View {
                             stopPulseAnimation()
                         }
                     }
-                Text(viewModel.isActiveStreak ? "View Active Streak" : "Start New Streak")
+                Text(viewModel.isActiveStreak ? NSLocalizedString("btn_view_active_streak", comment: "View active streak button") : NSLocalizedString("btn_start_new_streak", comment: "Start new streak button"))
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)

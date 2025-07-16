@@ -43,7 +43,7 @@ struct ProgressSectionView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            SectionHeaderView(title: "YOUR DASHBOARD", systemImage: "chart.bar.fill")
+            SectionHeaderView(title: NSLocalizedString("dashboard_title", comment: "Dashboard title"), systemImage: "chart.bar.fill")
             
             VStack(spacing: 12) {
                 // Current Active Streak Status
@@ -53,10 +53,10 @@ struct ProgressSectionView: View {
                         formatter.dateStyle = .medium
                         return formatter
                     }()
-                    let startDateText = dateFormatter.string(from: viewModel.sobrietyData.currentStartDate)
-                    MetricCardView(icon: "🔥", title: "Active Streak Started \(startDateText)", value: "\(viewModel.currentStreak) days", valueColor: .green)
+                    let startDateText = dateFormatter.string(from: viewModel.streakData.currentStartDate)
+                    MetricCardView(icon: "🔥", title: String(format: NSLocalizedString("active_streak_started_format", comment: "Active streak started format"), startDateText), value: "Day \(viewModel.currentStreak)", valueColor: .green)
                 } else {
-                    MetricCardView(icon: "⭕", title: "No Active Streak", value: "Ready to start", valueColor: .secondary)
+                    MetricCardView(icon: "⭕", title: NSLocalizedString("dashboard_no_active_streak", comment: "No active streak title"), value: NSLocalizedString("dashboard_ready_to_start", comment: "Ready to start message"), valueColor: .secondary)
                 }
                 
                 // Countdown Card
@@ -66,7 +66,7 @@ struct ProgressSectionView: View {
                             Text("\(formatTimeRemaining())")
                                 .font(.system(.title3, design: .monospaced))
                                 .foregroundColor(.red)
-                            Text(" to next goal")
+                            Text(NSLocalizedString("time_to_next_goal", comment: "Time to next goal"))
                                 .font(.system(.title3, design: .monospaced))
                                 .foregroundColor(.black)
                         }
@@ -77,15 +77,15 @@ struct ProgressSectionView: View {
                     .cornerRadius(12)
                 }
                 
-                MetricCardView(icon: "🏆", title: "Longest Streak", value: "\(viewModel.longestStreak) days", valueColor: .green)
+                MetricCardView(icon: "🏆", title: NSLocalizedString("metric_longest_streak", comment: "Longest streak title"), value: "\(viewModel.longestStreak) \(NSLocalizedString("unit_days", comment: "Days unit"))", valueColor: .green)
 
-                if let lastStreak = viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
+                if let lastStreak = viewModel.streakData.pastStreaks.sorted(by: { $0.endDate > $1.endDate }).first {
                     let daysSinceEnded = Calendar.current.dateComponents([.day], from: lastStreak.endDate, to: Date()).day ?? 0
-                    let daysText = daysSinceEnded == 0 ? "today" : daysSinceEnded == 1 ? "1 day ago" : "\(daysSinceEnded) days ago"
-                    MetricCardView(icon: "⏱", title: "Previous Streak Ended", value: daysText, valueColor: .primary)
+                    let daysText = daysSinceEnded == 0 ? NSLocalizedString("time_today", comment: "Today") : daysSinceEnded == 1 ? NSLocalizedString("time_one_day_ago", comment: "1 day ago") : String(format: NSLocalizedString("time_days_ago_format", comment: "Days ago format"), daysSinceEnded)
+                    MetricCardView(icon: "⏱", title: NSLocalizedString("dashboard_previous_streak_ended", comment: "Previous streak ended title"), value: daysText, valueColor: .primary)
                 }
 
-                MetricCardView(icon: "📈", title: "Total Attempts", value: "\(viewModel.totalAttempts)", valueColor: .primary)
+                MetricCardView(icon: "📈", title: NSLocalizedString("metric_total_attempts", comment: "Total attempts title"), value: "\(viewModel.totalAttempts)", valueColor: .primary)
             }
             .padding(.horizontal)
         }

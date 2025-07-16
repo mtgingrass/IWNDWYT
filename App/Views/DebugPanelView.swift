@@ -107,8 +107,17 @@ struct DebugPanelView: View {
                     HStack {
                         Button("Reschedule Daily") {
                             let isActiveStreak = dayCounterViewModel.isActiveStreak
-                            MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: isActiveStreak)
-                            showFeedback("✅ Daily notifications rescheduled")
+                            if isActiveStreak {
+                                let currentDay = dayCounterViewModel.currentStreak
+                                MotivationManager.shared.scheduleStreakEncouragementIfNeeded(
+                                    streakActive: true,
+                                    currentStreakDay: currentDay
+                                )
+                                showFeedback("✅ Encouragement notifications rescheduled")
+                            } else {
+                                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
+                                showFeedback("✅ Motivation notifications rescheduled")
+                            }
                         }
                         .buttonStyle(.borderedProminent)
                         .foregroundColor(.white)
@@ -195,7 +204,7 @@ struct DebugPanelView: View {
     
     private func resetAllUserDefaults() {
         // Clear all UserDefaults keys used by the app
-        UserDefaults.standard.removeObject(forKey: "sobriety_data")
+        UserDefaults.standard.removeObject(forKey: "streak_data")
         UserDefaults.standard.removeObject(forKey: "hasChosenStartDate")
         UserDefaults.standard.removeObject(forKey: "hasSeenIntro")
         
@@ -218,7 +227,7 @@ struct DebugPanelView: View {
         DummyDataManager.shared.isDummyDataActive = false
         
         // Reset ViewModels to fresh state
-        dayCounterViewModel.sobrietyData = SobrietyData(
+        dayCounterViewModel.streakData = StreakData(
             currentStartDate: DateProvider.now,
             pastStreaks: [],
             isActiveStreak: false

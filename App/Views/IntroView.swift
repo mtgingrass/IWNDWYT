@@ -14,24 +14,12 @@ struct IntroView: View {
         VStack(spacing: 24) {
             Spacer()
 
-            Text("Start with just One Day")
+            Text(NSLocalizedString("intro_title", comment: "Intro view title"))
                 .font(.largeTitle.bold())
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 
-            Text("""
-            Get through just today. That’s all.
-
-            This app will count down the hours until midnight. Then do it again tomorrow.
-
-            There are milestones. Sure.
-            But they come one day at a time.
-
-            This app doesn’t track ten different habits.
-            It tracks just one. The one that matters most.
-
-            Start now.
-            """)
+            Text(NSLocalizedString("intro_description", comment: "Intro view description"))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 
@@ -40,7 +28,7 @@ struct IntroView: View {
             Button(action: {
                 hasSeenIntro = true
             }) {
-                Text("Get Started")
+                Text(NSLocalizedString("btn_get_started", comment: "Get started button"))
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()

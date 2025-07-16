@@ -22,7 +22,7 @@ struct DataNerdModeView: View {
                                 .font(.title2)
                                 .foregroundColor(.accentColor)
                             
-                            Text("Data Nerd Mode")
+                            Text(NSLocalizedString("data_nerd_title", comment: "Data nerd mode title"))
                                 .font(.title2)
                                 .fontWeight(.bold)
                             
@@ -33,7 +33,7 @@ struct DataNerdModeView: View {
                                 .foregroundColor(.accentColor)
                         }
                         
-                        Text("Dive deep into your journey with comprehensive analytics")
+                        Text(NSLocalizedString("data_nerd_description", comment: "Data nerd mode description"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -48,40 +48,40 @@ struct DataNerdModeView: View {
                         GridItem(.flexible())
                     ], spacing: 12) {
                         QuickStatCard(
-                            title: "Current Streak",
+                            title: NSLocalizedString("metric_current_streak", comment: "Current streak title"),
                             value: "\(dayCounterViewModel.currentStreak)",
-                            subtitle: "days",
+                            subtitle: NSLocalizedString("data_nerd_days_unit", comment: "Days unit"),
                             icon: "flame.fill",
                             color: .orange
                         )
                         
                         QuickStatCard(
-                            title: "Longest Streak",
+                            title: NSLocalizedString("metric_longest_streak", comment: "Longest streak title"),
                             value: "\(dayCounterViewModel.longestStreak)",
-                            subtitle: "days",
+                            subtitle: NSLocalizedString("data_nerd_days_unit", comment: "Days unit"),
                             icon: "trophy.fill",
                             color: .yellow
                         )
                         
                         QuickStatCard(
-                            title: "Total Attempts",
+                            title: NSLocalizedString("data_nerd_total_attempts", comment: "Total attempts title"),
                             value: "\(dayCounterViewModel.totalAttempts)",
-                            subtitle: "streaks",
+                            subtitle: NSLocalizedString("data_nerd_streaks_unit", comment: "Streaks unit"),
                             icon: "arrow.up.circle.fill",
                             color: .blue
                         )
                         QuickStatCard(
-                            title: "Avg Streak",
+                            title: NSLocalizedString("data_nerd_avg_streak", comment: "Average streak title"),
                             value: "\(dayCounterViewModel.averageStreakLength)",
-                            subtitle: "days",
+                            subtitle: NSLocalizedString("data_nerd_days_unit", comment: "Days unit"),
                             icon: "chart.line.uptrend.xyaxis",
                             color: .purple
                         )
                         
                         QuickStatCard(
-                            title: "Total Success Days",
+                            title: NSLocalizedString("data_nerd_total_success_days", comment: "Total success days title"),
                             value: "\(dayCounterViewModel.totalSoberDays)",
-                            subtitle: "days",
+                            subtitle: NSLocalizedString("data_nerd_days_unit", comment: "Days unit"),
                             icon: "calendar.circle.fill",
                             color: .mint
                         )
@@ -92,7 +92,7 @@ struct DataNerdModeView: View {
                         HStack {
                             Image(systemName: "calendar.badge.plus")
                                 .foregroundColor(.accentColor)
-                            Text("Monthly Analysis")
+                            Text(NSLocalizedString("data_nerd_monthly_analysis", comment: "Monthly analysis title"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                             Spacer()
@@ -100,19 +100,19 @@ struct DataNerdModeView: View {
                         
                         VStack(spacing: 12) {
                             MonthlyComparisonRow(
-                                title: "Longest Streak This Month",
+                                title: NSLocalizedString("data_nerd_longest_streak_month", comment: "Longest streak this month"),
                                 thisMonth: longestStreakThisMonth,
                                 lastMonth: longestStreakLastMonth
                             )
                             
                             MonthlyComparisonRow(
-                                title: "Total Days This Month",
+                                title: NSLocalizedString("data_nerd_total_days_month", comment: "Total days this month"),
                                 thisMonth: totalDaysThisMonth,
                                 lastMonth: totalDaysLastMonth
                             )
                             
                             MonthlyComparisonRow(
-                                title: "Attempts This Month",
+                                title: NSLocalizedString("data_nerd_attempts_month", comment: "Attempts this month"),
                                 thisMonth: attemptsThisMonth,
                                 lastMonth: attemptsLastMonth
                             )
@@ -128,7 +128,7 @@ struct DataNerdModeView: View {
                         HStack {
                             Image(systemName: "calendar.badge.clock")
                                 .foregroundColor(.accentColor)
-                            Text("Yearly Analysis")
+                            Text(NSLocalizedString("data_nerd_yearly_analysis", comment: "Yearly analysis title"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                             Spacer()
@@ -136,19 +136,19 @@ struct DataNerdModeView: View {
                         
                         VStack(spacing: 12) {
                             YearlyComparisonRow(
-                                title: "Longest Streak This Year",
+                                title: NSLocalizedString("data_nerd_longest_streak_year", comment: "Longest streak this year"),
                                 thisYear: longestStreakThisYear,
                                 lastYear: longestStreakLastYear
                             )
                             
                             YearlyComparisonRow(
-                                title: "Total Days This Year",
+                                title: NSLocalizedString("data_nerd_total_days_year", comment: "Total days this year"),
                                 thisYear: totalDaysThisYear,
                                 lastYear: totalDaysLastYear
                             )
                             
                             YearlyComparisonRow(
-                                title: "Attempts This Year",
+                                title: NSLocalizedString("data_nerd_attempts_year", comment: "Attempts this year"),
                                 thisYear: attemptsThisYear,
                                 lastYear: attemptsLastYear
                             )
@@ -164,16 +164,16 @@ struct DataNerdModeView: View {
                         HStack {
                             Image(systemName: "list.bullet.rectangle")
                                 .foregroundColor(.accentColor)
-                            Text("Detailed Breakdown")
+                            Text(NSLocalizedString("data_nerd_detailed_breakdown", comment: "Detailed breakdown title"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                             Spacer()
                         }
                         
                         VStack(spacing: 8) {
-                            DataBreakdownRow(label: "Total Streaks Recorded", value: "\(totalStreaksRecorded)")
-                            DataBreakdownRow(label: "Median Streak Length", value: "\(medianStreakLength) days")
-                            DataBreakdownRow(label: "Days Since First Attempt", value: "\(daysSinceFirstAttempt) days")
+                            DataBreakdownRow(label: NSLocalizedString("data_nerd_total_streaks_recorded", comment: "Total streaks recorded"), value: "\(totalStreaksRecorded)")
+                            DataBreakdownRow(label: NSLocalizedString("data_nerd_median_streak_length", comment: "Median streak length"), value: "\(medianStreakLength) \(NSLocalizedString("data_nerd_days_unit", comment: "Days unit"))")
+                            DataBreakdownRow(label: NSLocalizedString("data_nerd_days_since_first", comment: "Days since first attempt"), value: "\(daysSinceFirstAttempt) \(NSLocalizedString("data_nerd_days_unit", comment: "Days unit"))")
                         }
                         .padding()
                         .background(Color(.systemBackground))
@@ -183,11 +183,11 @@ struct DataNerdModeView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Data Nerd Mode")
+            .navigationTitle(NSLocalizedString("nav_data_nerd_mode", comment: "Data nerd mode navigation title"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
+                    Button(NSLocalizedString("btn_done", comment: "Done button")) {
                         dismiss()
                     }
                 }
@@ -279,7 +279,7 @@ struct MonthlyComparisonRow: View {
             
             HStack(spacing: 16) {
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("This")
+                    Text(NSLocalizedString("data_nerd_this", comment: "This column header"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Text("\(thisMonth)")
@@ -288,7 +288,7 @@ struct MonthlyComparisonRow: View {
                 }
                 
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("Last")
+                    Text(NSLocalizedString("data_nerd_last", comment: "Last column header"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Text(lastMonth == 0 ? "-" : "\(lastMonth)")
@@ -350,7 +350,7 @@ struct YearlyComparisonRow: View {
             
             HStack(spacing: 16) {
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("This")
+                    Text(NSLocalizedString("data_nerd_this", comment: "This column header"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Text("\(thisYear)")
@@ -359,7 +359,7 @@ struct YearlyComparisonRow: View {
                 }
                 
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("Last")
+                    Text(NSLocalizedString("data_nerd_last", comment: "Last column header"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Text(lastYear == 0 ? "-" : "\(lastYear)")
@@ -409,14 +409,14 @@ extension DataNerdModeView {
         let now = DateProvider.now
         let thisMonth = calendar.dateInterval(of: .month, for: now)!
         
-        let streaksThisMonth = dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        let streaksThisMonth = dayCounterViewModel.streakData.pastStreaks.filter { streak in
             thisMonth.contains(streak.startDate)
         }
         
         var maxStreak = streaksThisMonth.map { $0.length }.max() ?? 0
         
         // Check if current streak started this month
-        if dayCounterViewModel.isActiveStreak && thisMonth.contains(dayCounterViewModel.sobrietyData.currentStartDate) {
+        if dayCounterViewModel.isActiveStreak && thisMonth.contains(dayCounterViewModel.streakData.currentStartDate) {
             maxStreak = max(maxStreak, dayCounterViewModel.currentStreak)
         }
         
@@ -429,7 +429,7 @@ extension DataNerdModeView {
         let lastMonth = calendar.date(byAdding: .month, value: -1, to: now)!
         let lastMonthInterval = calendar.dateInterval(of: .month, for: lastMonth)!
         
-        return dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        return dayCounterViewModel.streakData.pastStreaks.filter { streak in
             lastMonthInterval.contains(streak.startDate)
         }.map { $0.length }.max() ?? 0
     }
@@ -439,13 +439,13 @@ extension DataNerdModeView {
         let now = DateProvider.now
         let thisMonth = calendar.dateInterval(of: .month, for: now)!
         
-        let streaksThisMonth = dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        let streaksThisMonth = dayCounterViewModel.streakData.pastStreaks.filter { streak in
             thisMonth.contains(streak.startDate)
         }
         
         var totalDays = streaksThisMonth.reduce(0) { $0 + $1.length }
         
-        if dayCounterViewModel.isActiveStreak && thisMonth.contains(dayCounterViewModel.sobrietyData.currentStartDate) {
+        if dayCounterViewModel.isActiveStreak && thisMonth.contains(dayCounterViewModel.streakData.currentStartDate) {
             totalDays += dayCounterViewModel.currentStreak
         }
         
@@ -458,7 +458,7 @@ extension DataNerdModeView {
         let lastMonth = calendar.date(byAdding: .month, value: -1, to: now)!
         let lastMonthInterval = calendar.dateInterval(of: .month, for: lastMonth)!
         
-        return dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        return dayCounterViewModel.streakData.pastStreaks.filter { streak in
             lastMonthInterval.contains(streak.startDate)
         }.reduce(0) { $0 + $1.length }
     }
@@ -468,11 +468,11 @@ extension DataNerdModeView {
         let now = DateProvider.now
         let thisMonth = calendar.dateInterval(of: .month, for: now)!
         
-        var attempts = dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        var attempts = dayCounterViewModel.streakData.pastStreaks.filter { streak in
             thisMonth.contains(streak.startDate)
         }.count
         
-        if dayCounterViewModel.isActiveStreak && thisMonth.contains(dayCounterViewModel.sobrietyData.currentStartDate) {
+        if dayCounterViewModel.isActiveStreak && thisMonth.contains(dayCounterViewModel.streakData.currentStartDate) {
             attempts += 1
         }
         
@@ -485,7 +485,7 @@ extension DataNerdModeView {
         let lastMonth = calendar.date(byAdding: .month, value: -1, to: now)!
         let lastMonthInterval = calendar.dateInterval(of: .month, for: lastMonth)!
         
-        return dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        return dayCounterViewModel.streakData.pastStreaks.filter { streak in
             lastMonthInterval.contains(streak.startDate)
         }.count
     }
@@ -496,14 +496,14 @@ extension DataNerdModeView {
         let now = DateProvider.now
         let thisYear = calendar.dateInterval(of: .year, for: now)!
         
-        let streaksThisYear = dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        let streaksThisYear = dayCounterViewModel.streakData.pastStreaks.filter { streak in
             thisYear.contains(streak.startDate)
         }
         
         var maxStreak = streaksThisYear.map { $0.length }.max() ?? 0
         
         // Check if current streak started this year
-        if dayCounterViewModel.isActiveStreak && thisYear.contains(dayCounterViewModel.sobrietyData.currentStartDate) {
+        if dayCounterViewModel.isActiveStreak && thisYear.contains(dayCounterViewModel.streakData.currentStartDate) {
             maxStreak = max(maxStreak, dayCounterViewModel.currentStreak)
         }
         
@@ -516,7 +516,7 @@ extension DataNerdModeView {
         let lastYear = calendar.date(byAdding: .year, value: -1, to: now)!
         let lastYearInterval = calendar.dateInterval(of: .year, for: lastYear)!
         
-        return dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        return dayCounterViewModel.streakData.pastStreaks.filter { streak in
             lastYearInterval.contains(streak.startDate)
         }.map { $0.length }.max() ?? 0
     }
@@ -526,13 +526,13 @@ extension DataNerdModeView {
         let now = DateProvider.now
         let thisYear = calendar.dateInterval(of: .year, for: now)!
         
-        let streaksThisYear = dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        let streaksThisYear = dayCounterViewModel.streakData.pastStreaks.filter { streak in
             thisYear.contains(streak.startDate)
         }
         
         var totalDays = streaksThisYear.reduce(0) { $0 + $1.length }
         
-        if dayCounterViewModel.isActiveStreak && thisYear.contains(dayCounterViewModel.sobrietyData.currentStartDate) {
+        if dayCounterViewModel.isActiveStreak && thisYear.contains(dayCounterViewModel.streakData.currentStartDate) {
             totalDays += dayCounterViewModel.currentStreak
         }
         
@@ -545,7 +545,7 @@ extension DataNerdModeView {
         let lastYear = calendar.date(byAdding: .year, value: -1, to: now)!
         let lastYearInterval = calendar.dateInterval(of: .year, for: lastYear)!
         
-        return dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        return dayCounterViewModel.streakData.pastStreaks.filter { streak in
             lastYearInterval.contains(streak.startDate)
         }.reduce(0) { $0 + $1.length }
     }
@@ -555,11 +555,11 @@ extension DataNerdModeView {
         let now = DateProvider.now
         let thisYear = calendar.dateInterval(of: .year, for: now)!
         
-        var attempts = dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        var attempts = dayCounterViewModel.streakData.pastStreaks.filter { streak in
             thisYear.contains(streak.startDate)
         }.count
         
-        if dayCounterViewModel.isActiveStreak && thisYear.contains(dayCounterViewModel.sobrietyData.currentStartDate) {
+        if dayCounterViewModel.isActiveStreak && thisYear.contains(dayCounterViewModel.streakData.currentStartDate) {
             attempts += 1
         }
         
@@ -572,19 +572,19 @@ extension DataNerdModeView {
         let lastYear = calendar.date(byAdding: .year, value: -1, to: now)!
         let lastYearInterval = calendar.dateInterval(of: .year, for: lastYear)!
         
-        return dayCounterViewModel.sobrietyData.pastStreaks.filter { streak in
+        return dayCounterViewModel.streakData.pastStreaks.filter { streak in
             lastYearInterval.contains(streak.startDate)
         }.count
     }
     
     // Detailed Breakdown
     private var totalStreaksRecorded: Int {
-        dayCounterViewModel.sobrietyData.pastStreaks.count + (dayCounterViewModel.isActiveStreak ? 1 : 0)
+        dayCounterViewModel.streakData.pastStreaks.count + (dayCounterViewModel.isActiveStreak ? 1 : 0)
     }
     
 
     private var medianStreakLength: Int {
-        let pastStreaks = dayCounterViewModel.sobrietyData.pastStreaks.map { $0.length }
+        let pastStreaks = dayCounterViewModel.streakData.pastStreaks.map { $0.length }
         let allStreaks = dayCounterViewModel.isActiveStreak ? pastStreaks + [dayCounterViewModel.currentStreak] : pastStreaks
         let sortedStreaks = allStreaks.sorted()
         
@@ -598,12 +598,12 @@ extension DataNerdModeView {
     }
     
     private var daysSinceFirstAttempt: Int {
-        guard let firstStreak = dayCounterViewModel.sobrietyData.pastStreaks.min(by: { $0.startDate < $1.startDate }) else {
+        guard let firstStreak = dayCounterViewModel.streakData.pastStreaks.min(by: { $0.startDate < $1.startDate }) else {
             return dayCounterViewModel.currentStreak
         }
         
         let startDate = dayCounterViewModel.isActiveStreak ? 
-            min(firstStreak.startDate, dayCounterViewModel.sobrietyData.currentStartDate) : 
+            min(firstStreak.startDate, dayCounterViewModel.streakData.currentStartDate) : 
             firstStreak.startDate
         
         return Calendar.current.dateComponents([.day], from: startDate, to: DateProvider.now).day ?? 0

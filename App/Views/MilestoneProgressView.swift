@@ -5,23 +5,25 @@ struct MilestoneProgressView: View {
     @State private var celebratingMilestones: Set<Int> = []
     @State private var lastCelebrated: Int = -1
     
-    private let milestones = [
-        // Row 1 - Early Wins
-        Milestone(days: 1, title: "Day 1", emoji: "🌱"),
-        Milestone(days: 2, title: "2 Days", emoji: "🍀"),
-        Milestone(days: 5, title: "5 Days", emoji: "⭐️"),
-        Milestone(days: 7, title: "1 Week", emoji: "🌟"),
-        // Row 2 - Building Momentum
-        Milestone(days: 14, title: "2 Weeks", emoji: "🎯"),
-        Milestone(days: 30, title: "1 Month", emoji: "🏆"),
-        Milestone(days: 60, title: "2 Months", emoji: "💫"),
-        Milestone(days: 90, title: "3 Months", emoji: "🌙"),
-        // Row 3 - Major Achievements
-        Milestone(days: 180, title: "6 Months", emoji: "🌞"),
-        Milestone(days: 365, title: "1 Year", emoji: "👑"),
-        Milestone(days: 730, title: "2 Years", emoji: "🎊"),
-        Milestone(days: 1095, title: "3 Years", emoji: "⚡️")
-    ]
+    private var milestones: [Milestone] {
+        return [
+            // Row 1 - Early Wins
+            Milestone(days: 1, title: NSLocalizedString("milestone_day_1", comment: "Day 1 milestone"), emoji: "🌱"),
+            Milestone(days: 2, title: NSLocalizedString("milestone_2_days", comment: "2 Days milestone"), emoji: "🍀"),
+            Milestone(days: 5, title: NSLocalizedString("milestone_5_days", comment: "5 Days milestone"), emoji: "⭐️"),
+            Milestone(days: 7, title: NSLocalizedString("milestone_1_week", comment: "1 Week milestone"), emoji: "🌟"),
+            // Row 2 - Building Momentum
+            Milestone(days: 14, title: NSLocalizedString("milestone_2_weeks", comment: "2 Weeks milestone"), emoji: "🎯"),
+            Milestone(days: 30, title: NSLocalizedString("milestone_1_month", comment: "1 Month milestone"), emoji: "🏆"),
+            Milestone(days: 60, title: NSLocalizedString("milestone_2_months", comment: "2 Months milestone"), emoji: "💫"),
+            Milestone(days: 90, title: NSLocalizedString("milestone_3_months", comment: "3 Months milestone"), emoji: "🌙"),
+            // Row 3 - Major Achievements
+            Milestone(days: 180, title: NSLocalizedString("milestone_6_months", comment: "6 Months milestone"), emoji: "🌞"),
+            Milestone(days: 365, title: NSLocalizedString("milestone_1_year", comment: "1 Year milestone"), emoji: "👑"),
+            Milestone(days: 730, title: NSLocalizedString("milestone_2_years", comment: "2 Years milestone"), emoji: "🎊"),
+            Milestone(days: 1095, title: NSLocalizedString("milestone_3_years", comment: "3 Years milestone"), emoji: "⚡️")
+        ]
+    }
     
     private var rows: [[Milestone]] {
         var result: [[Milestone]] = []
@@ -53,9 +55,9 @@ struct MilestoneProgressView: View {
                         
                         // Progress circle with gradient
                         Circle()
-                            .trim(from: 0, to: min(CGFloat(currentStreak) / CGFloat(milestone.days), 1.0))
+                            .trim(from: 0, to: min(CGFloat(max(0, currentStreak - 1)) / CGFloat(milestone.days), 1.0))
                             .stroke(
-                                currentStreak >= milestone.days ? 
+                                (currentStreak - 1) >= milestone.days ? 
                                 LinearGradient(
                                     gradient: Gradient(colors: [.green, .mint, .cyan]),
                                     startPoint: .topLeading,
@@ -69,11 +71,11 @@ struct MilestoneProgressView: View {
                                 style: StrokeStyle(lineWidth: 6, lineCap: .round)
                             )
                             .rotationEffect(.degrees(-90))
-                            .scaleEffect(currentStreak >= milestone.days && celebratingMilestones.contains(milestone.days) ? 1.2 : 1.0)
+                            .scaleEffect((currentStreak - 1) >= milestone.days && celebratingMilestones.contains(milestone.days) ? 1.2 : 1.0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.7), value: currentStreak)
                         
                         // Glow effect for completed milestones
-                        if currentStreak >= milestone.days {
+                        if (currentStreak - 1) >= milestone.days {
                             Circle()
                                 .stroke(
                                     LinearGradient(
@@ -119,17 +121,18 @@ struct MilestoneProgressView: View {
                         VStack(spacing: 2) {
                             Text(milestone.emoji)
                                 .font(.title2)
-                                .scaleEffect(currentStreak >= milestone.days ? 
+                                .scaleEffect((currentStreak - 1) >= milestone.days ? 
                                     (celebratingMilestones.contains(milestone.days) ? 1.5 : 1.2) : 0.8)
-                                .opacity(currentStreak >= milestone.days ? 1 : 0.4)
+                                .opacity((currentStreak - 1) >= milestone.days ? 1 : 0.4)
                                 .shadow(
-                                    color: currentStreak >= milestone.days ? .yellow.opacity(0.6) : .clear,
+                                    color: (currentStreak - 1) >= milestone.days ? .yellow.opacity(0.6) : .clear,
                                     radius: celebratingMilestones.contains(milestone.days) ? 8 : 0
                                 )
                                 .animation(.spring(response: 0.5, dampingFraction: 0.6), value: currentStreak)
                             
-                            if currentStreak < milestone.days {
-                                Text("\(currentStreak)/\(milestone.days)")
+                            if currentStreak <= milestone.days {
+                                let completedDays = max(0, currentStreak - 1)
+                                Text("\(completedDays)/\(milestone.days)")
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                                     .fontWeight(.medium)
@@ -137,7 +140,7 @@ struct MilestoneProgressView: View {
                         }
                         
                         // Completion checkmark
-                        if currentStreak >= milestone.days {
+                        if (currentStreak - 1) >= milestone.days {
                             VStack {
                                 HStack {
                                     Spacer()
@@ -185,7 +188,7 @@ struct MilestoneProgressView: View {
     private func checkForNewMilestones(newStreak: Int) {
         // Find newly completed milestones
         let newlyCompleted = milestones.filter { milestone in
-            newStreak >= milestone.days && lastCelebrated < milestone.days
+            (newStreak - 1) >= milestone.days && lastCelebrated < milestone.days
         }
         
         // Trigger celebrations for new milestones

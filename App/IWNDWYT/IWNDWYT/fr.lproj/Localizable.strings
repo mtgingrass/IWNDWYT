@@ -1,0 +1,393 @@
+/* Main App Title */
+"app_title" = "JNBPAT";
+
+/* Tab Bar */
+"tab_home" = "Accueil";
+"tab_streak" = "Série";
+"tab_metrics" = "Statistiques";
+
+/* Navigation Titles */
+"nav_streak_progress" = "Progression de la Série";
+"nav_metrics" = "Statistiques";
+"nav_data_nerd_mode" = "Mode Analyste";
+"nav_settings" = "Paramètres";
+"nav_data_management" = "Gestion des Données";
+"nav_leave_tip" = "Laisser un Pourboire";
+"nav_about" = "À Propos";
+"nav_debug_panel" = "Panneau de Débogage";
+"nav_data_nerd_mode" = "Mode Analyste";
+
+/* Buttons */
+"btn_view_active_streak" = "Voir la Série Active";
+"btn_start_new_streak" = "Commencer une Nouvelle Série";
+"btn_get_started" = "Commencer";
+"btn_confirm_start_tracking" = "Confirmer et Commencer le Suivi";
+"btn_not_today" = "Pas Aujourd'hui - Je commencerai une autre fois";
+"btn_end_streak" = "Terminer la Série";
+"btn_cancel_streak" = "Annuler la Série";
+"btn_done" = "Terminé";
+"btn_ok" = "OK";
+"btn_cancel" = "Annuler";
+"btn_export_data" = "Exporter les Données";
+"btn_import_data" = "Importer les Données";
+"btn_open_settings" = "Ouvrir les Paramètres";
+"btn_request_permission" = "Demander la Permission";
+"btn_tip_developer" = "Donner un Pourboire au Développeur";
+"btn_keep_going" = "Continuez !";
+"btn_ive_got_this" = "J'ai confiance";
+"btn_reset_offset" = "Réinitialiser le Décalage";
+"btn_quick_test" = "Test Rapide";
+"btn_test_popup" = "Test Popup";
+"btn_management" = "Gestion";
+"btn_reschedule_daily" = "Reprogrammer Quotidiennement";
+"btn_cancel_all" = "Tout Annuler";
+"btn_force_rating_request" = "Forcer la Demande d'Évaluation";
+"btn_reset_rating_data" = "Réinitialiser les Données d'Évaluation";
+"btn_complete_reset" = "Réinitialisation Complète";
+"btn_open_debug_panel" = "Ouvrir le Panneau de Débogage";
+"btn_view_details" = "Voir les Détails";
+
+/* Headers and Titles */
+"header_start_one_day" = "Commencer avec un Seul Jour";
+"header_choose_start_date" = "Choisissez Votre Date de Début";
+"header_data_nerd_mode" = "Mode Analyste";
+"header_milestone_achieved" = "🎉 ÉTAPE FRANCHIE ! 🎉";
+"header_support_developer" = "Soutenir le Développeur";
+"header_acknowledgments" = "Remerciements";
+"header_current_status" = "Statut Actuel";
+"header_statistics" = "Statistiques";
+"header_calendar" = "Calendrier";
+"header_past_streaks" = "Séries Passées";
+"header_monthly_analysis" = "Analyse Mensuelle";
+"header_yearly_analysis" = "Analyse Annuelle";
+"header_detailed_breakdown" = "Analyse Détaillée";
+"header_detailed_history" = "HISTORIQUE DÉTAILLÉ";
+"header_progress_history" = "Progrès et Historique";
+"header_export_section" = "Section d'Exportation";
+"header_import_section" = "Section d'Importation";
+"header_data_management" = "Gestion des Données";
+"header_resources" = "Ressources";
+"header_notifications" = "Notifications";
+"header_support" = "Support";
+"header_debug_simulated_time" = "Débogage : Temps Simulé";
+"header_debug_app_state" = "Débogage : État de l'Application";
+
+/* Descriptions */
+"desc_choose_start_date" = "Quand avez-vous commencé votre parcours ? Sélectionnez une date pour suivre vos progrès à partir de ce moment.";
+"desc_data_nerd_mode" = "Plongez profondément dans votre parcours avec des analyses complètes";
+"desc_data_nerd_mode_full" = "Plongez profondément dans votre parcours avec des analyses complètes";
+"desc_data_export" = "Exportez vos données pour les sauvegarder ou les transférer vers un autre appareil. La réinitialisation supprimera définitivement tous vos progrès.";
+"desc_notifications" = "Recevez des messages de motivation quotidiens pour vous aider à rester sur la bonne voie.";
+"desc_tip_jar" = "Cette application est gratuite. Si elle vous a été utile et que vous souhaitez laisser un pourboire, merci ! C'est grandement apprécié.";
+"desc_app_about" = "Conçu pour arrêter les habitudes, suivre les progrès avec des étapes et rester motivé.";
+"desc_app_tagline" = "Commencez par passer un seul jour.";
+"desc_app_inspiration" = "Inspiré par la communauté r/stopdrinking et l'engagement quotidien partagé par des millions de personnes.";
+"desc_export_data" = "Créer une sauvegarde de vos données de série";
+"desc_import_data" = "Restaurer à partir d'un fichier de sauvegarde";
+"desc_calendar_note" = "Si une série se termine le même jour qu'une nouvelle série commence, ce jour apparaîtra neutre mais ne comptera pas contre la nouvelle série";
+"desc_dummy_data_warning" = "⚠️ Les données factices sont uniquement pour les captures d'écran. N'oubliez pas de restaurer les vraies données une fois terminé.";
+"desc_complete_reset_warning" = "Cela effacera toutes les données de l'application et la réinitialisera à un état d'installation fraîche";
+"desc_reset_warning" = "Cela effacera tous les paramètres utilisateur et réinitialisera l'application à un état d'installation fraîche. Cette action ne peut pas être annulée.";
+
+/* Time Labels */
+"time_days" = "Jours";
+"time_next_day_starts" = "Le prochain jour commence dans";
+"time_to_next_goal" = " jusqu'au prochain objectif";
+"time_this" = "Ce";
+"time_last" = "Dernier";
+"time_daily_time" = "Heure Quotidienne :";
+"time_30_sec" = "30 sec";
+"time_1_min" = "1 min";
+
+/* Milestones */
+"milestone_day_1" = "Jour 1";
+"milestone_2_days" = "2 Jours";
+"milestone_5_days" = "5 Jours";
+"milestone_1_week" = "1 Semaine";
+"milestone_2_weeks" = "2 Semaines";
+"milestone_1_month" = "1 Mois";
+"milestone_2_months" = "2 Mois";
+"milestone_3_months" = "3 Mois";
+"milestone_6_months" = "6 Mois";
+"milestone_1_year" = "1 An";
+"milestone_2_years" = "2 Ans";
+"milestone_3_years" = "3 Ans";
+"milestones_title" = "Étapes";
+
+/* Metrics */
+"metric_current_streak" = "Série Actuelle";
+"metric_longest_streak" = "Série la Plus Longue";
+"metric_total_attempts" = "Tentatives Totales";
+"metric_success_rate" = "Taux de Réussite";
+"metric_data_nerd_mode" = "Mode Analyste";
+"metric_data_nerd_desc" = "Plongez profondément dans vos analyses";
+"metric_total_success_days" = "Jours de Succès Totaux";
+"metric_average_streak" = "Série Moyenne";
+
+/* Alerts */
+"alert_end_streak_title" = "Terminer la Série Actuelle ?";
+"alert_end_streak_message" = "Êtes-vous sûr de vouloir terminer votre série actuelle ? Cela marquera aujourd'hui comme date de fin.";
+"alert_cancel_streak_title" = "Annuler la Série ?";
+"alert_cancel_streak_message" = "Cela supprimera complètement cette tentative de série. Elle ne sera pas sauvegardée ou comptée dans votre historique. Cette action ne peut pas être annulée.";
+"alert_reset_data_title" = "Réinitialiser Toutes les Données";
+"alert_reset_data_message" = "Êtes-vous sûr de vouloir réinitialiser toutes les données ? Cette action ne peut pas être annulée.";
+"alert_enjoying_app_title" = "Vous appréciez l'application ?";
+"alert_confirm_import_title" = "Confirmer l'Importation";
+"alert_confirm_import_message" = "Cela remplacera vos données actuelles par les données importées. Une sauvegarde sera créée automatiquement.";
+
+/* Status Messages */
+"status_already_tipped" = "Pourboire Déjà Donné";
+"status_processing_purchase" = "Traitement de l'achat...";
+"status_thank_you" = "Merci pour votre soutien !";
+"status_purchase_failed" = "Échec de l'achat";
+"status_data_imported" = "Données importées avec succès ! Vos données de série ont été restaurées.";
+
+/* Tip Prompts */
+"tip_prompt_format" = "Bonjour, vous avez ouvert l'application plus de %d fois. Considérez laisser un pourboire si elle vous a aidé !";
+
+/* Contact and Version Info */
+"contact_label" = "Contact :";
+"version_info_format" = "Version %@ • Build %@ • iOS %@+";
+"copyright" = "© 2025 Mark Gingrass";
+"leave_tip_icon" = "💙 Laisser un Pourboire";
+"app_name_full" = "JNBPATAujourd'hui";
+"app_name_expanded" = "Je Ne Boirai Pas Avec Toi Aujourd'hui";
+
+/* Days Format */
+"days_format" = "%d Jours";
+"days_format_singular" = "%d Jour";
+"days_with_number" = "%d jours";
+"days_with_number_singular" = "%d jour";
+"days_strong_format" = "%d JOURS FORT !";
+
+/* Progress Format */
+"progress_format" = "%d/%d";
+
+/* Notification Content */
+"notification_title" = "JNBPAT";
+"notification_test" = "Notification de test";
+"notification_tap_motivation" = "Appuyez pour la motivation";
+"notification_quick_test" = "Test rapide - appuyez pour la motivation";
+"notification_fallback" = "Vous pouvez le faire. Commencez aujourd'hui.";
+
+/* Motivational Messages */
+"motivation_1" = "Aujourd'hui est un bon jour pour recommencer.";
+"motivation_2" = "Vous vous devez d'essayer.";
+"motivation_3" = "Commencez petit. Commencez maintenant.";
+"motivation_4" = "Vous n'avez pas besoin d'être parfait—juste commencer.";
+"motivation_5" = "Le premier pas est le plus difficile. Faites-le aujourd'hui.";
+"motivation_6" = "Vous êtes plus fort que cette habitude.";
+"motivation_7" = "Votre futur vous remerciera.";
+"motivation_8" = "C'est votre bouton de réinitialisation. Appuyez dessus.";
+"motivation_9" = "Chaque série commence par le Jour Un.";
+"motivation_10" = "Le changement commence au moment où vous décidez.";
+"motivation_11" = "Vous méritez une vie libre de ce cycle.";
+"motivation_12" = "Rien ne change si rien ne change.";
+"motivation_13" = "Commencez maintenant. Pas plus tard. Maintenant.";
+"motivation_14" = "Que ce soit la dernière fois que vous redémarrez.";
+"motivation_15" = "Vous n'êtes pas seul dans cela. Repartez à zéro.";
+"motivation_16" = "Un jour peut se transformer en plusieurs.";
+"motivation_17" = "Le progrès bat la perfection.";
+"motivation_18" = "Vous avez attendu assez longtemps. Commencez.";
+"motivation_19" = "Ce moment est votre point de basculement.";
+"motivation_20" = "Faites que aujourd'hui compte pour quelque chose de plus grand.";
+
+/* Error Messages */
+"error_encode_data" = "Échec de l'encodage des données pour l'exportation";
+"error_decode_data" = "Échec du décodage des données importées";
+"error_create_export" = "Échec de la création du fichier d'exportation";
+"error_file_not_found" = "Fichier d'importation introuvable";
+"error_invalid_format" = "Format de fichier invalide";
+"error_unsupported_version" = "Version d'exportation non prise en charge";
+"error_corrupted_data" = "Les données semblent corrompues";
+
+/* File Naming */
+"export_filename_format" = "JNBPAT_Export_%@.json";
+"backup_filename_suffix" = " Une sauvegarde de vos données précédentes a été créée à : %@";
+
+/* Form Labels */
+"form_start_date" = "Date de Début";
+
+/* Dashboard */
+"dashboard_title" = "VOTRE TABLEAU DE BORD";
+"dashboard_no_active_streak" = "Aucune Série Active";
+"dashboard_ready_to_start" = "Prêt à commencer";
+"active_streak_started_format" = "Série Active Commencée %@";
+"dashboard_previous_streak_ended" = "Série Précédente Terminée";
+
+/* Settings View */
+"settings_export_data" = "Exporter les Données";
+"settings_import_data" = "Importer les Données";
+"settings_data_export_desc" = "Exportez vos données pour les sauvegarder ou les transférer vers un autre appareil. La réinitialisation supprimera définitivement tous vos progrès.";
+"settings_notifications_desc" = "Recevez des messages de motivation quotidiens pour vous aider à rester sur la bonne voie.";
+"settings_reset_confirm" = "Êtes-vous sûr de vouloir réinitialiser toutes les données ? Cette action ne peut pas être annulée.";
+"settings_open_settings" = "Ouvrir les Paramètres";
+"settings_request_permission" = "Demander la Permission";
+"settings_motivational_reminders" = "Rappels Motivationnels";
+"settings_rate_app" = "Évaluer JNBPAT";
+"settings_contact_support" = "Contacter le Support";
+
+/* About View */
+"about_app_name" = "JNBPATAujourd'hui";
+"about_app_full_name" = "Je Ne Boirai Pas Avec Toi Aujourd'hui";
+"about_app_description" = "Conçu pour arrêter les habitudes, suivre les progrès avec des étapes et rester motivé.";
+"about_app_tagline" = "Commencez par passer un seul jour.";
+"about_acknowledgments" = "Remerciements";
+"about_inspiration" = "Inspiré par la communauté r/stopdrinking et l'engagement quotidien partagé par des millions de personnes.";
+"about_contact" = "Contact :";
+"about_leave_tip" = "💙 Laisser un Pourboire";
+"about_version_format" = "Version %@ • Build %@ • iOS %@+";
+"about_copyright" = "© 2025 Mark Gingrass";
+"about_feature_track" = "Suivre les progrès quotidiens";
+"about_feature_stats" = "Voir les statistiques et métriques";
+"about_feature_milestones" = "Célébrer les étapes";
+"about_feature_interface" = "Interface simple et intuitive";
+
+/* Data Import/Export */
+"data_export_section" = "Section d'Exportation";
+"data_import_section" = "Section d'Importation";
+"data_export_desc" = "Créer une sauvegarde de vos données de série";
+"data_import_desc" = "Restaurer à partir d'un fichier de sauvegarde";
+"data_import_confirm" = "Confirmer l'Importation";
+"data_import_message" = "Cela remplacera vos données actuelles par les données importées. Une sauvegarde sera créée automatiquement.";
+
+/* Intro View */
+"intro_title" = "Commencer avec un Seul Jour";
+"intro_description" = "Passer juste aujourd'hui. C'est tout.\n\nCette application comptera les heures jusqu'à minuit. Puis recommencera demain.\n\nIl y a des étapes. Bien sûr.\nMais elles viennent un jour à la fois.\n\nCette application ne suit pas dix habitudes différentes.\nElle en suit juste une. Celle qui compte le plus.\n\nCommencez maintenant.";
+
+/* Start Date Picker */
+"start_date_title" = "Choisissez Votre Date de Début";
+"start_date_description" = "Quand avez-vous commencé votre parcours ? Sélectionnez une date pour suivre vos progrès à partir de ce moment.";
+"start_date_confirm" = "Confirmer et Commencer le Suivi";
+"start_date_not_today" = "Pas Aujourd'hui - Je commencerai une autre fois";
+
+/* Active Streak View */
+"active_streak_days_format" = "%d Jours";
+"active_streak_next_day" = "Le prochain jour commence dans";
+"active_streak_end_streak" = "Terminer la Série";
+"active_streak_cancel_streak" = "Annuler la Série";
+"active_streak_end_confirm_title" = "Terminer la Série Actuelle ?";
+"active_streak_end_confirm_message" = "Êtes-vous sûr de vouloir terminer votre série actuelle ? Cela marquera aujourd'hui comme date de fin.";
+"active_streak_cancel_confirm_title" = "Annuler la Série ?";
+"active_streak_cancel_confirm_message" = "Cela supprimera complètement cette tentative de série. Elle ne sera pas sauvegardée ou comptée dans votre historique. Cette action ne peut pas être annulée.";
+
+/* Milestone Celebration */
+"milestone_achieved" = "🎉 ÉTAPE FRANCHIE ! 🎉";
+"milestone_days_strong" = "%d JOURS FORT !";
+"milestone_message_1" = "Chaque voyage commence par un seul pas. Vous avez fait le vôtre !";
+"milestone_message_2" = "Deux jours de force. Vous construisez quelque chose d'incroyable !";
+"milestone_message_5" = "Cinq jours d'engagement. Votre détermination est inspirante !";
+"milestone_message_7" = "Une semaine forte ! Vous avez prouvé que vous pouvez le faire !";
+"milestone_message_14" = "Deux semaines fortes ! Vous créez un changement durable !";
+"milestone_message_30" = "Un mois de transformation ! Votre force est remarquable !";
+"milestone_message_60" = "Deux mois de croissance ! Vous devenez inarrêtable !";
+"milestone_message_90" = "Trois mois de dévouement ! Vous avez construit une nouvelle fondation !";
+"milestone_message_180" = "Six mois de triomphe ! Vous avez changé votre vie !";
+"milestone_message_365" = "Une année complète ! Vous êtes une vraie inspiration !";
+"milestone_message_730" = "Deux ans d'excellence ! Vous avez maîtrisé ce voyage !";
+"milestone_message_1095" = "Trois ans de grandeur ! Vous êtes absolument incroyable !";
+"milestone_message_default" = "Une autre étape franchie ! Votre voyage continue d'inspirer !";
+
+/* Calendar View */
+"calendar_explanation" = "Si une série se termine le même jour qu'une nouvelle série commence, ce jour apparaîtra neutre mais ne comptera pas contre la nouvelle série";
+
+/* Tip Jar */
+"tip_jar_title" = "Soutenir le Développeur";
+"tip_jar_description" = "Cette application est gratuite. Si elle vous a été utile et que vous souhaitez laisser un pourboire, merci ! C'est grandement apprécié.";
+"tip_jar_loading" = "Chargement des pourboires…";
+"tip_jar_already_tipped" = "Pourboire Déjà Donné";
+"tip_jar_processing" = "Traitement de l'achat...";
+"tip_jar_thank_you" = "Merci pour votre soutien !";
+"tip_jar_failed" = "Échec de l'achat";
+
+/* Data Nerd Mode */
+"data_nerd_title" = "Mode Analyste";
+"data_nerd_description" = "Plongez profondément dans votre parcours avec des analyses complètes";
+"data_nerd_total_attempts" = "Tentatives Totales";
+"data_nerd_avg_streak" = "Série Moyenne";
+"data_nerd_total_success_days" = "Jours de Succès Totaux";
+"data_nerd_monthly_analysis" = "Analyse Mensuelle";
+"data_nerd_yearly_analysis" = "Analyse Annuelle";
+"data_nerd_detailed_breakdown" = "Analyse Détaillée";
+"data_nerd_this" = "Ce";
+"data_nerd_last" = "Dernier";
+"data_nerd_days_unit" = "jours";
+"data_nerd_streaks_unit" = "séries";
+"data_nerd_longest_streak_month" = "Série la Plus Longue ce Mois";
+"data_nerd_total_days_month" = "Jours Totaux ce Mois";
+"data_nerd_attempts_month" = "Tentatives ce Mois";
+"data_nerd_longest_streak_year" = "Série la Plus Longue cette Année";
+"data_nerd_total_days_year" = "Jours Totaux cette Année";
+"data_nerd_attempts_year" = "Tentatives cette Année";
+"data_nerd_total_streaks_recorded" = "Séries Totales Enregistrées";
+"data_nerd_median_streak_length" = "Longueur Médiane des Séries";
+"data_nerd_days_since_first" = "Jours Depuis la Première Tentative";
+
+/* Time Indicators */
+"time_today" = "aujourd'hui";
+"time_one_day_ago" = "il y a 1 jour";
+"time_days_ago_format" = "il y a %d jours";
+
+/* Common Units */
+"unit_days" = "jours";
+"unit_streaks" = "séries";
+
+/* Motivational Popup */
+"motivational_popup_title" = "JNBPAT";
+"motivational_popup_button" = "J'ai confiance";
+
+/* Tip Prompts */
+"tip_prompt_message" = "Bonjour, vous avez ouvert l'application plus de %d fois. Considérez laisser un pourboire si elle vous a aidé !";
+"tip_prompt_enjoying_title" = "Vous appréciez l'application ?";
+"tip_prompt_not_now" = "Pas Maintenant";
+
+/* Debug Panel (for development) */
+"debug_simulated_time" = "Débogage : Temps Simulé";
+"debug_notifications" = "Notifications";
+"debug_daily_time" = "Heure Quotidienne :";
+"debug_quick_test" = "Test Rapide";
+"debug_30_sec" = "30 sec";
+"debug_1_min" = "1 min";
+"debug_test_popup" = "Test Popup";
+"debug_management" = "Gestion";
+"debug_reschedule_daily" = "Reprogrammer Quotidiennement";
+"debug_cancel_all" = "Tout Annuler";
+"debug_app_state" = "Débogage : État de l'Application";
+"debug_reset_all" = "Réinitialiser Tous les Paramètres";
+"debug_reset_description" = "Cela effacera toutes les données de l'application et la réinitialisera à un état d'installation fraîche";
+"debug_reset_warning" = "Cela effacera tous les paramètres utilisateur et réinitialisera l'application à un état d'installation fraîche. Cette action ne peut pas être annulée.";
+"debug_force_rating" = "Forcer la Demande d'Évaluation";
+"debug_reset_rating" = "Réinitialiser les Données d'Évaluation";
+"debug_complete_reset" = "Réinitialisation Complète";
+"debug_test_scenarios" = "Scénarios de Test :";
+"debug_current_streak" = "Série Actuelle :";
+"debug_active" = "Actif :";
+"debug_yes" = "Oui";
+"debug_no" = "Non";
+"debug_dummy_data_active" = "Données Factices Actives";
+"debug_real_data_active" = "Données Réelles Actives";
+"debug_select_scenario" = "Sélectionner un Scénario :";
+"debug_current_stats" = "Statistiques Actuelles :";
+"debug_streak_format" = "Série : %dj";
+"debug_total_format" = "Total : %dj";
+"debug_longest_format" = "Plus Long : %dj";
+"debug_attempts_format" = "Tentatives : %d";
+"debug_preview_stats" = "Aperçu des Statistiques";
+"debug_apply_dummy" = "Appliquer les Données Factices";
+"debug_restore_real" = "Restaurer les Données Réelles";
+"debug_dummy_warning" = "⚠️ Les données factices sont uniquement pour les captures d'écran. N'oubliez pas de restaurer les vraies données une fois terminé.";
+"debug_day_3" = "Jour 3";
+"debug_day_7" = "Jour 7";
+"debug_day_14" = "Jour 14";
+"debug_day_30" = "Jour 30";
+"debug_test_rating" = "Tester l'Éligibilité d'Évaluation";
+
+/* Common Boolean Values */
+"value_yes" = "Oui";
+"value_no" = "Non";
+
+/* Common Actions */
+"action_import" = "Importer";
+"action_export" = "Exporter";
+"action_reset" = "Réinitialiser";
+"action_keep_streak" = "Garder la Série";

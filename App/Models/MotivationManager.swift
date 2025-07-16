@@ -19,26 +19,44 @@ class MotivationManager {
     #endif
 
     private let motivationMessages = [
-        "Today's a good day to begin again.",
-        "You owe it to yourself to try.",
-        "Start small. Start now.",
-        "You don't have to be perfect—just start.",
-        "The first step is the hardest. Take it today.",
-        "You're stronger than this habit.",
-        "Your future self will thank you.",
-        "This is your reset button. Tap it.",
-        "Every streak starts with Day One.",
-        "Change begins the moment you decide.",
-        "You deserve a life free from this cycle.",
-        "Nothing changes if nothing changes.",
-        "Start now. Not later. Now.",
-        "Let this be the last time you restart.",
-        "You're not alone in this. Start fresh.",
-        "One day can turn into many.",
-        "Progress beats perfection.",
-        "You've waited long enough. Begin.",
-        "This moment is your turning point.",
-        "Make today count for something bigger."
+        NSLocalizedString("motivation_1", comment: "Motivational message 1"),
+        NSLocalizedString("motivation_2", comment: "Motivational message 2"),
+        NSLocalizedString("motivation_3", comment: "Motivational message 3"),
+        NSLocalizedString("motivation_4", comment: "Motivational message 4"),
+        NSLocalizedString("motivation_5", comment: "Motivational message 5"),
+        NSLocalizedString("motivation_6", comment: "Motivational message 6"),
+        NSLocalizedString("motivation_7", comment: "Motivational message 7"),
+        NSLocalizedString("motivation_8", comment: "Motivational message 8"),
+        NSLocalizedString("motivation_9", comment: "Motivational message 9"),
+        NSLocalizedString("motivation_10", comment: "Motivational message 10"),
+        NSLocalizedString("motivation_11", comment: "Motivational message 11"),
+        NSLocalizedString("motivation_12", comment: "Motivational message 12"),
+        NSLocalizedString("motivation_13", comment: "Motivational message 13"),
+        NSLocalizedString("motivation_14", comment: "Motivational message 14"),
+        NSLocalizedString("motivation_15", comment: "Motivational message 15"),
+        NSLocalizedString("motivation_16", comment: "Motivational message 16"),
+        NSLocalizedString("motivation_17", comment: "Motivational message 17"),
+        NSLocalizedString("motivation_18", comment: "Motivational message 18"),
+        NSLocalizedString("motivation_19", comment: "Motivational message 19"),
+        NSLocalizedString("motivation_20", comment: "Motivational message 20")
+    ]
+    
+    private let encouragementMessages = [
+        NSLocalizedString("encouragement_1", comment: "Encouragement message 1"),
+        NSLocalizedString("encouragement_2", comment: "Encouragement message 2"),
+        NSLocalizedString("encouragement_3", comment: "Encouragement message 3"),
+        NSLocalizedString("encouragement_4", comment: "Encouragement message 4"),
+        NSLocalizedString("encouragement_5", comment: "Encouragement message 5"),
+        NSLocalizedString("encouragement_6", comment: "Encouragement message 6"),
+        NSLocalizedString("encouragement_7", comment: "Encouragement message 7"),
+        NSLocalizedString("encouragement_8", comment: "Encouragement message 8"),
+        NSLocalizedString("encouragement_9", comment: "Encouragement message 9"),
+        NSLocalizedString("encouragement_10", comment: "Encouragement message 10"),
+        NSLocalizedString("encouragement_11", comment: "Encouragement message 11"),
+        NSLocalizedString("encouragement_12", comment: "Encouragement message 12"),
+        NSLocalizedString("encouragement_13", comment: "Encouragement message 13"),
+        NSLocalizedString("encouragement_14", comment: "Encouragement message 14"),
+        NSLocalizedString("encouragement_15", comment: "Encouragement message 15")
     ]
 
     private init() {}
@@ -116,7 +134,7 @@ class MotivationManager {
 
         for (index, message) in motivationMessages.enumerated() {
             let content = UNMutableNotificationContent()
-            content.title = "IWNDWYT"
+            content.title = NSLocalizedString("notification_title", comment: "Notification title")
             content.body = message
             content.sound = .default
             content.badge = NSNumber(value: index + 1)
@@ -142,7 +160,7 @@ class MotivationManager {
         center.getPendingNotificationRequests { requests in
             let allNotificationIdentifiers = requests
                 .map { $0.identifier }
-                .filter { $0.hasPrefix("motivation_notif_") || $0 == "dailyMotivation" }
+                .filter { $0.hasPrefix("motivation_notif_") || $0 == "dailyMotivation" || $0 == "dailyEncouragement" }
             
             if !allNotificationIdentifiers.isEmpty {
                 center.removePendingNotificationRequests(withIdentifiers: allNotificationIdentifiers)
@@ -167,7 +185,7 @@ class MotivationManager {
         // First, cancel any existing daily motivation
         center.removePendingNotificationRequests(withIdentifiers: ["dailyMotivation"])
         
-        let message = motivationMessages.randomElement() ?? "You've got this. Start today."
+        let message = motivationMessages.randomElement() ?? NSLocalizedString("notification_fallback", comment: "Fallback notification message")
         let content = UNMutableNotificationContent()
         content.title = "IWNDWYT"
         content.body = message
@@ -266,11 +284,11 @@ class MotivationManager {
             }
             
             let center = UNUserNotificationCenter.current()
-            let message = self.motivationMessages.randomElement() ?? "Test notification"
+            let message = self.motivationMessages.randomElement() ?? NSLocalizedString("notification_test", comment: "Test notification message")
             let content = UNMutableNotificationContent()
-            content.title = "IWNDWYT"
+            content.title = NSLocalizedString("notification_title", comment: "Notification title")
             content.subtitle = message
-            content.body = "Tap for motivation"
+            content.body = NSLocalizedString("notification_tap_motivation", comment: "Notification body text")
             content.sound = .default
             content.badge = NSNumber(value: 1)
             
@@ -310,10 +328,10 @@ class MotivationManager {
             
             let center = UNUserNotificationCenter.current()
             let content = UNMutableNotificationContent()
-            let message = self.motivationMessages.randomElement() ?? "Test notification"
-            content.title = "IWNDWYT"
+            let message = self.motivationMessages.randomElement() ?? NSLocalizedString("notification_test", comment: "Test notification message")
+            content.title = NSLocalizedString("notification_title", comment: "Notification title")
             content.subtitle = message
-            content.body = "Quick test - tap for motivation"
+            content.body = NSLocalizedString("notification_quick_test", comment: "Quick test notification body")
             content.sound = .default
             content.badge = NSNumber(value: 1)
             
@@ -361,6 +379,119 @@ class MotivationManager {
     
     /// Get a random motivational message for popups
     func getRandomMotivationalMessage() -> String {
-        return motivationMessages.randomElement() ?? "You've got this. Start today."
+        return motivationMessages.randomElement() ?? NSLocalizedString("notification_fallback", comment: "Fallback notification message")
+    }
+    
+    /// Schedule daily encouragement notifications when user is in an active streak
+    func scheduleStreakEncouragementIfNeeded(streakActive: Bool, currentStreakDay: Int = 0) {
+        print("🎯 scheduleStreakEncouragementIfNeeded called with streakActive: \(streakActive), day: \(currentStreakDay)")
+        
+        let center = UNUserNotificationCenter.current()
+        
+        // Cancel any existing encouragement notifications
+        center.removePendingNotificationRequests(withIdentifiers: ["dailyEncouragement"])
+        
+        // Only schedule if streak is active
+        guard streakActive else {
+            print("🎯 No active streak - not scheduling encouragement")
+            return
+        }
+        
+        // Check permissions first
+        checkNotificationPermission { [weak self] status in
+            guard status == .authorized || status == .provisional else {
+                print("❌ Encouragement notification failed: Not authorized")
+                return
+            }
+            
+            self?.scheduleEncouragementNotification(currentStreakDay: currentStreakDay)
+        }
+    }
+    
+    private func scheduleEncouragementNotification(currentStreakDay: Int) {
+        let center = UNUserNotificationCenter.current()
+        
+        // Choose message based on milestone or random encouragement
+        let message: String
+        let title = NSLocalizedString("notification_encouragement_title", comment: "Encouragement notification title")
+        
+        // Check for milestone messages
+        switch currentStreakDay {
+        case 7:
+            message = NSLocalizedString("milestone_week", comment: "One week milestone")
+        case 30:
+            message = NSLocalizedString("milestone_month", comment: "30 day milestone")
+        case 100:
+            message = NSLocalizedString("milestone_100", comment: "100 day milestone")
+        case 365:
+            message = NSLocalizedString("milestone_year", comment: "One year milestone")
+        default:
+            // Use regular encouragement with day count
+            let randomEncouragement = encouragementMessages.randomElement() ?? NSLocalizedString("encouragement_1", comment: "Default encouragement")
+            message = String(format: randomEncouragement, currentStreakDay)
+        }
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = message
+        content.sound = .default
+        content.badge = NSNumber(value: 1)
+        
+        var dateComponents = DateComponents()
+        let notificationTime = getNotificationTime()
+        dateComponents.hour = notificationTime.hour
+        dateComponents.minute = notificationTime.minute
+        
+        print("🎯 Scheduling encouragement for \(notificationTime.hour):\(notificationTime.minute)")
+        
+        #if DEBUG
+        // In debug mode, use DateProvider.now
+        let currentDate = DateProvider.now
+        let calendar = Calendar.current
+        var triggerComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+        triggerComponents.hour = notificationTime.hour
+        triggerComponents.minute = notificationTime.minute
+        
+        guard let triggerDate = calendar.date(from: triggerComponents) else {
+            print("❌ Could not create trigger date")
+            return
+        }
+        
+        let finalTriggerDate: Date
+        if triggerDate <= currentDate {
+            finalTriggerDate = calendar.date(byAdding: .day, value: 1, to: triggerDate) ?? triggerDate
+            print("🎯 Time passed today, scheduling for tomorrow: \(finalTriggerDate)")
+        } else {
+            finalTriggerDate = triggerDate
+            print("🎯 Time is in future, scheduling for today: \(finalTriggerDate)")
+        }
+        
+        let finalTriggerComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: finalTriggerDate)
+        #else
+        // Release mode - use normal Date()
+        var triggerDate = Calendar.current.date(from: dateComponents) ?? Date()
+        
+        if triggerDate < Date() {
+            triggerDate = Calendar.current.date(byAdding: .day, value: 1, to: triggerDate) ?? Date()
+        }
+        
+        let finalTriggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate)
+        #endif
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: finalTriggerComponents, repeats: true)
+        
+        let request = UNNotificationRequest(
+            identifier: "dailyEncouragement",
+            content: content,
+            trigger: trigger
+        )
+        
+        center.add(request) { error in
+            if let error = error {
+                print("❌ Failed to schedule encouragement: \(error.localizedDescription)")
+            } else {
+                print("✅ Daily encouragement scheduled with message: \(message)")
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ struct MainTabView: View {
                     // Home Tab
                     NavigationView {
                         ContentView(selectedTab: $selectedTab, showingSettings: $showingSettings)
-                            .navigationBarTitle("IWNDWYT", displayMode: .inline)
+                            .navigationBarTitle(NSLocalizedString("app_title", comment: "App title"), displayMode: .inline)
                     }
                     .tag(0)
                     
@@ -57,7 +57,7 @@ struct MainTabView: View {
                 HStack {
                     TabBarButton(
                         icon: "house.fill",
-                        title: "Home",
+                        title: NSLocalizedString("tab_home", comment: "Home tab title"),
                         isSelected: selectedTab == 0
                     ) {
                         selectedTab = 0
@@ -66,7 +66,7 @@ struct MainTabView: View {
                     if viewModel.isActiveStreak {
                         TabBarButton(
                             icon: "flame.fill",
-                            title: "Streak",
+                            title: NSLocalizedString("tab_streak", comment: "Streak tab title"),
                             isSelected: selectedTab == 1
                         ) {
                             selectedTab = 1
@@ -75,7 +75,7 @@ struct MainTabView: View {
                     
                     TabBarButton(
                         icon: "chart.bar.fill",
-                        title: "Metrics",
+                        title: NSLocalizedString("tab_metrics", comment: "Metrics tab title"),
                         isSelected: selectedTab == (viewModel.isActiveStreak ? 2 : 1)
                     ) {
                         selectedTab = viewModel.isActiveStreak ? 2 : 1

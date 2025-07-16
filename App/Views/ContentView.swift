@@ -73,14 +73,6 @@ struct ContentView: View {
                 StreakActionButtonView(selectedTab: $selectedTab)
 
                 ProgressSectionView()
-
-                #if DEBUG
-                Button("Open Debug Panel") {
-                    showingDebugPanel = true
-                }
-                .font(.footnote)
-                .padding(.top)
-                #endif
             }
             NavigationLink(destination: TipJarView(), isActive: $navigateToTipJar) {
                 EmptyView()

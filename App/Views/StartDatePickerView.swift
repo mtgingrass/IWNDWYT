@@ -25,12 +25,12 @@ struct StartDatePickerView: View {
                         .font(.system(size: 60))
                         .foregroundColor(.accentColor)
                     
-                    Text("Choose Your Start Date")
+                    Text(NSLocalizedString("start_date_title", comment: "Choose your start date title"))
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                     
-                    Text("When did you start your journey? Select a date to track your progress from that point.")
+                    Text(NSLocalizedString("start_date_description", comment: "Start date description"))
                         .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -39,12 +39,12 @@ struct StartDatePickerView: View {
                 
                 // Date Picker
                 VStack(spacing: 12) {
-                    Text("Start Date")
+                    Text(NSLocalizedString("form_start_date", comment: "Start date label"))
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     DatePicker(
-                        "Start Date",
+                        NSLocalizedString("form_start_date", comment: "Start date label"),
                         selection: $selectedDate,
                         in: ...Date(),
                         displayedComponents: .date
@@ -62,7 +62,7 @@ struct StartDatePickerView: View {
                 // Action Buttons
                 VStack(spacing: 12) {
                     Button(action: confirmStartDate) {
-                        Text("Confirm & Start Tracking")
+                        Text(NSLocalizedString("start_date_confirm", comment: "Confirm and start tracking button"))
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -72,7 +72,7 @@ struct StartDatePickerView: View {
                     }
                     
                     Button(action: skipDateSelection) {
-                        Text("Not Today - I will start another time")
+                        Text(NSLocalizedString("start_date_not_today", comment: "Not today button"))
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }

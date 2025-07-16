@@ -56,13 +56,13 @@ struct ActiveStreakView: View {
     private var streakCountdownBox: some View {
         NavigationLink(destination: MetricsView(showingSettings: $showingSettings)) {
             VStack(spacing: 12) {
-                Text("\(viewModel.currentStreak) Days")
+                Text("Day \(viewModel.currentStreak)")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.green)
                     .padding(.top, 8)
                 
                 HStack(spacing: 4) {
-                    Text("Next day starts in")
+                    Text(NSLocalizedString("active_streak_next_day", comment: "Next day starts in"))
                         .foregroundColor(.primary)
                         //.font(.footnote)
                     
@@ -96,7 +96,7 @@ struct ActiveStreakView: View {
                 
                 // Milestones
                 VStack(spacing: 16) {
-                    Text("Milestones")
+                    Text("Completed Milestones")
                         .font(.headline)
                         .foregroundColor(.secondary)
 
@@ -113,7 +113,7 @@ struct ActiveStreakView: View {
                         HStack(spacing: 8) {
                             Image(systemName: "stop.circle.fill")
                                 .font(.title3)
-                            Text("End Streak")
+                            Text(NSLocalizedString("active_streak_end_streak", comment: "End streak button"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                         }
@@ -132,14 +132,14 @@ struct ActiveStreakView: View {
                         .shadow(color: Color.red.opacity(0.3), radius: 8, x: 0, y: 4)
                     }
 
-                    if Calendar.current.isDate(viewModel.sobrietyData.currentStartDate, inSameDayAs: DateProvider.now) {
+                    if Calendar.current.isDate(viewModel.streakData.currentStartDate, inSameDayAs: DateProvider.now) {
                         Button(action: {
                             showCancelConfirmation = true
                         }) {
                             HStack(spacing: 8) {
                                 Image(systemName: "arrow.uturn.backward.circle")
                                     .font(.title3)
-                                Text("Cancel Streak")
+                                Text(NSLocalizedString("active_streak_cancel_streak", comment: "Cancel streak button"))
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                             }
@@ -161,13 +161,6 @@ struct ActiveStreakView: View {
                 }
                 .padding(.horizontal)
 
-                #if DEBUG
-                NavigationLink("Open Debug Panel") {
-                    DebugPanelView()
-                }
-                .font(.footnote)
-                .padding(.top)
-                #endif
             }
             .padding()
         }
@@ -177,7 +170,7 @@ struct ActiveStreakView: View {
         .onReceive(timer) { _ in
             updateTimeUntilMidnight()
         }
-        .navigationTitle("Streak Progress")
+        .navigationTitle(NSLocalizedString("nav_streak_progress", comment: "Streak progress navigation title"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -190,23 +183,23 @@ struct ActiveStreakView: View {
                 }
             }
         }
-        .alert("End Current Streak?", isPresented: $showEndConfirmation) {
-            Button("Cancel", role: .cancel) { }
-            Button("End Streak", role: .destructive) {
+        .alert(NSLocalizedString("active_streak_end_confirm_title", comment: "End streak confirmation title"), isPresented: $showEndConfirmation) {
+            Button(NSLocalizedString("btn_cancel", comment: "Cancel button"), role: .cancel) { }
+            Button(NSLocalizedString("active_streak_end_streak", comment: "End streak button"), role: .destructive) {
                 viewModel.endStreak()
                 selectedTab = 0
             }
         } message: {
-            Text("Are you sure you want to end your current streak? This will mark today as the end date.")
+            Text(NSLocalizedString("active_streak_end_confirm_message", comment: "End streak confirmation message"))
         }
-        .alert("Cancel Streak?", isPresented: $showCancelConfirmation) {
-            Button("Keep Streak", role: .cancel) { }
-            Button("Cancel Streak", role: .destructive) {
+        .alert(NSLocalizedString("active_streak_cancel_confirm_title", comment: "Cancel streak confirmation title"), isPresented: $showCancelConfirmation) {
+            Button(NSLocalizedString("action_keep_streak", comment: "Keep streak button"), role: .cancel) { }
+            Button(NSLocalizedString("active_streak_cancel_streak", comment: "Cancel streak button"), role: .destructive) {
                 viewModel.cancelStreak()
                 selectedTab = 0
             }
         } message: {
-            Text("This will completely remove this streak attempt. It won't be saved or counted in your history. This action cannot be undone.")
+            Text(NSLocalizedString("active_streak_cancel_confirm_message", comment: "Cancel streak confirmation message"))
         }
     }
 }

@@ -19,19 +19,19 @@ struct MetricsView: View {
                 // Metrics List
                 List {
                     Section {
-                        MetricRowView(title: "Current Streak", value: "\(viewModel.currentStreak) days", icon: "calendar")
-                        MetricRowView(title: "Longest Streak", value: "\(viewModel.longestStreak) days", icon: "star.fill")
-                        MetricRowView(title: "Total Attempts", value: "\(viewModel.totalAttempts)", icon: "arrow.triangle.2.circlepath")
+                        MetricRowView(title: NSLocalizedString("metric_current_streak", comment: "Current streak title"), value: "Day \(viewModel.currentStreak)", icon: "calendar")
+                        MetricRowView(title: NSLocalizedString("metric_longest_streak", comment: "Longest streak title"), value: "\(viewModel.longestStreak) \(NSLocalizedString("unit_days", comment: "Days unit"))", icon: "star.fill")
+                        MetricRowView(title: NSLocalizedString("metric_total_attempts", comment: "Total attempts title"), value: "\(viewModel.totalAttempts)", icon: "arrow.triangle.2.circlepath")
                     } header: {
-                        Text("Current Status")
+                        Text(NSLocalizedString("header_current_status", comment: "Current status header"))
                     }
                     
                     Section {
-                        MetricRowView(title: "Total Success Days", value: "\(viewModel.totalSoberDays) days", icon: "sum")
-                        MetricRowView(title: "Average Streak", value: "\(viewModel.averageStreakLength) days", icon: "chart.bar.fill")
-                        MetricRowView(title: "Success Rate", value: String(format: "%.1f%%", viewModel.successRate), icon: "percent")
+                        MetricRowView(title: NSLocalizedString("metric_total_success_days", comment: "Total success days title"), value: "\(viewModel.totalSoberDays) \(NSLocalizedString("unit_days", comment: "Days unit"))", icon: "sum")
+                        MetricRowView(title: NSLocalizedString("metric_average_streak", comment: "Average streak title"), value: "\(viewModel.averageStreakLength) \(NSLocalizedString("unit_days", comment: "Days unit"))", icon: "chart.bar.fill")
+                        MetricRowView(title: NSLocalizedString("metric_success_rate", comment: "Success rate title"), value: String(format: "%.1f%%", viewModel.successRate), icon: "percent")
                     } header: {
-                        Text("Statistics")
+                        Text(NSLocalizedString("header_statistics", comment: "Statistics header"))
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
@@ -45,12 +45,12 @@ struct MetricsView: View {
                             .font(.title2)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Data Nerd Mode")
+                            Text(NSLocalizedString("metric_data_nerd_mode", comment: "Data nerd mode title"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.primary)
                             
-                            Text("Dive deep into your analytics")
+                            Text(NSLocalizedString("metric_data_nerd_desc", comment: "Data nerd mode description"))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -70,7 +70,7 @@ struct MetricsView: View {
                 
                 // Calendar Section
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Calendar")
+                    Text(NSLocalizedString("header_calendar", comment: "Calendar header"))
                         .font(.headline)
                         .foregroundColor(.secondary)
                         .padding(.horizontal)
@@ -83,12 +83,12 @@ struct MetricsView: View {
                 .background(Color(.systemGroupedBackground))
                 
                 // Past Streaks
-                if !viewModel.sobrietyData.pastStreaks.isEmpty {
+                if !viewModel.streakData.pastStreaks.isEmpty {
                     List {
                         Section {
-                            ForEach(viewModel.sobrietyData.pastStreaks.sorted(by: { $0.endDate > $1.endDate })) { streak in
+                            ForEach(viewModel.streakData.pastStreaks.sorted(by: { $0.endDate > $1.endDate })) { streak in
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text("\(streak.length) days")
+                                    Text("\(streak.length) \(NSLocalizedString("unit_days", comment: "Days unit"))")
                                         .font(.headline)
                                     Text("\(streak.startDate.formatted(date: .abbreviated, time: .omitted)) - \(streak.endDate.formatted(date: .abbreviated, time: .omitted))")
                                         .font(.caption)
@@ -96,16 +96,16 @@ struct MetricsView: View {
                                 }
                             }
                         } header: {
-                            Text("Past Streaks")
+                            Text(NSLocalizedString("header_past_streaks", comment: "Past streaks header"))
                         }
                     }
                     .listStyle(InsetGroupedListStyle())
-                    .frame(height: min(CGFloat(viewModel.sobrietyData.pastStreaks.count * 60 + 50), 300))
+                    .frame(height: min(CGFloat(viewModel.streakData.pastStreaks.count * 60 + 50), 300))
                 }
             }
             .padding(.vertical)
         }
-        .navigationTitle("Metrics")
+        .navigationTitle(NSLocalizedString("nav_metrics", comment: "Metrics navigation title"))
         .background(Color(.systemGroupedBackground))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

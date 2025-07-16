@@ -49,7 +49,7 @@ struct MilestoneCelebrationView: View {
                     
                     VStack(spacing: 16) {
                         // Celebration text
-                        Text("🎉 MILESTONE ACHIEVED! 🎉")
+                        Text(NSLocalizedString("milestone_achieved", comment: "Milestone achieved header"))
                             .font(.system(size: 14, weight: .bold, design: .rounded))
                             .foregroundColor(.white.opacity(0.9))
                             .tracking(1.5)
@@ -74,8 +74,8 @@ struct MilestoneCelebrationView: View {
                             .opacity(showContent ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.7).delay(0.6), value: showContent)
                         
-                        // Streak count with emphasis
-                        Text("\(currentStreak) DAYS STRONG!")
+                        // Milestone day count with emphasis
+                        Text(String(format: NSLocalizedString("milestone_days_strong", comment: "Days strong format"), milestone.days))
                             .font(.system(size: 16, weight: .semibold, design: .rounded))
                             .foregroundColor(.white.opacity(0.9))
                             .tracking(1)
@@ -104,7 +104,7 @@ struct MilestoneCelebrationView: View {
                         HStack(spacing: 12) {
                             Image(systemName: "star.fill")
                                 .font(.system(size: 16, weight: .bold))
-                            Text("Keep Going!")
+                            Text(NSLocalizedString("btn_keep_going", comment: "Keep going button"))
                                 .font(.system(size: 18, weight: .bold, design: .rounded))
                         }
                         .foregroundColor(.white)
@@ -200,31 +200,31 @@ struct MilestoneCelebrationView: View {
     private func getMilestoneMessage() -> String {
         switch milestone.days {
         case 1:
-            return "Every journey begins with a single step. You've taken yours!"
+            return NSLocalizedString("milestone_message_1", comment: "1 day milestone message")
         case 2:
-            return "Two days of strength. You're building something amazing!"
+            return NSLocalizedString("milestone_message_2", comment: "2 days milestone message")
         case 5:
-            return "Five days of commitment. Your determination is inspiring!"
+            return NSLocalizedString("milestone_message_5", comment: "5 days milestone message")
         case 7:
-            return "One week of sobriety! You've proven you can do this!"
+            return NSLocalizedString("milestone_message_7", comment: "7 days milestone message")
         case 14:
-            return "Two weeks strong! You're creating lasting change!"
+            return NSLocalizedString("milestone_message_14", comment: "14 days milestone message")
         case 30:
-            return "One month of transformation! Your strength is remarkable!"
+            return NSLocalizedString("milestone_message_30", comment: "30 days milestone message")
         case 60:
-            return "Two months of growth! You're becoming unstoppable!"
+            return NSLocalizedString("milestone_message_60", comment: "60 days milestone message")
         case 90:
-            return "Three months of dedication! You've built a new foundation!"
+            return NSLocalizedString("milestone_message_90", comment: "90 days milestone message")
         case 180:
-            return "Six months of triumph! You've changed your life!"
+            return NSLocalizedString("milestone_message_180", comment: "180 days milestone message")
         case 365:
-            return "One full year! You are a true inspiration!"
+            return NSLocalizedString("milestone_message_365", comment: "365 days milestone message")
         case 730:
-            return "Two years of excellence! You've mastered this journey!"
+            return NSLocalizedString("milestone_message_730", comment: "730 days milestone message")
         case 1095:
-            return "Three years of greatness! You are absolutely incredible!"
+            return NSLocalizedString("milestone_message_1095", comment: "1095 days milestone message")
         default:
-            return "Another milestone reached! Your journey continues to inspire!"
+            return NSLocalizedString("milestone_message_default", comment: "Default milestone message")
         }
     }
 }
@@ -242,7 +242,7 @@ struct ConfettiParticle {
 #Preview {
     MilestoneCelebrationView(
         isPresented: .constant(true),
-        milestone: Milestone(days: 7, title: "1 Week", emoji: "🌟"),
+        milestone: Milestone(days: 7, title: NSLocalizedString("milestone_1_week", comment: "1 Week milestone"), emoji: "🌟"),
         currentStreak: 7
     )
 }

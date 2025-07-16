@@ -1,0 +1,418 @@
+/* Main App Title */
+"app_title" = "IWNDWYT";
+
+/* Tab Bar */
+"tab_home" = "Home";
+"tab_streak" = "Streak";
+"tab_metrics" = "Metrics";
+
+/* Navigation Titles */
+"nav_streak_progress" = "Streak Progress";
+"nav_metrics" = "Metrics";
+"nav_data_nerd_mode" = "Data Nerd Mode";
+"nav_settings" = "Settings";
+"nav_data_management" = "Data Management";
+"nav_leave_tip" = "Leave a Tip";
+"nav_about" = "About";
+"nav_debug_panel" = "Debug Panel";
+"nav_data_nerd_mode" = "Data Nerd Mode";
+
+/* Buttons */
+"btn_view_active_streak" = "View Active Streak";
+"btn_start_new_streak" = "Start New Streak";
+"btn_get_started" = "Get Started";
+"btn_confirm_start_tracking" = "Confirm & Start Tracking";
+"btn_not_today" = "Not Today - I will start another time";
+"btn_end_streak" = "End Streak";
+"btn_cancel_streak" = "Cancel Streak";
+"btn_done" = "Done";
+"btn_ok" = "OK";
+"btn_cancel" = "Cancel";
+"btn_export_data" = "Export Data";
+"btn_import_data" = "Import Data";
+"btn_open_settings" = "Open Settings";
+"btn_request_permission" = "Request Permission";
+"btn_tip_developer" = "Tip the Developer";
+"btn_keep_going" = "Keep Going!";
+"btn_ive_got_this" = "I've got this";
+"btn_reset_offset" = "Reset Offset";
+"btn_quick_test" = "Quick Test";
+"btn_test_popup" = "Test Popup";
+"btn_management" = "Management";
+"btn_reschedule_daily" = "Reschedule Daily";
+"btn_cancel_all" = "Cancel All";
+"btn_force_rating_request" = "Force Rating Request";
+"btn_reset_rating_data" = "Reset Rating Data";
+"btn_complete_reset" = "Complete Reset";
+"btn_open_debug_panel" = "Open Debug Panel";
+"btn_view_details" = "View Details";
+
+/* Headers and Titles */
+"header_start_one_day" = "Start with just One Day";
+"header_choose_start_date" = "Choose Your Start Date";
+"header_data_nerd_mode" = "Data Nerd Mode";
+"header_milestone_achieved" = "🎉 MILESTONE ACHIEVED! 🎉";
+"header_support_developer" = "Support the Developer";
+"header_acknowledgments" = "Acknowledgments";
+"header_current_status" = "Current Status";
+"header_statistics" = "Statistics";
+"header_calendar" = "Calendar";
+"header_past_streaks" = "Past Streaks";
+"header_monthly_analysis" = "Monthly Analysis";
+"header_yearly_analysis" = "Yearly Analysis";
+"header_detailed_breakdown" = "Detailed Breakdown";
+"header_detailed_history" = "DETAILED HISTORY";
+"header_progress_history" = "Progress & History";
+"header_export_section" = "Export Section";
+"header_import_section" = "Import Section";
+"header_data_management" = "Data Management";
+"header_resources" = "Resources";
+"header_notifications" = "Notifications";
+"header_support" = "Support";
+"header_debug_simulated_time" = "Debug: Simulated Time";
+"header_debug_app_state" = "Debug: App State";
+
+/* Descriptions */
+"desc_choose_start_date" = "When did you start your journey? Select a date to track your progress from that point.";
+"desc_data_nerd_mode" = "Dive deep into your journey with comprehensive analytics";
+"desc_data_nerd_mode_full" = "Dive deep into your journey with comprehensive analytics";
+"desc_data_export" = "Export your data for backup or transfer to another device. Reset will permanently delete all your progress.";
+"desc_notifications" = "Receive daily motivational messages to help you stay on track.";
+"desc_tip_jar" = "This app is free to use. If you've found it helpful and want to leave a tip, thank you! It's greatly appreciated.";
+"desc_app_about" = "Designed to stop habits, track progress with milestones, and stay motivated.";
+"desc_app_tagline" = "Start with getting through just one day.";
+"desc_app_inspiration" = "Inspired by the community at r/stopdrinking and the daily commitment shared by millions.";
+"desc_export_data" = "Create a backup of your streak data";
+"desc_import_data" = "Restore from backup file";
+"desc_calendar_note" = "If a streak ends on the same day a new streak begins, that day will appear neutral but won't count against the new streak";
+"desc_dummy_data_warning" = "⚠️ Dummy data is for screenshots only. Remember to restore real data when done.";
+"desc_complete_reset_warning" = "This will clear all app data and reset to a fresh install state";
+"desc_reset_warning" = "This will clear all user defaults and reset the app to a fresh install state. This action cannot be undone.";
+
+/* Time Labels */
+"time_days" = "Days";
+"time_next_day_starts" = "Next day starts in";
+"time_to_next_goal" = " to next goal";
+"time_this" = "This";
+"time_last" = "Last";
+"time_daily_time" = "Daily Time:";
+"time_30_sec" = "30 sec";
+"time_1_min" = "1 min";
+
+/* Milestones */
+"milestone_day_1" = "Day 1";
+"milestone_2_days" = "2 Days";
+"milestone_5_days" = "5 Days";
+"milestone_1_week" = "1 Week";
+"milestone_2_weeks" = "2 Weeks";
+"milestone_1_month" = "1 Month";
+"milestone_2_months" = "2 Months";
+"milestone_3_months" = "3 Months";
+"milestone_6_months" = "6 Months";
+"milestone_1_year" = "1 Year";
+"milestone_2_years" = "2 Years";
+"milestone_3_years" = "3 Years";
+"milestones_title" = "Milestones";
+
+/* Metrics */
+"metric_current_streak" = "Current Streak";
+"metric_longest_streak" = "Longest Streak";
+"metric_total_attempts" = "Total Attempts";
+"metric_success_rate" = "Success Rate";
+"metric_data_nerd_mode" = "Data Nerd Mode";
+"metric_data_nerd_desc" = "Dive deep into your analytics";
+"metric_total_success_days" = "Total Success Days";
+"metric_average_streak" = "Average Streak";
+
+/* Alerts */
+"alert_end_streak_title" = "End Current Streak?";
+"alert_end_streak_message" = "Are you sure you want to end your current streak? This will mark today as the end date.";
+"alert_cancel_streak_title" = "Cancel Streak?";
+"alert_cancel_streak_message" = "This will completely remove this streak attempt. It won't be saved or counted in your history. This action cannot be undone.";
+"alert_reset_data_title" = "Reset All Data";
+"alert_reset_data_message" = "Are you sure you want to reset all data? This action cannot be undone.";
+"alert_enjoying_app_title" = "Enjoying the app?";
+"alert_confirm_import_title" = "Confirm Import";
+"alert_confirm_import_message" = "This will replace your current data with the imported data. A backup will be created automatically.";
+
+/* Status Messages */
+"status_already_tipped" = "Already Tipped";
+"status_processing_purchase" = "Processing purchase...";
+"status_thank_you" = "Thank you for your support!";
+"status_purchase_failed" = "Purchase failed";
+"status_data_imported" = "Data imported successfully! Your streak data has been restored.";
+
+/* Tip Prompts */
+"tip_prompt_format" = "Hi, you've opened the app over %d times. Consider leaving a tip if it's helped you!";
+
+/* Contact and Version Info */
+"contact_label" = "Contact:";
+"version_info_format" = "Version %@ • Build %@ • iOS %@+";
+"copyright" = "© 2025 Mark Gingrass";
+"leave_tip_icon" = "💙 Leave a Tip";
+"app_name_full" = "IWNDWYToday";
+"app_name_expanded" = "I Will Not Destruct With You Today";
+
+/* Days Format */
+"days_format" = "%d Days";
+"days_format_singular" = "%d Day";
+"days_with_number" = "%d days";
+"days_with_number_singular" = "%d day";
+"days_strong_format" = "%d DAYS STRONG!";
+
+/* Progress Format */
+"progress_format" = "%d/%d";
+
+/* Notification Content */
+"notification_title" = "IWNDWYT";
+"notification_test" = "Test notification";
+"notification_tap_motivation" = "Tap for motivation";
+"notification_quick_test" = "Quick test - tap for motivation";
+"notification_fallback" = "You've got this. Start today.";
+"notification_encouragement_title" = "Keep Going! 🔥";
+"notification_encouragement_body" = "Tap to see your progress";
+
+/* Motivational Messages */
+"motivation_1" = "Today's a good day to begin again.";
+"motivation_2" = "You owe it to yourself to try.";
+"motivation_3" = "Start small. Start now.";
+"motivation_4" = "You don't have to be perfect—just start.";
+"motivation_5" = "The first step is the hardest. Take it today.";
+"motivation_6" = "You're stronger than this habit.";
+"motivation_7" = "Your future self will thank you.";
+"motivation_8" = "This is your reset button. Tap it.";
+"motivation_9" = "Every streak starts with Day One.";
+"motivation_10" = "Change begins the moment you decide.";
+"motivation_11" = "You deserve a life free from this cycle.";
+"motivation_12" = "Nothing changes if nothing changes.";
+"motivation_13" = "Start now. Not later. Now.";
+"motivation_14" = "Let this be the last time you restart.";
+"motivation_15" = "You're not alone in this. Start fresh.";
+"motivation_16" = "One day can turn into many.";
+"motivation_17" = "Progress beats perfection.";
+"motivation_18" = "You've waited long enough. Begin.";
+"motivation_19" = "This moment is your turning point.";
+"motivation_20" = "Make today count for something bigger.";
+
+/* Streak Encouragement Messages */
+"encouragement_1" = "Day %d - You're doing amazing! Keep it up!";
+"encouragement_2" = "Day %d - Every day counts. Proud of you!";
+"encouragement_3" = "Day %d - You're stronger than yesterday!";
+"encouragement_4" = "Day %d - Another victory in the books!";
+"encouragement_5" = "Day %d - You're proving it's possible!";
+"encouragement_6" = "Day %d - Your commitment is inspiring!";
+"encouragement_7" = "Day %d - Keep building on this momentum!";
+"encouragement_8" = "Day %d - You're creating lasting change!";
+"encouragement_9" = "Day %d - This streak is your superpower!";
+"encouragement_10" = "Day %d - Consistency is your strength!";
+"encouragement_11" = "Day %d - You're rewriting your story!";
+"encouragement_12" = "Day %d - Progress, not perfection!";
+"encouragement_13" = "Day %d - You're unstoppable!";
+"encouragement_14" = "Day %d - Every day is a win!";
+"encouragement_15" = "Day %d - You've got this!";
+
+/* Milestone Encouragement Messages */
+"milestone_week" = "One week strong! You're building something special!";
+"milestone_month" = "30 days! You've proven your strength!";
+"milestone_100" = "100 days! Triple digits - incredible achievement!";
+"milestone_year" = "365 days! A full year of victories!";
+
+/* Error Messages */
+"error_encode_data" = "Failed to encode data for export";
+"error_decode_data" = "Failed to decode imported data";
+"error_create_export" = "Failed to create export file";
+"error_file_not_found" = "Import file not found";
+"error_invalid_format" = "Invalid file format";
+"error_unsupported_version" = "Unsupported export version";
+"error_corrupted_data" = "Data appears to be corrupted";
+
+/* File Naming */
+"export_filename_format" = "IWNDWYT_Export_%@.json";
+"backup_filename_suffix" = " A backup of your previous data was created at: %@";
+
+/* Form Labels */
+"form_start_date" = "Start Date";
+
+/* Dashboard */
+"dashboard_title" = "YOUR DASHBOARD";
+"dashboard_no_active_streak" = "No Active Streak";
+"dashboard_ready_to_start" = "Ready to start";
+"active_streak_started_format" = "Active Streak Started %@";
+"dashboard_previous_streak_ended" = "Previous Streak Ended";
+
+/* Settings View */
+"settings_export_data" = "Export Data";
+"settings_import_data" = "Import Data";
+"settings_data_export_desc" = "Export your data for backup or transfer to another device. Reset will permanently delete all your progress.";
+"settings_notifications_desc" = "Receive daily motivational messages to help you stay on track.";
+"settings_reset_confirm" = "Are you sure you want to reset all data? This action cannot be undone.";
+"settings_open_settings" = "Open Settings";
+"settings_request_permission" = "Request Permission";
+"settings_motivational_reminders" = "Motivational Reminders";
+"settings_rate_app" = "Rate IWNDWYT";
+"settings_contact_support" = "Contact Support";
+
+/* About View */
+"about_app_name" = "IWNDWYToday";
+"about_app_full_name" = "I Will Not Destruct With You Today";
+"about_app_description" = "Designed to stop habits, track progress with milestones, and stay motivated.";
+"about_app_tagline" = "Start with getting through just one day.";
+"about_acknowledgments" = "Acknowledgments";
+"about_inspiration" = "Inspired by the community at r/stopdrinking and the daily commitment shared by millions.";
+"about_contact" = "Contact:";
+"about_leave_tip" = "💙 Leave a Tip";
+"about_version_format" = "Version %@ • Build %@ • iOS %@+";
+"about_copyright" = "© 2025 Mark Gingrass";
+"about_feature_track" = "Track daily progress";
+"about_feature_stats" = "View statistics and metrics";
+"about_feature_milestones" = "Celebrate milestones";
+"about_feature_interface" = "Simple, intuitive interface";
+
+/* Data Import/Export */
+"data_export_section" = "Export Section";
+"data_import_section" = "Import Section";
+"data_export_desc" = "Create a backup of your streak data";
+"data_import_desc" = "Restore from backup file";
+"data_import_confirm" = "Confirm Import";
+"data_import_message" = "This will replace your current data with the imported data. A backup will be created automatically.";
+
+/* Intro View */
+"intro_title" = "Start with just One Day";
+"intro_description" = "Get through just today. That's all.\n\nThis app will count down the hours until midnight. Then do it again tomorrow.\n\nThere are milestones. Sure.\nBut they come one day at a time.\n\nThis app doesn't track ten different habits.\nIt tracks just one. The one that matters most.\n\nStart now.";
+
+/* Start Date Picker */
+"start_date_title" = "Choose Your Start Date";
+"start_date_description" = "When did you start your journey? Select a date to track your progress from that point.";
+"start_date_confirm" = "Confirm & Start Tracking";
+"start_date_not_today" = "Not Today - I will start another time";
+
+/* Active Streak View */
+"active_streak_days_format" = "%d Days";
+"active_streak_next_day" = "Next day starts in";
+"active_streak_end_streak" = "End Streak";
+"active_streak_cancel_streak" = "Cancel Streak";
+"active_streak_end_confirm_title" = "End Current Streak?";
+"active_streak_end_confirm_message" = "Are you sure you want to end your current streak? This will mark today as the end date.";
+"active_streak_cancel_confirm_title" = "Cancel Streak?";
+"active_streak_cancel_confirm_message" = "This will completely remove this streak attempt. It won't be saved or counted in your history. This action cannot be undone.";
+
+/* Milestone Celebration */
+"milestone_achieved" = "🎉 MILESTONE ACHIEVED! 🎉";
+"milestone_days_strong" = "%d DAYS STRONG!";
+"milestone_message_1" = "Every journey begins with a single step. You've taken yours!";
+"milestone_message_2" = "Two days of strength. You're building something amazing!";
+"milestone_message_5" = "Five days of commitment. Your determination is inspiring!";
+"milestone_message_7" = "One week strong! You've proven you can do this!";
+"milestone_message_14" = "Two weeks strong! You're creating lasting change!";
+"milestone_message_30" = "One month of transformation! Your strength is remarkable!";
+"milestone_message_60" = "Two months of growth! You're becoming unstoppable!";
+"milestone_message_90" = "Three months of dedication! You've built a new foundation!";
+"milestone_message_180" = "Six months of triumph! You've changed your life!";
+"milestone_message_365" = "One full year! You are a true inspiration!";
+"milestone_message_730" = "Two years of excellence! You've mastered this journey!";
+"milestone_message_1095" = "Three years of greatness! You are absolutely incredible!";
+"milestone_message_default" = "Another milestone reached! Your journey continues to inspire!";
+
+/* Calendar View */
+"calendar_explanation" = "If a streak ends on the same day a new streak begins, that day will appear neutral but won't count against the new streak";
+
+/* Tip Jar */
+"tip_jar_title" = "Support the Developer";
+"tip_jar_description" = "This app is free to use. If you've found it helpful and want to leave a tip, thank you! It's greatly appreciated.";
+"tip_jar_loading" = "Loading tips…";
+"tip_jar_already_tipped" = "Already Tipped";
+"tip_jar_processing" = "Processing purchase...";
+"tip_jar_thank_you" = "Thank you for your support!";
+"tip_jar_failed" = "Purchase failed";
+
+/* Data Nerd Mode */
+"data_nerd_title" = "Data Nerd Mode";
+"data_nerd_description" = "Dive deep into your journey with comprehensive analytics";
+"data_nerd_total_attempts" = "Total Attempts";
+"data_nerd_avg_streak" = "Avg Streak";
+"data_nerd_total_success_days" = "Total Success Days";
+"data_nerd_monthly_analysis" = "Monthly Analysis";
+"data_nerd_yearly_analysis" = "Yearly Analysis";
+"data_nerd_detailed_breakdown" = "Detailed Breakdown";
+"data_nerd_this" = "This";
+"data_nerd_last" = "Last";
+"data_nerd_days_unit" = "days";
+"data_nerd_streaks_unit" = "streaks";
+"data_nerd_longest_streak_month" = "Longest Streak This Month";
+"data_nerd_total_days_month" = "Total Days This Month";
+"data_nerd_attempts_month" = "Attempts This Month";
+"data_nerd_longest_streak_year" = "Longest Streak This Year";
+"data_nerd_total_days_year" = "Total Days This Year";
+"data_nerd_attempts_year" = "Attempts This Year";
+"data_nerd_total_streaks_recorded" = "Total Streaks Recorded";
+"data_nerd_median_streak_length" = "Median Streak Length";
+"data_nerd_days_since_first" = "Days Since First Attempt";
+
+/* Time Indicators */
+"time_today" = "today";
+"time_one_day_ago" = "1 day ago";
+"time_days_ago_format" = "%d days ago";
+
+/* Common Units */
+"unit_days" = "days";
+"unit_streaks" = "streaks";
+
+/* Motivational Popup */
+"motivational_popup_title" = "IWNDWYT";
+"motivational_popup_button" = "I've got this";
+
+/* Tip Prompts */
+"tip_prompt_message" = "Hi, you've opened the app over %d times. Consider leaving a tip if it's helped you!";
+"tip_prompt_enjoying_title" = "Enjoying the app?";
+"tip_prompt_not_now" = "Not Now";
+
+/* Debug Panel (for development) */
+"debug_simulated_time" = "Debug: Simulated Time";
+"debug_notifications" = "Notifications";
+"debug_daily_time" = "Daily Time:";
+"debug_quick_test" = "Quick Test";
+"debug_30_sec" = "30 sec";
+"debug_1_min" = "1 min";
+"debug_test_popup" = "Test Popup";
+"debug_management" = "Management";
+"debug_reschedule_daily" = "Reschedule Daily";
+"debug_cancel_all" = "Cancel All";
+"debug_app_state" = "Debug: App State";
+"debug_reset_all" = "Reset All User Defaults";
+"debug_reset_description" = "This will clear all app data and reset to a fresh install state";
+"debug_reset_warning" = "This will clear all user defaults and reset the app to a fresh install state. This action cannot be undone.";
+"debug_force_rating" = "Force Rating Request";
+"debug_reset_rating" = "Reset Rating Data";
+"debug_complete_reset" = "Complete Reset";
+"debug_test_scenarios" = "Test Scenarios:";
+"debug_current_streak" = "Current Streak:";
+"debug_active" = "Active:";
+"debug_yes" = "Yes";
+"debug_no" = "No";
+"debug_dummy_data_active" = "Dummy Data Active";
+"debug_real_data_active" = "Real Data Active";
+"debug_select_scenario" = "Select Scenario:";
+"debug_current_stats" = "Current Stats:";
+"debug_streak_format" = "Streak: %dd";
+"debug_total_format" = "Total: %dd";
+"debug_longest_format" = "Longest: %dd";
+"debug_attempts_format" = "Attempts: %d";
+"debug_preview_stats" = "Preview Stats";
+"debug_apply_dummy" = "Apply Dummy Data";
+"debug_restore_real" = "Restore Real Data";
+"debug_dummy_warning" = "⚠️ Dummy data is for screenshots only. Remember to restore real data when done.";
+"debug_day_3" = "Day 3";
+"debug_day_7" = "Day 7";
+"debug_day_14" = "Day 14";
+"debug_day_30" = "Day 30";
+"debug_test_rating" = "Test Rating Eligibility";
+
+/* Common Boolean Values */
+"value_yes" = "Yes";
+"value_no" = "No";
+
+/* Common Actions */
+"action_import" = "Import";
+"action_export" = "Export";
+"action_reset" = "Reset";
+"action_keep_streak" = "Keep Streak";

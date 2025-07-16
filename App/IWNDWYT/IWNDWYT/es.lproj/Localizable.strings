@@ -1,0 +1,380 @@
+/* Main App Title */
+"app_title" = "NOBPHT";
+
+/* Tab Bar */
+"tab_home" = "Inicio";
+"tab_streak" = "Racha";
+"tab_metrics" = "Métricas";
+
+/* Navigation Titles */
+"nav_streak_progress" = "Progreso de Racha";
+"nav_metrics" = "Métricas";
+"nav_data_nerd_mode" = "Modo Analítico";
+"nav_settings" = "Ajustes";
+"nav_data_management" = "Gestión de Datos";
+"nav_leave_tip" = "Dejar Propina";
+"nav_about" = "Acerca de";
+"nav_debug_panel" = "Panel de Depuración";
+"nav_data_nerd_mode" = "Modo Analítico";
+
+/* Buttons */
+"btn_view_active_streak" = "Ver Racha Activa";
+"btn_start_new_streak" = "Comenzar Nueva Racha";
+"btn_get_started" = "Comenzar";
+"btn_confirm_start_tracking" = "Confirmar e Iniciar Seguimiento";
+"btn_not_today" = "Hoy No - Comenzaré en otro momento";
+"btn_end_streak" = "Terminar Racha";
+"btn_cancel_streak" = "Cancelar Racha";
+"btn_done" = "Hecho";
+"btn_ok" = "OK";
+"btn_cancel" = "Cancelar";
+"btn_export_data" = "Exportar Datos";
+"btn_import_data" = "Importar Datos";
+"btn_open_settings" = "Abrir Ajustes";
+"btn_request_permission" = "Solicitar Permiso";
+"btn_tip_developer" = "Dar Propina al Desarrollador";
+"btn_keep_going" = "¡Sigue Así!";
+"btn_ive_got_this" = "Puedo hacerlo";
+"btn_reset_offset" = "Reiniciar Desplazamiento";
+"btn_quick_test" = "Prueba Rápida";
+"btn_test_popup" = "Probar Popup";
+"btn_management" = "Gestión";
+"btn_reschedule_daily" = "Reprogramar Diario";
+"btn_cancel_all" = "Cancelar Todo";
+"btn_force_rating_request" = "Forzar Solicitud de Calificación";
+"btn_reset_rating_data" = "Reiniciar Datos de Calificación";
+"btn_complete_reset" = "Reinicio Completo";
+"btn_open_debug_panel" = "Abrir Panel de Depuración";
+"btn_view_details" = "Ver Detalles";
+
+/* Headers and Titles */
+"header_start_one_day" = "Comienza con Solo Un Día";
+"header_choose_start_date" = "Elige Tu Fecha de Inicio";
+"header_data_nerd_mode" = "Modo Analítico";
+"header_milestone_achieved" = "🎉 ¡HITO ALCANZADO! 🎉";
+"header_support_developer" = "Apoyar al Desarrollador";
+"header_acknowledgments" = "Reconocimientos";
+"header_current_status" = "Estado Actual";
+"header_statistics" = "Estadísticas";
+"header_calendar" = "Calendario";
+"header_past_streaks" = "Rachas Pasadas";
+"header_monthly_analysis" = "Análisis Mensual";
+"header_yearly_analysis" = "Análisis Anual";
+"header_detailed_breakdown" = "Análisis Detallado";
+"header_detailed_history" = "HISTORIAL DETALLADO";
+"header_progress_history" = "Progreso e Historial";
+"header_export_section" = "Sección de Exportación";
+"header_import_section" = "Sección de Importación";
+"header_data_management" = "Gestión de Datos";
+"header_resources" = "Recursos";
+"header_notifications" = "Notificaciones";
+"header_support" = "Soporte";
+"header_debug_simulated_time" = "Depuración: Tiempo Simulado";
+"header_debug_app_state" = "Depuración: Estado de la App";
+
+/* Descriptions */
+"desc_choose_start_date" = "¿Cuándo comenzaste tu viaje? Selecciona una fecha para rastrear tu progreso desde ese punto.";
+"desc_data_nerd_mode" = "Sumérgete profundamente en tu viaje con análisis completos";
+"desc_data_nerd_mode_full" = "Sumérgete profundamente en tu viaje con análisis completos";
+"desc_data_export" = "Exporta tus datos para respaldo o transferencia a otro dispositivo. Reiniciar eliminará permanentemente todo tu progreso.";
+"desc_notifications" = "Recibe mensajes motivacionales diarios para ayudarte a mantenerte en el camino.";
+"desc_tip_jar" = "Esta app es gratuita. Si te ha resultado útil y quieres dejar una propina, ¡gracias! Es muy apreciado.";
+"desc_app_about" = "Diseñada para detener hábitos, rastrear progreso con hitos y mantenerte motivado.";
+"desc_app_tagline" = "Comienza superando solo un día.";
+"desc_app_inspiration" = "Inspirada por la comunidad en r/stopdrinking y el compromiso diario compartido por millones.";
+"desc_export_data" = "Crear una copia de seguridad de tus datos de racha";
+"desc_import_data" = "Restaurar desde archivo de respaldo";
+"desc_calendar_note" = "Si una racha termina el mismo día que comienza una nueva racha, ese día aparecerá neutral pero no contará contra la nueva racha";
+"desc_dummy_data_warning" = "⚠️ Los datos ficticios son solo para capturas de pantalla. Recuerda restaurar los datos reales cuando termines.";
+"desc_complete_reset_warning" = "Esto eliminará todos los datos de la app y la reiniciará a un estado de instalación nueva";
+"desc_reset_warning" = "Esto eliminará todas las configuraciones de usuario y reiniciará la app a un estado de instalación nueva. Esta acción no se puede deshacer.";
+
+/* Time Labels */
+"time_days" = "Días";
+"time_next_day_starts" = "El próximo día comienza en";
+"time_to_next_goal" = " hasta el próximo objetivo";
+"time_this" = "Este";
+"time_last" = "Último";
+"time_daily_time" = "Hora Diaria:";
+"time_30_sec" = "30 seg";
+"time_1_min" = "1 min";
+
+/* Milestones */
+"milestone_day_1" = "Día 1";
+"milestone_2_days" = "2 Días";
+"milestone_5_days" = "5 Días";
+"milestone_1_week" = "1 Semana";
+"milestone_2_weeks" = "2 Semanas";
+"milestone_1_month" = "1 Mes";
+"milestone_2_months" = "2 Meses";
+"milestone_3_months" = "3 Meses";
+"milestone_6_months" = "6 Meses";
+"milestone_1_year" = "1 Año";
+"milestone_2_years" = "2 Años";
+"milestone_3_years" = "3 Años";
+"milestones_title" = "Hitos";
+
+/* Metrics */
+"metric_current_streak" = "Racha Actual";
+"metric_longest_streak" = "Racha Más Larga";
+"metric_total_attempts" = "Intentos Totales";
+"metric_success_rate" = "Tasa de Éxito";
+"metric_data_nerd_mode" = "Modo Analítico";
+"metric_data_nerd_desc" = "Sumérgete profundamente en tus análisis";
+"metric_total_success_days" = "Días de Éxito Totales";
+"metric_average_streak" = "Racha Promedio";
+
+/* Alerts */
+"alert_end_streak_title" = "¿Terminar Racha Actual?";
+"alert_end_streak_message" = "¿Estás seguro de que quieres terminar tu racha actual? Esto marcará hoy como la fecha de finalización.";
+"alert_cancel_streak_title" = "¿Cancelar Racha?";
+"alert_cancel_streak_message" = "Esto eliminará completamente este intento de racha. No se guardará ni contará en tu historial. Esta acción no se puede deshacer.";
+"alert_reset_data_title" = "Reiniciar Todos los Datos";
+"alert_reset_data_message" = "¿Estás seguro de que quieres reiniciar todos los datos? Esta acción no se puede deshacer.";
+"alert_enjoying_app_title" = "¿Disfrutando la app?";
+"alert_confirm_import_title" = "Confirmar Importación";
+"alert_confirm_import_message" = "Esto reemplazará tus datos actuales con los datos importados. Se creará automáticamente una copia de seguridad.";
+
+/* Status Messages */
+"status_already_tipped" = "Ya se Dio Propina";
+"status_processing_purchase" = "Procesando compra...";
+"status_thank_you" = "¡Gracias por tu apoyo!";
+"status_purchase_failed" = "Compra fallida";
+"status_data_imported" = "¡Datos importados exitosamente! Tus datos de racha han sido restaurados.";
+
+/* Tip Prompts */
+"tip_prompt_format" = "Hola, has abierto la app más de %d veces. ¡Considera dejar una propina si te ha ayudado!";
+
+/* Contact and Version Info */
+"contact_label" = "Contacto:";
+"version_info_format" = "Versión %@ • Build %@ • iOS %@+";
+"copyright" = "© 2025 Mark Gingrass";
+"leave_tip_icon" = "💙 Dejar Propina";
+"app_name_full" = "NOBPHTHoy";
+"app_name_expanded" = "No Beberé Contigo Hoy";
+
+/* Days Format */
+"days_format" = "%d Días";
+"days_format_singular" = "%d Día";
+"days_with_number" = "%d días";
+"days_with_number_singular" = "%d día";
+"days_strong_format" = "¡%d DÍAS FUERTE!";
+
+/* Progress Format */
+"progress_format" = "%d/%d";
+
+/* Notification Content */
+"notification_title" = "NOBPHT";
+"notification_test" = "Notificación de prueba";
+"notification_tap_motivation" = "Toca para motivación";
+"notification_quick_test" = "Prueba rápida - toca para motivación";
+"notification_fallback" = "Puedes hacerlo. Comienza hoy.";
+
+/* Motivational Messages */
+"motivation_1" = "Hoy es un buen día para comenzar de nuevo.";
+"motivation_2" = "Te debes a ti mismo intentarlo.";
+"motivation_3" = "Comienza poco a poco. Comienza ahora.";
+"motivation_4" = "No tienes que ser perfecto—solo comenzar.";
+"motivation_5" = "El primer paso es el más difícil. Tómalo hoy.";
+"motivation_6" = "Eres más fuerte que este hábito.";
+"motivation_7" = "Tu yo futuro te lo agradecerá.";
+"motivation_8" = "Este es tu botón de reinicio. Presiónalo.";
+"motivation_9" = "Cada racha comienza con el Día Uno.";
+"motivation_10" = "El cambio comienza en el momento que decides.";
+"motivation_11" = "Mereces una vida libre de este ciclo.";
+"motivation_12" = "Nada cambia si nada cambia.";
+"motivation_13" = "Comienza ahora. No después. Ahora.";
+"motivation_14" = "Que esta sea la última vez que reinicies.";
+"motivation_15" = "No estás solo en esto. Comienza de nuevo.";
+"motivation_16" = "Un día puede convertirse en muchos.";
+"motivation_17" = "El progreso vence a la perfección.";
+"motivation_18" = "Has esperado lo suficiente. Comienza.";
+"motivation_19" = "Este momento es tu punto de inflexión.";
+"motivation_20" = "Haz que hoy cuente para algo más grande.";
+
+/* Error Messages */
+"error_encode_data" = "Error al codificar datos para exportación";
+"error_decode_data" = "Error al decodificar datos importados";
+"error_create_export" = "Error al crear archivo de exportación";
+"error_file_not_found" = "Archivo de importación no encontrado";
+"error_invalid_format" = "Formato de archivo inválido";
+"error_unsupported_version" = "Versión de exportación no soportada";
+"error_corrupted_data" = "Los datos parecen estar corruptos";
+
+/* File Naming */
+"export_filename_format" = "NOBPHT_Export_%@.json";
+"backup_filename_suffix" = " Se creó una copia de seguridad de tus datos anteriores en: %@";
+
+/* Form Labels */
+"form_start_date" = "Fecha de Inicio";
+
+/* Dashboard */
+"dashboard_title" = "TU TABLERO";
+"dashboard_no_active_streak" = "Sin Racha Activa";
+"dashboard_ready_to_start" = "Listo para comenzar";
+"active_streak_started_format" = "Racha Activa Iniciada %@";
+"dashboard_previous_streak_ended" = "Racha Anterior Terminada";
+
+/* Settings View */
+"settings_export_data" = "Exportar Datos";
+"settings_import_data" = "Importar Datos";
+"settings_data_export_desc" = "Exporta tus datos para respaldo o transferencia a otro dispositivo. Reiniciar eliminará permanentemente todo tu progreso.";
+"settings_notifications_desc" = "Recibe mensajes motivacionales diarios para ayudarte a mantenerte en el camino.";
+"settings_reset_confirm" = "¿Estás seguro de que quieres reiniciar todos los datos? Esta acción no se puede deshacer.";
+"settings_open_settings" = "Abrir Ajustes";
+"settings_request_permission" = "Solicitar Permiso";
+"settings_motivational_reminders" = "Recordatorios Motivacionales";
+"settings_rate_app" = "Calificar NOBPHT";
+"settings_contact_support" = "Contactar Soporte";
+
+/* About View */
+"about_app_name" = "NOBPHTHoy";
+"about_app_full_name" = "No Beberé Contigo Hoy";
+"about_app_description" = "Diseñada para detener hábitos, rastrear progreso con hitos y mantenerte motivado.";
+"about_app_tagline" = "Comienza superando solo un día.";
+"about_acknowledgments" = "Reconocimientos";
+"about_inspiration" = "Inspirada por la comunidad en r/stopdrinking y el compromiso diario compartido por millones.";
+"about_contact" = "Contacto:";
+"about_leave_tip" = "💙 Dejar Propina";
+"about_version_format" = "Versión %@ • Build %@ • iOS %@+";
+"about_copyright" = "© 2025 Mark Gingrass";
+"about_feature_track" = "Rastrear progreso diario";
+"about_feature_stats" = "Ver estadísticas y métricas";
+"about_feature_milestones" = "Celebrar hitos";
+"about_feature_interface" = "Interfaz simple e intuitiva";
+
+/* Data Import/Export */
+"data_export_section" = "Sección de Exportación";
+"data_import_section" = "Sección de Importación";
+"data_export_desc" = "Crear una copia de seguridad de tus datos de racha";
+"data_import_desc" = "Restaurar desde archivo de respaldo";
+"data_import_confirm" = "Confirmar Importación";
+"data_import_message" = "Esto reemplazará tus datos actuales con los datos importados. Se creará automáticamente una copia de seguridad.";
+
+/* Intro View */
+"intro_title" = "Comienza con Solo Un Día";
+"intro_description" = "Supera solo hoy. Eso es todo.\n\nEsta app contará las horas hasta la medianoche. Luego lo hará de nuevo mañana.\n\nHay hitos. Claro.\nPero vienen un día a la vez.\n\nEsta app no rastrea diez hábitos diferentes.\nRastrea solo uno. El que más importa.\n\nComienza ahora.";
+
+/* Start Date Picker */
+"start_date_title" = "Elige Tu Fecha de Inicio";
+"start_date_description" = "¿Cuándo comenzaste tu viaje? Selecciona una fecha para rastrear tu progreso desde ese punto.";
+"start_date_confirm" = "Confirmar e Iniciar Seguimiento";
+"start_date_not_today" = "Hoy No - Comenzaré en otro momento";
+
+/* Active Streak View */
+"active_streak_days_format" = "%d Días";
+"active_streak_next_day" = "El próximo día comienza en";
+"active_streak_end_streak" = "Terminar Racha";
+"active_streak_cancel_streak" = "Cancelar Racha";
+"active_streak_end_confirm_title" = "¿Terminar Racha Actual?";
+"active_streak_end_confirm_message" = "¿Estás seguro de que quieres terminar tu racha actual? Esto marcará hoy como la fecha de finalización.";
+"active_streak_cancel_confirm_title" = "¿Cancelar Racha?";
+"active_streak_cancel_confirm_message" = "Esto eliminará completamente este intento de racha. No se guardará ni contará en tu historial. Esta acción no se puede deshacer.";
+
+/* Milestone Celebration */
+"milestone_achieved" = "🎉 ¡HITO ALCANZADO! 🎉";
+"milestone_days_strong" = "¡%d DÍAS FUERTE!";
+
+/* Calendar View */
+"calendar_explanation" = "Si una racha termina el mismo día que comienza una nueva racha, ese día aparecerá neutral pero no contará contra la nueva racha";
+
+/* Tip Jar */
+"tip_jar_title" = "Apoyar al Desarrollador";
+"tip_jar_description" = "Esta app es gratuita. Si te ha resultado útil y quieres dejar una propina, ¡gracias! Es muy apreciado.";
+"tip_jar_loading" = "Cargando propinas…";
+"tip_jar_already_tipped" = "Ya se Dio Propina";
+"tip_jar_processing" = "Procesando compra...";
+"tip_jar_thank_you" = "¡Gracias por tu apoyo!";
+"tip_jar_failed" = "Compra fallida";
+
+/* Data Nerd Mode */
+"data_nerd_title" = "Modo Analítico";
+"data_nerd_description" = "Sumérgete profundamente en tu viaje con análisis completos";
+"data_nerd_total_attempts" = "Intentos Totales";
+"data_nerd_avg_streak" = "Racha Promedio";
+"data_nerd_total_success_days" = "Días de Éxito Totales";
+"data_nerd_monthly_analysis" = "Análisis Mensual";
+"data_nerd_yearly_analysis" = "Análisis Anual";
+"data_nerd_detailed_breakdown" = "Análisis Detallado";
+"data_nerd_this" = "Este";
+"data_nerd_last" = "Último";
+"data_nerd_days_unit" = "días";
+"data_nerd_streaks_unit" = "rachas";
+"data_nerd_longest_streak_month" = "Racha Más Larga Este Mes";
+"data_nerd_total_days_month" = "Días Totales Este Mes";
+"data_nerd_attempts_month" = "Intentos Este Mes";
+"data_nerd_longest_streak_year" = "Racha Más Larga Este Año";
+"data_nerd_total_days_year" = "Días Totales Este Año";
+"data_nerd_attempts_year" = "Intentos Este Año";
+"data_nerd_total_streaks_recorded" = "Rachas Totales Registradas";
+"data_nerd_median_streak_length" = "Longitud Mediana de Racha";
+"data_nerd_days_since_first" = "Días Desde Primer Intento";
+
+/* Time Indicators */
+"time_today" = "hoy";
+"time_one_day_ago" = "hace 1 día";
+"time_days_ago_format" = "hace %d días";
+
+/* Common Units */
+"unit_days" = "días";
+"unit_streaks" = "rachas";
+
+/* Motivational Popup */
+"motivational_popup_title" = "NOBPHT";
+"motivational_popup_button" = "Puedo hacerlo";
+
+/* Tip Prompts */
+"tip_prompt_message" = "Hola, has abierto la app más de %d veces. ¡Considera dejar una propina si te ha ayudado!";
+"tip_prompt_enjoying_title" = "¿Disfrutando la app?";
+"tip_prompt_not_now" = "Ahora No";
+
+/* Debug Panel (for development) */
+"debug_simulated_time" = "Depuración: Tiempo Simulado";
+"debug_notifications" = "Notificaciones";
+"debug_daily_time" = "Hora Diaria:";
+"debug_quick_test" = "Prueba Rápida";
+"debug_30_sec" = "30 seg";
+"debug_1_min" = "1 min";
+"debug_test_popup" = "Probar Popup";
+"debug_management" = "Gestión";
+"debug_reschedule_daily" = "Reprogramar Diario";
+"debug_cancel_all" = "Cancelar Todo";
+"debug_app_state" = "Depuración: Estado de la App";
+"debug_reset_all" = "Reiniciar Todas las Configuraciones de Usuario";
+"debug_reset_description" = "Esto eliminará todos los datos de la app y la reiniciará a un estado de instalación nueva";
+"debug_reset_warning" = "Esto eliminará todas las configuraciones de usuario y reiniciará la app a un estado de instalación nueva. Esta acción no se puede deshacer.";
+"debug_force_rating" = "Forzar Solicitud de Calificación";
+"debug_reset_rating" = "Reiniciar Datos de Calificación";
+"debug_complete_reset" = "Reinicio Completo";
+"debug_test_scenarios" = "Escenarios de Prueba:";
+"debug_current_streak" = "Racha Actual:";
+"debug_active" = "Activo:";
+"debug_yes" = "Sí";
+"debug_no" = "No";
+"debug_dummy_data_active" = "Datos Ficticios Activos";
+"debug_real_data_active" = "Datos Reales Activos";
+"debug_select_scenario" = "Seleccionar Escenario:";
+"debug_current_stats" = "Estadísticas Actuales:";
+"debug_streak_format" = "Racha: %dd";
+"debug_total_format" = "Total: %dd";
+"debug_longest_format" = "Más Larga: %dd";
+"debug_attempts_format" = "Intentos: %d";
+"debug_preview_stats" = "Vista Previa de Estadísticas";
+"debug_apply_dummy" = "Aplicar Datos Ficticios";
+"debug_restore_real" = "Restaurar Datos Reales";
+"debug_dummy_warning" = "⚠️ Los datos ficticios son solo para capturas de pantalla. Recuerda restaurar los datos reales cuando termines.";
+"debug_day_3" = "Día 3";
+"debug_day_7" = "Día 7";
+"debug_day_14" = "Día 14";
+"debug_day_30" = "Día 30";
+"debug_test_rating" = "Probar Elegibilidad de Calificación";
+
+/* Common Boolean Values */
+"value_yes" = "Sí";
+"value_no" = "No";
+
+/* Common Actions */
+"action_import" = "Importar";
+"action_export" = "Exportar";
+"action_reset" = "Reiniciar";
+"action_keep_streak" = "Mantener Racha";

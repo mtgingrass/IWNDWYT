@@ -15,19 +15,19 @@ struct TipJarView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                Text("Support the Developer")
+                Text(NSLocalizedString("tip_jar_title", comment: "Tip jar title"))
                     .font(.title2)
                     .bold()
                     .padding(.top)
 
-                Text("This app is free to use. If you've found it helpful and want to leave a tip, thank you! It's greatly appreciated.")
+                Text(NSLocalizedString("tip_jar_description", comment: "Tip jar description"))
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
                     .padding(.horizontal)
 
                 if store.products.isEmpty {
-                    ProgressView("Loading tips…")
+                    ProgressView(NSLocalizedString("tip_jar_loading", comment: "Loading tips progress"))
                         .padding()
                 } else {
                     VStack(spacing: 12) {
@@ -48,7 +48,7 @@ struct TipJarView: View {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundColor(.green)
                                             .imageScale(.small)
-                                        Text("Already Tipped")
+                                        Text(NSLocalizedString("tip_jar_already_tipped", comment: "Already tipped status"))
                                             .font(.footnote)
                                     } else {
                                         Text(product.displayPrice)
@@ -84,7 +84,7 @@ struct TipJarView: View {
                     HStack {
                         ProgressView()
                             .scaleEffect(0.8)
-                        Text("Processing purchase...")
+                        Text(NSLocalizedString("tip_jar_processing", comment: "Processing purchase status"))
                     }
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -92,7 +92,7 @@ struct TipJarView: View {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
-                        Text("Thank you for your support!")
+                        Text(NSLocalizedString("tip_jar_thank_you", comment: "Thank you message"))
                     }
                     .font(.caption)
                     .foregroundColor(.green)
@@ -100,7 +100,7 @@ struct TipJarView: View {
                     HStack {
                         Image(systemName: "exclamationmark.circle.fill")
                             .foregroundColor(.red)
-                        Text("Purchase failed")
+                        Text(NSLocalizedString("tip_jar_failed", comment: "Purchase failed message"))
                     }
                     .font(.caption)
                     .foregroundColor(.red)
@@ -110,7 +110,7 @@ struct TipJarView: View {
             }
             .padding()
         }
-        .navigationTitle("Leave a Tip")
+        .navigationTitle(NSLocalizedString("nav_leave_tip", comment: "Leave a tip navigation title"))
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await store.loadProducts()

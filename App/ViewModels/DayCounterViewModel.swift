@@ -67,13 +67,14 @@ class DayCounterViewModel: ObservableObject {
         
         // Only create a streak if there were successful days (length > 0)
         let length = Calendar.current.dateComponents([.day], from: streakData.currentStartDate, to: yesterday).day ?? 0
+        let inclusiveLength = max(0, length + 1)
         
         if length > 0 {
             let finishedStreak = Streak(
                 id: UUID(),
                 startDate: streakData.currentStartDate,
                 endDate: yesterday, // Last successful day
-                length: length
+                length: inclusiveLength
             )
             streakData.pastStreaks.append(finishedStreak)
         }
@@ -100,7 +101,16 @@ class DayCounterViewModel: ObservableObject {
         print("🔄 Milestone tracking reset for new streak")
         
         save()
+        
+        // Cancel motivation notifications and schedule encouragement notifications
         MotivationManager.shared.cancelAllNotifications()
+        
+        // Calculate current streak day for the encouragement message
+        let currentDay = max(0, currentStreak)
+        MotivationManager.shared.scheduleStreakEncouragementIfNeeded(
+            streakActive: true,
+            currentStreakDay: currentDay
+        )
     }
     
     // Start a new streak with custom date
@@ -115,7 +125,17 @@ class DayCounterViewModel: ObservableObject {
         print("🔄 Milestone tracking reset for new streak with custom date")
         
         save()
+        
+        // Cancel motivation notifications and schedule encouragement notifications
         MotivationManager.shared.cancelAllNotifications()
+        
+        // Calculate current streak day for the encouragement message
+        let currentDay = Calendar.current.dateComponents([.day], from: date, to: DateProvider.now).day ?? 0
+        let inclusiveCurrentDay = max(0, currentDay + 1)
+        MotivationManager.shared.scheduleStreakEncouragementIfNeeded(
+            streakActive: true,
+            currentStreakDay: inclusiveCurrentDay
+        )
     }
     
     func cancelStreak() {
@@ -159,18 +179,19 @@ class DayCounterViewModel: ObservableObject {
     var currentStreak: Int {
         guard streakData.isActiveStreak else { return 0 }
         let streak = Calendar.current.dateComponents([.day], from: streakData.currentStartDate, to: DateProvider.now).day ?? 0
+        let inclusiveStreak = max(0, streak + 1)
         
         // Check for milestone celebrations and rating requests when streak is calculated
         DispatchQueue.main.async {
-            self.checkForMilestoneCelebration(newStreak: streak)
+            self.checkForMilestoneCelebration(newStreak: inclusiveStreak)
             
             RatingManager.shared.checkForRatingRequest(
-                currentStreak: streak,
+                currentStreak: inclusiveStreak,
                 isActiveStreak: self.streakData.isActiveStreak
             )
         }
         
-        return streak
+        return inclusiveStreak
     }
 
     var totalAttempts: Int {
@@ -179,7 +200,8 @@ class DayCounterViewModel: ObservableObject {
 
     var longestStreak: Int {
         let past = streakData.pastStreaks.map { $0.length }.max() ?? 0
-        return max(past, currentStreak)
+        let currentCompleted = streakData.isActiveStreak ? max(0, currentStreak - 1) : 0
+        return max(past, currentCompleted)
     }
     
     var isActiveStreak: Bool {
@@ -188,20 +210,22 @@ class DayCounterViewModel: ObservableObject {
     
     // MARK: - Milestone Celebrations
     
-    private let milestones = [
-        Milestone(days: 1, title: "Day 1", emoji: "🌱"),
-        Milestone(days: 2, title: "2 Days", emoji: "🍀"),
-        Milestone(days: 5, title: "5 Days", emoji: "⭐️"),
-        Milestone(days: 7, title: "1 Week", emoji: "🌟"),
-        Milestone(days: 14, title: "2 Weeks", emoji: "🎯"),
-        Milestone(days: 30, title: "1 Month", emoji: "🏆"),
-        Milestone(days: 60, title: "2 Months", emoji: "💫"),
-        Milestone(days: 90, title: "3 Months", emoji: "🌙"),
-        Milestone(days: 180, title: "6 Months", emoji: "🌞"),
-        Milestone(days: 365, title: "1 Year", emoji: "👑"),
-        Milestone(days: 730, title: "2 Years", emoji: "🎊"),
-        Milestone(days: 1095, title: "3 Years", emoji: "⚡️")
-    ]
+    private var milestones: [Milestone] {
+        return [
+            Milestone(days: 1, title: NSLocalizedString("milestone_day_1", comment: "Day 1 milestone"), emoji: "🌱"),
+            Milestone(days: 2, title: NSLocalizedString("milestone_2_days", comment: "2 Days milestone"), emoji: "🍀"),
+            Milestone(days: 5, title: NSLocalizedString("milestone_5_days", comment: "5 Days milestone"), emoji: "⭐️"),
+            Milestone(days: 7, title: NSLocalizedString("milestone_1_week", comment: "1 Week milestone"), emoji: "🌟"),
+            Milestone(days: 14, title: NSLocalizedString("milestone_2_weeks", comment: "2 Weeks milestone"), emoji: "🎯"),
+            Milestone(days: 30, title: NSLocalizedString("milestone_1_month", comment: "1 Month milestone"), emoji: "🏆"),
+            Milestone(days: 60, title: NSLocalizedString("milestone_2_months", comment: "2 Months milestone"), emoji: "💫"),
+            Milestone(days: 90, title: NSLocalizedString("milestone_3_months", comment: "3 Months milestone"), emoji: "🌙"),
+            Milestone(days: 180, title: NSLocalizedString("milestone_6_months", comment: "6 Months milestone"), emoji: "🌞"),
+            Milestone(days: 365, title: NSLocalizedString("milestone_1_year", comment: "1 Year milestone"), emoji: "👑"),
+            Milestone(days: 730, title: NSLocalizedString("milestone_2_years", comment: "2 Years milestone"), emoji: "🎊"),
+            Milestone(days: 1095, title: NSLocalizedString("milestone_3_years", comment: "3 Years milestone"), emoji: "⚡️")
+        ]
+    }
     
     private func checkForMilestoneCelebration(newStreak: Int) {
         print("🔍 Checking milestones: newStreak=\(newStreak), lastCelebrated=\(lastCelebratedStreak), isActive=\(streakData.isActiveStreak)")
@@ -214,7 +238,7 @@ class DayCounterViewModel: ObservableObject {
         
         // Find newly completed milestones
         let newlyCompleted = milestones.filter { milestone in
-            newStreak >= milestone.days && lastCelebratedStreak < milestone.days
+            (newStreak - 1) >= milestone.days && lastCelebratedStreak < milestone.days
         }
         
         print("🔍 Newly completed milestones: \(newlyCompleted.map { "\($0.days) days" })")
@@ -274,7 +298,8 @@ class DayCounterViewModel: ObservableObject {
         // Add current streak days if active
         if streakData.isActiveStreak {
             let currentDays = Calendar.current.dateComponents([.day], from: streakData.currentStartDate, to: DateProvider.now).day ?? 0
-            totalTrackedDays += currentDays
+            let inclusiveCurrentDays = max(0, currentDays + 1)
+            totalTrackedDays += inclusiveCurrentDays
         }
         
         // If we haven't tracked any days, return 100% (fresh start)
@@ -317,7 +342,15 @@ class DayCounterViewModel: ObservableObject {
             objectWillChange.send()
             
             // Update notifications based on new streak state
-            MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: streakData.isActiveStreak)
+            if streakData.isActiveStreak {
+                let currentDay = max(0, currentStreak)
+                MotivationManager.shared.scheduleStreakEncouragementIfNeeded(
+                    streakActive: true,
+                    currentStreakDay: currentDay
+                )
+            } else {
+                MotivationManager.shared.scheduleDailyMotivationIfNeeded(streakStarted: false)
+            }
             
             let message = "Data imported successfully! Your streak data has been restored."
             if case .success(let backupURL) = backupResult {

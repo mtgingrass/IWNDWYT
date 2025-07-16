@@ -28,7 +28,7 @@ struct CalendarView: View {
     var body: some View {
         VStack(spacing: 8) {
             // Explanatory note
-            Text("If a streak ends on the same day a new streak begins, that day will appear neutral but won't count against the new streak")
+            Text(NSLocalizedString("calendar_explanation", comment: "Calendar explanation text"))
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -152,15 +152,15 @@ struct CalendarView: View {
         let isToday = Calendar.current.isDate(date, inSameDayAs: DateProvider.now)
         
         // Rule 1: Past streaks = green (successful days)
-        for streak in viewModel.sobrietyData.pastStreaks {
+        for streak in viewModel.streakData.pastStreaks {
             if date >= streak.startDate && date <= streak.endDate {
                 return .sober
             }
         }
         
         // Rule 2: Active streak days (excluding today) = green  
-        if viewModel.sobrietyData.isActiveStreak &&
-           date >= viewModel.sobrietyData.currentStartDate &&
+        if viewModel.streakData.isActiveStreak &&
+           date >= viewModel.streakData.currentStartDate &&
            !isToday { // Explicitly exclude today regardless of date comparison
             return .sober
         }
@@ -171,9 +171,9 @@ struct CalendarView: View {
         }
         
         // Rule 4: Any other tracked day = red (relapse days)
-        let hasAnyData = !viewModel.sobrietyData.pastStreaks.isEmpty || viewModel.sobrietyData.isActiveStreak
+        let hasAnyData = !viewModel.streakData.pastStreaks.isEmpty || viewModel.streakData.isActiveStreak
         if hasAnyData {
-            let firstTrackingDate = viewModel.sobrietyData.pastStreaks.first?.startDate ?? viewModel.sobrietyData.currentStartDate
+            let firstTrackingDate = viewModel.streakData.pastStreaks.first?.startDate ?? viewModel.streakData.currentStartDate
             if date >= firstTrackingDate {
                 return .nonSober
             }
